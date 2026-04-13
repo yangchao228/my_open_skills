@@ -13,7 +13,7 @@ openclaw skills install resume-interview-generator
 Codex / Claude Code:
 
 ```bash
-npx @skills-hub-ai/cli install resume-interview-generator
+npx @skills-hub-ai/cli install resume-interview-generator-2
 ```
 
 ## Use When
