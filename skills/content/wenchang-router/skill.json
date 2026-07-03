@@ -1,0 +1,22 @@
+{
+  "slug": "wenchang-router",
+  "title": "Wenchang Router",
+  "category": "content",
+  "summary": "Routes content requests to the correct Wenchang stage and produces a compact content_state handoff.",
+  "keywords": [
+    "content routing",
+    "writing workflow",
+    "router",
+    "brief"
+  ],
+  "user_needs": [
+    "know which writing workflow step comes next",
+    "turn a vague content request into an executable brief",
+    "avoid jumping straight to a final draft"
+  ],
+  "source_dir": "skills/content/wenchang-router",
+  "entry": "SKILL.md",
+  "package_strategy": "on-demand",
+  "package_format": "skill",
+  "status": "ready"
+}

@@ -14,7 +14,7 @@
     "给候选人出一套笔试题",
     "评估候选人简历真实性"
   ],
-  "source_dir": "skills/resume-interview-generator",
+  "source_dir": "skills/work/resume-interview-generator",
   "entry": "SKILL.md",
   "package_strategy": "on-demand",
   "package_format": "skill",

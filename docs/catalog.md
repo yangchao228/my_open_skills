@@ -1,0 +1,39 @@
+# Skill Catalog
+
+Status values: `ready`, `draft`, `incubating`, `private-source`, `deprecated`.
+
+Invocation values: `model-invoked`, `user-invoked`, `router-only`.
+
+## Content
+
+| Skill | Status | Invocation | Purpose |
+| --- | --- | --- | --- |
+| [wenchang-orchestrator](../skills/content/wenchang-orchestrator) | ready | user-invoked | Full content workflow coordinator |
+| [wenchang-router](../skills/content/wenchang-router) | ready | model-invoked | Route content requests to the next stage |
+| [storm-research](../skills/content/storm-research) | ready | model-invoked | Pre-writing multi-perspective research |
+| [wenchang-research](../skills/content/wenchang-research) | ready | model-invoked | Evidence gathering and confidence review |
+| [wenchang-wechat-writer](../skills/content/wenchang-wechat-writer) | ready | model-invoked | Draft WeChat-style long-form articles |
+| [wenchang-review](../skills/content/wenchang-review) | ready | model-invoked | Diagnose or edit existing drafts |
+| [wenchang-publish-check](../skills/content/wenchang-publish-check) | ready | model-invoked | Final publish asset check |
+
+Future candidates: `zhihu-topic-hunter`, `xiaohongshu-topic-generator`, `wechat-to-cards`, `long-to-cards`, `redbook-cards`.
+
+## Work
+
+| Skill | Status | Invocation | Purpose |
+| --- | --- | --- | --- |
+| [resume-interview-generator](../skills/work/resume-interview-generator) | ready | model-invoked | Generate structured interview questions from resumes |
+
+Future candidates: `project-weekly-report`, `create-plan`, `doc-coauthoring`.
+
+## Engineering
+
+No public ready skills in the first phase.
+
+Future candidates: `wechat-miniprogram-ui-acceptance`, `playwright`, `figma`, `figma-implement-design`, `mcp-builder`, `frontend-design`, `webapp-testing`.
+
+## Publishing
+
+No public ready skills in the first phase.
+
+Future candidates: `md-img-r2`, `bilibili-video-publisher`, `superman-blog-publisher`.

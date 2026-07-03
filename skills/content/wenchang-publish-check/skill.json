@@ -1,0 +1,22 @@
+{
+  "slug": "wenchang-publish-check",
+  "title": "Wenchang Publish Check",
+  "category": "content",
+  "summary": "Checks final publish assets, platform fit, and knowledge asset value for near-final drafts.",
+  "keywords": [
+    "publish check",
+    "title",
+    "summary",
+    "distribution"
+  ],
+  "user_needs": [
+    "prepare a draft for publishing",
+    "check title, summary, tags, images, and sharing copy",
+    "identify blockers before publishing"
+  ],
+  "source_dir": "skills/content/wenchang-publish-check",
+  "entry": "SKILL.md",
+  "package_strategy": "on-demand",
+  "package_format": "skill",
+  "status": "ready"
+}

@@ -1,0 +1,22 @@
+{
+  "slug": "wenchang-orchestrator",
+  "title": "Wenchang Orchestrator",
+  "category": "content",
+  "summary": "Routes a content request through the Wenchang workflow from topic to publish check while preserving user judgment.",
+  "keywords": [
+    "content workflow",
+    "orchestrator",
+    "writing",
+    "content_state"
+  ],
+  "user_needs": [
+    "turn a topic into a structured content workflow",
+    "decide which content skill to run next",
+    "keep writing, research, review, and publishing steps aligned"
+  ],
+  "source_dir": "skills/content/wenchang-orchestrator",
+  "entry": "SKILL.md",
+  "package_strategy": "on-demand",
+  "package_format": "skill",
+  "status": "ready"
+}
