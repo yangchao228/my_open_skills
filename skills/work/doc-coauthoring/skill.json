@@ -1,0 +1,24 @@
+{
+  "slug": "doc-coauthoring",
+  "title": "Doc Co-Authoring",
+  "category": "work",
+  "summary": "Guide structured co-authoring of substantial documents through context alignment, section drafting, reader testing, and final checks.",
+  "keywords": [
+    "documentation",
+    "coauthoring",
+    "PRD",
+    "technical spec",
+    "decision record"
+  ],
+  "user_needs": [
+    "write a substantial document with an AI collaborator",
+    "turn scattered notes into a structured proposal or spec",
+    "review whether a document works for its readers",
+    "iterate section by section without losing context"
+  ],
+  "source_dir": "skills/work/doc-coauthoring",
+  "entry": "SKILL.md",
+  "package_strategy": "on-demand",
+  "package_format": "skill",
+  "status": "ready"
+}
