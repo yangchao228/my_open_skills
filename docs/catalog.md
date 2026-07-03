@@ -23,8 +23,9 @@ Future candidates: `zhihu-topic-hunter`, `xiaohongshu-topic-generator`, `wechat-
 | Skill | Status | Invocation | Purpose |
 | --- | --- | --- | --- |
 | [resume-interview-generator](../skills/work/resume-interview-generator) | ready | model-invoked | Generate structured interview questions from resumes |
+| [project-weekly-report](../skills/work/project-weekly-report) | ready | model-invoked | Generate evidence-based project weekly reports from local repositories |
 
-Future candidates: `project-weekly-report`, `create-plan`, `doc-coauthoring`.
+Future candidates: `create-plan`, `doc-coauthoring`.
 
 ## Engineering
 

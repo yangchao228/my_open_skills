@@ -16,9 +16,17 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library.
 - [x] Add Wenchang end-to-end smoke example
 - [x] Enhance validation for catalog links, Markdown links, and unique `source_dir`
 
+## Phase 2
+
+- [x] Publicize `skills/work/project-weekly-report`
+- [ ] Publicize next work skill candidate: `create-plan` or `doc-coauthoring`
+- [ ] Publicize next content candidate: `zhihu-topic-hunter`
+- [ ] Review publishing candidates for credential and account-session risk before migration
+
 ## Ready Skills
 
 - `skills/work/resume-interview-generator`
+- `skills/work/project-weekly-report`
 - `skills/content/wenchang-orchestrator`
 - `skills/content/wenchang-router`
 - `skills/content/storm-research`
@@ -29,7 +37,8 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library.
 
 ## Candidate Pool
 
-- `skills/work/project-weekly-report`
+- `skills/work/create-plan`
+- `skills/work/doc-coauthoring`
 - `skills/content/zhihu-topic-hunter`
 - `skills/content/xiaohongshu-topic-generator`
 - `skills/content/wechat-to-cards`
@@ -50,3 +59,4 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library.
 ## Review
 
 - 2026-07-03: Created the public library skeleton, categorized skills under `content`, `work`, `engineering`, and `publishing`, moved `resume-interview-generator` into `skills/work/`, added the first-phase Wenchang content workflow, documented an end-to-end smoke path, enhanced validation for links and unique `source_dir`, and passed `./scripts/validate-skills.sh`.
+- 2026-07-03: Publicized `project-weekly-report` as a work skill by rewriting the local workflow into a shareable evidence-first weekly report skill, adding examples, and updating the README, catalog, work index, and candidate pool.

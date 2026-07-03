@@ -40,6 +40,7 @@ See [skills/content/README.md](skills/content/README.md).
 Reusable structured work output.
 
 - [resume-interview-generator](skills/work/resume-interview-generator) - generate structured interview questions, follow-up paths, scoring criteria, and risk checks from a resume and role.
+- [project-weekly-report](skills/work/project-weekly-report) - generate evidence-based project weekly reports from local repository history, tags, docs, and artifacts.
 
 See [skills/work/README.md](skills/work/README.md).
 
