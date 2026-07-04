@@ -21,7 +21,8 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library.
 - [x] Publicize `skills/work/project-weekly-report`
 - [x] Publicize `skills/work/create-plan`
 - [x] Publicize `skills/work/doc-coauthoring`
-- [ ] Publicize next content candidate: `zhihu-topic-hunter`
+- [x] Publicize `skills/content/zhihu-topic-hunter`
+- [ ] Publicize next content candidate: `xiaohongshu-topic-generator`
 - [ ] Review publishing candidates for credential and account-session risk before migration
 
 ## Ready Skills
@@ -30,6 +31,7 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library.
 - `skills/work/project-weekly-report`
 - `skills/work/create-plan`
 - `skills/work/doc-coauthoring`
+- `skills/content/zhihu-topic-hunter`
 - `skills/content/wenchang-orchestrator`
 - `skills/content/wenchang-router`
 - `skills/content/storm-research`
@@ -40,7 +42,6 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library.
 
 ## Candidate Pool
 
-- `skills/content/zhihu-topic-hunter`
 - `skills/content/xiaohongshu-topic-generator`
 - `skills/content/wechat-to-cards`
 - `skills/content/long-to-cards`
@@ -63,3 +64,4 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library.
 - 2026-07-03: Publicized `project-weekly-report` as a work skill by rewriting the local workflow into a shareable evidence-first weekly report skill, adding examples, and updating the README, catalog, work index, and candidate pool.
 - 2026-07-03: Publicized `create-plan` as a work skill with a read-only planning boundary, concise output template, validation expectations, examples, and catalog updates.
 - 2026-07-03: Publicized `doc-coauthoring` as a work skill with context alignment, section-by-section drafting, reader testing, final checks, examples, and catalog updates.
+- 2026-07-04: Publicized `zhihu-topic-hunter` as a content skill for theme-bound Zhihu topic hunting, discussion-signal filtering, scoring, drop-list decisions, examples, and catalog updates.

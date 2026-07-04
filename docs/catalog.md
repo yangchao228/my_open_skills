@@ -15,8 +15,9 @@ Invocation values: `model-invoked`, `user-invoked`, `router-only`.
 | [wenchang-wechat-writer](../skills/content/wenchang-wechat-writer) | ready | model-invoked | Draft WeChat-style long-form articles |
 | [wenchang-review](../skills/content/wenchang-review) | ready | model-invoked | Diagnose or edit existing drafts |
 | [wenchang-publish-check](../skills/content/wenchang-publish-check) | ready | model-invoked | Final publish asset check |
+| [zhihu-topic-hunter](../skills/content/zhihu-topic-hunter) | ready | user-invoked | Generate ranked Zhihu topic candidates from a theme |
 
-Future candidates: `zhihu-topic-hunter`, `xiaohongshu-topic-generator`, `wechat-to-cards`, `long-to-cards`, `redbook-cards`.
+Future candidates: `xiaohongshu-topic-generator`, `wechat-to-cards`, `long-to-cards`, `redbook-cards`.
 
 ## Work
 

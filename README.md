@@ -27,6 +27,7 @@ Start here:
 
 Core content skills:
 
+- [zhihu-topic-hunter](skills/content/zhihu-topic-hunter)
 - [storm-research](skills/content/storm-research)
 - [wenchang-research](skills/content/wenchang-research)
 - [wenchang-wechat-writer](skills/content/wenchang-wechat-writer)

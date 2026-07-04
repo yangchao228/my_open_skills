@@ -26,6 +26,7 @@ wenchang-orchestrator
 
 - [wenchang-orchestrator](wenchang-orchestrator): full workflow coordinator
 - [wenchang-router](wenchang-router): stage and platform router
+- [zhihu-topic-hunter](zhihu-topic-hunter): theme-based Zhihu topic hunting and ranking
 - [storm-research](storm-research): multi-perspective research map
 - [wenchang-research](wenchang-research): source-backed evidence gathering
 - [wenchang-wechat-writer](wenchang-wechat-writer): WeChat-style long-form drafting
