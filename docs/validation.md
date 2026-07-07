@@ -16,6 +16,7 @@ The validation script checks:
 - `skill.json.source_dir` matches the real folder
 - `skill.json.source_dir` values are unique
 - every first-phase public skill has example files
+- every `README.md` has a sibling `README.zh-CN.md`
 - catalog skill links point to real paths
 - repository Markdown links point to real local files or directories
 - public files do not contain common private-path or credential markers

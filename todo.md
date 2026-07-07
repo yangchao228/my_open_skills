@@ -25,6 +25,8 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library.
 - [x] Publicize `skills/content/xiaohongshu-topic-generator`
 - [x] Publicize `skills/content/long-to-cards`
 - [ ] Publicize next content candidate: `wechat-to-cards`
+- [x] Add sibling `README.zh-CN.md` files for every project `README.md`
+- [x] Enforce README Chinese counterpart validation
 - [ ] Review publishing candidates for credential and account-session risk before migration
 
 ## Ready Skills
@@ -69,3 +71,4 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library.
 - 2026-07-04: Publicized `zhihu-topic-hunter` as a content skill for theme-bound Zhihu topic hunting, discussion-signal filtering, scoring, drop-list decisions, examples, and catalog updates.
 - 2026-07-04: Publicized `xiaohongshu-topic-generator` as a content skill for platform-fit topic generation, hook and card-outline planning, scoring, risk checks, examples, and catalog updates.
 - 2026-07-07: Publicized `long-to-cards` as a content skill for converting long-form source material into card-based social packages with source diagnosis, card copy, visual direction, publishing assets, and caveats.
+- 2026-07-07: Added sibling `README.zh-CN.md` files for every current `README.md`, linked Chinese versions from the original README files, documented the bilingual README convention, and updated validation to fail when a README lacks a Chinese counterpart.

@@ -1,5 +1,7 @@
 # Work Skills
 
+[中文版本](README.zh-CN.md)
+
 `skills/work/` contains reusable structured work-output skills.
 
 ## Ready Skills

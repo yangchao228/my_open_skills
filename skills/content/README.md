@@ -1,5 +1,7 @@
 # Content Skills
 
+[中文版本](README.zh-CN.md)
+
 `skills/content/` contains the Wenchang content workflow.
 
 Wenchang is a set of composable skills for moving from a topic, trend, external material, or draft into a publish-ready content package.

@@ -1,10 +1,10 @@
 # Engineering Skills
 
-[中文版本](README.zh-CN.md)
+[English](README.md)
 
-Engineering skills will be published after the content and work categories are stable.
+工程类 skills 会在 content 和 work 分类稳定后再公开。
 
-Candidate skills:
+候选 skills：
 
 - `wechat-miniprogram-ui-acceptance`
 - `playwright`

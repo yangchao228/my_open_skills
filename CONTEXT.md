@@ -43,3 +43,7 @@ The public name for the content creation workflow in `skills/content/`. It is a 
 **Publishable skill**
 
 A skill that a new user can understand, run with an example, and safely adapt without needing the author's private context.
+
+## Documentation Conventions
+
+Every `README.md` in this repository should have a sibling `README.zh-CN.md` Chinese version in the same directory. When a README changes materially, update its Chinese counterpart in the same change.

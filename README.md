@@ -1,5 +1,7 @@
 # My Open Skills
 
+[中文版本](README.zh-CN.md)
+
 Public AI Agent Skills collected from local workflows that have been cleaned, generalized, and made reusable.
 
 This repository is not a single-skill package. It is a long-term open skills library organized by workflow area.
@@ -78,7 +80,7 @@ For local development, clone this repo and link or copy the skill folders into t
 ./scripts/validate-skills.sh
 ```
 
-Validation checks skill metadata, paths, examples, JSON, and common private-content leaks.
+Validation checks skill metadata, paths, examples, JSON, README Chinese counterparts, and common private-content leaks.
 
 The first Wenchang workflow smoke is documented in [docs/examples/wenchang-end-to-end-smoke.md](docs/examples/wenchang-end-to-end-smoke.md).
 

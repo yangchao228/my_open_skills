@@ -79,6 +79,13 @@ if [ "${#source_dirs[@]}" -gt 0 ]; then
   fi
 fi
 
+while IFS= read -r readme; do
+  zh_readme="$(dirname "$readme")/README.zh-CN.md"
+  if [ ! -f "$zh_readme" ]; then
+    error "$readme missing sibling README.zh-CN.md"
+  fi
+done < <(find . -name README.md -not -path './.git/*' | sort)
+
 while IFS= read -r catalog_target; do
   [ -z "$catalog_target" ] && continue
   if [ ! -e "docs/$catalog_target" ]; then
@@ -108,9 +115,9 @@ validate_markdown_links() {
 
 while IFS= read -r md; do
   validate_markdown_links "$md"
-done < <(find README.md CONTEXT.md docs skills -name '*.md' -not -path '*/examples/*' | sort)
+done < <(find README.md README.zh-CN.md CONTEXT.md docs skills -name '*.md' -not -path '*/examples/*' | sort)
 
-scan_targets=(README.md CONTEXT.md docs/catalog.md skills)
+scan_targets=(README.md README.zh-CN.md CONTEXT.md docs/catalog.md skills)
 for pattern in \
   '/Users/yangchao/' \
   '.env' \

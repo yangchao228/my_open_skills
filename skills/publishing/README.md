@@ -1,5 +1,7 @@
 # Publishing Skills
 
+[中文版本](README.zh-CN.md)
+
 Publishing skills will be added after separate public-safety review.
 
 Candidate skills:
