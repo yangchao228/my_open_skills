@@ -23,7 +23,8 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library.
 - [x] Publicize `skills/work/doc-coauthoring`
 - [x] Publicize `skills/content/zhihu-topic-hunter`
 - [x] Publicize `skills/content/xiaohongshu-topic-generator`
-- [ ] Publicize next content candidate: `wechat-to-cards` or `long-to-cards`
+- [x] Publicize `skills/content/long-to-cards`
+- [ ] Publicize next content candidate: `wechat-to-cards`
 - [ ] Review publishing candidates for credential and account-session risk before migration
 
 ## Ready Skills
@@ -34,6 +35,7 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library.
 - `skills/work/doc-coauthoring`
 - `skills/content/zhihu-topic-hunter`
 - `skills/content/xiaohongshu-topic-generator`
+- `skills/content/long-to-cards`
 - `skills/content/wenchang-orchestrator`
 - `skills/content/wenchang-router`
 - `skills/content/storm-research`
@@ -45,7 +47,6 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library.
 ## Candidate Pool
 
 - `skills/content/wechat-to-cards`
-- `skills/content/long-to-cards`
 - `skills/publishing/md-img-r2`
 - `skills/engineering/playwright`
 - `skills/engineering/wechat-miniprogram-ui-acceptance`
@@ -67,3 +68,4 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library.
 - 2026-07-03: Publicized `doc-coauthoring` as a work skill with context alignment, section-by-section drafting, reader testing, final checks, examples, and catalog updates.
 - 2026-07-04: Publicized `zhihu-topic-hunter` as a content skill for theme-bound Zhihu topic hunting, discussion-signal filtering, scoring, drop-list decisions, examples, and catalog updates.
 - 2026-07-04: Publicized `xiaohongshu-topic-generator` as a content skill for platform-fit topic generation, hook and card-outline planning, scoring, risk checks, examples, and catalog updates.
+- 2026-07-07: Publicized `long-to-cards` as a content skill for converting long-form source material into card-based social packages with source diagnosis, card copy, visual direction, publishing assets, and caveats.

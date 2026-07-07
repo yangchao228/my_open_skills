@@ -17,8 +17,9 @@ Invocation values: `model-invoked`, `user-invoked`, `router-only`.
 | [wenchang-publish-check](../skills/content/wenchang-publish-check) | ready | model-invoked | Final publish asset check |
 | [zhihu-topic-hunter](../skills/content/zhihu-topic-hunter) | ready | user-invoked | Generate ranked Zhihu topic candidates from a theme |
 | [xiaohongshu-topic-generator](../skills/content/xiaohongshu-topic-generator) | ready | user-invoked | Generate Xiaohongshu-ready topic candidates and card outlines |
+| [long-to-cards](../skills/content/long-to-cards) | ready | user-invoked | Transform long-form content into card-based social packages |
 
-Future candidates: `wechat-to-cards`, `long-to-cards`, `redbook-cards`.
+Future candidates: `wechat-to-cards`, `redbook-cards`.
 
 ## Work
 

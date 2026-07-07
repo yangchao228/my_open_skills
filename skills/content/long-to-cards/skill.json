@@ -1,0 +1,24 @@
+{
+  "slug": "long-to-cards",
+  "title": "Long To Cards",
+  "category": "content",
+  "summary": "Transform long-form source material into card-based social content packages with card copy, visual direction, publishing assets, and source caveats.",
+  "keywords": [
+    "cards",
+    "carousel",
+    "long-form repurposing",
+    "social content",
+    "card copy"
+  ],
+  "user_needs": [
+    "turn a long article into social cards",
+    "convert notes or transcripts into carousel copy",
+    "create card-by-card visual and copy guidance",
+    "preserve source claims while adapting for skimmable formats"
+  ],
+  "source_dir": "skills/content/long-to-cards",
+  "entry": "SKILL.md",
+  "package_strategy": "on-demand",
+  "package_format": "skill",
+  "status": "ready"
+}
