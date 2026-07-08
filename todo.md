@@ -27,7 +27,7 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library.
 - [x] Publicize `skills/content/wechat-to-cards`
 - [x] Add sibling `README.zh-CN.md` files for every project `README.md`
 - [x] Enforce README Chinese counterpart validation
-- [ ] Review publishing candidates for credential and account-session risk before migration
+- [x] Review publishing candidates for credential and account-session risk before migration
 
 ## Ready Skills
 
@@ -50,6 +50,8 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library.
 ## Candidate Pool
 
 - `skills/publishing/md-img-r2`
+- `skills/publishing/bilibili-publish-package-check`
+- `skills/publishing/markdown-blog-importer`
 - `skills/engineering/playwright`
 - `skills/engineering/wechat-miniprogram-ui-acceptance`
 
@@ -73,3 +75,4 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library.
 - 2026-07-07: Publicized `long-to-cards` as a content skill for converting long-form source material into card-based social packages with source diagnosis, card copy, visual direction, publishing assets, and caveats.
 - 2026-07-07: Added sibling `README.zh-CN.md` files for every current `README.md`, linked Chinese versions from the original README files, documented the bilingual README convention, and updated validation to fail when a README lacks a Chinese counterpart.
 - 2026-07-08: Publicized `wechat-to-cards` as a content skill for transforming WeChat articles and drafts into card packages, Moments copy, community share copy, summaries, cover text, and source caveats.
+- 2026-07-08: Reviewed publishing candidates before migration. `md-img-r2` should be rewritten as a dry-run-first public helper; Bilibili automation stays private with only a publish-package checker candidate; the personal blog publisher stays private until it is extracted into a generic Markdown blog importer.

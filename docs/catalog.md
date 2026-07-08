@@ -43,4 +43,10 @@ Future candidates: `wechat-miniprogram-ui-acceptance`, `playwright`, `figma`, `f
 
 No public ready skills in the first phase.
 
-Future candidates: `md-img-r2`, `bilibili-video-publisher`, `superman-blog-publisher`.
+Current migration decision: see [Publishing Risk Review](publishing-risk-review.md).
+
+| Candidate | Status | Invocation | Public-safe direction |
+| --- | --- | --- | --- |
+| `md-img-r2` | incubating | user-invoked | Dry-run-first Markdown image publishing helper after safety rewrite |
+| `bilibili-video-publisher` | private-source | user-invoked | Metadata package and pre-publish checklist only |
+| `superman-blog-publisher` | private-source | user-invoked | Generic Markdown blog importer after site-specific cleanup |
