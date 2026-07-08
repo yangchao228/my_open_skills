@@ -31,6 +31,7 @@ wenchang-orchestrator
 - [zhihu-topic-hunter](zhihu-topic-hunter): theme-based Zhihu topic hunting and ranking
 - [xiaohongshu-topic-generator](xiaohongshu-topic-generator): Xiaohongshu topic generation and card-outline planning
 - [long-to-cards](long-to-cards): long-form source repurposing into card-based social packages
+- [wechat-to-cards](wechat-to-cards): WeChat article repurposing into card and distribution assets
 - [storm-research](storm-research): multi-perspective research map
 - [wenchang-research](wenchang-research): source-backed evidence gathering
 - [wenchang-wechat-writer](wenchang-wechat-writer): WeChat-style long-form drafting

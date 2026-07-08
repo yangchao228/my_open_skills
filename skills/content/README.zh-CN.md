@@ -31,6 +31,7 @@ wenchang-orchestrator
 - [zhihu-topic-hunter](zhihu-topic-hunter)：基于主题的知乎选题发现与排序
 - [xiaohongshu-topic-generator](xiaohongshu-topic-generator)：小红书选题生成和卡片大纲规划
 - [long-to-cards](long-to-cards)：把长文材料复用为卡片式社交内容包
+- [wechat-to-cards](wechat-to-cards)：把公众号文章复用为卡片和分发素材
 - [storm-research](storm-research)：多视角研究地图
 - [wenchang-research](wenchang-research)：基于来源的事实采证
 - [wenchang-wechat-writer](wenchang-wechat-writer)：公众号风格长文起稿
