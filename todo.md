@@ -2,7 +2,7 @@
 
 ## Current Goal
 
-Build `my_open_skills` into a public, categorized AI Agent Skills library.
+Build `my_open_skills` into a public, categorized AI Agent Skills library, and validate it through a reproducible public case series.
 
 ## Phase 1
 
@@ -28,6 +28,19 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library.
 - [x] Add sibling `README.zh-CN.md` files for every project `README.md`
 - [x] Enforce README Chinese counterpart validation
 - [x] Review publishing candidates for credential and account-session risk before migration
+
+## Phase 3: Handcrafted Skills Public Series
+
+- [x] Define the Zhihu and Xiaohongshu series position, platform contract, and six-week first season
+- [x] Add a reusable public Case Pack template
+- [x] Produce the first `xiaohongshu-topic-generator` Case Pack from a public input
+- [x] Draft separate Zhihu and Xiaohongshu assets for episode 01
+- [x] Add the series and first episode to the root README files
+- [x] Render and visually review the first eight 3:4 Xiaohongshu cards
+- [x] Choose and add the repository license before describing the library as freely reusable open source
+- [x] Unify verified install and trial instructions across ready skills
+- [ ] Produce complete public outputs for the first three featured skills
+- [ ] Publish episode 01 and record platform plus repository feedback
 
 ## Ready Skills
 
@@ -76,3 +89,6 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library.
 - 2026-07-07: Added sibling `README.zh-CN.md` files for every current `README.md`, linked Chinese versions from the original README files, documented the bilingual README convention, and updated validation to fail when a README lacks a Chinese counterpart.
 - 2026-07-08: Publicized `wechat-to-cards` as a content skill for transforming WeChat articles and drafts into card packages, Moments copy, community share copy, summaries, cover text, and source caveats.
 - 2026-07-08: Reviewed publishing candidates before migration. `md-img-r2` should be rewritten as a dry-run-first public helper; Bilibili automation stays private with only a publish-package checker candidate; the personal blog publisher stays private until it is extracted into a generic Markdown blog importer.
+- 2026-07-10: Started the `我亲手打造的 Skills` public series with a six-week Zhihu and Xiaohongshu plan, a reusable Case Pack contract, a reproducible `xiaohongshu-topic-generator` case, and separate first-episode drafts for both platforms. Kept license selection and unverified one-command installation claims as explicit pre-publish blockers.
+- 2026-07-11: Rendered and visually reviewed the first eight 1080×1440 Xiaohongshu cards using the Trace Ledger visual philosophy, then refined spacing and linked the final PNG assets from the episode draft.
+- 2026-07-11: Added the MIT license and a repository-level install/trial guide. Root README files and the `resume-interview-generator` README now distinguish documented package commands from the default local Case Pack trial path.

@@ -6,6 +6,8 @@
 
 ## 安装
 
+这些包命令只适用于 `resume-interview-generator`。仓库级试用说明见 [安装与试用](../../../docs/install-and-trial.md)。
+
 OpenClaw:
 
 ```bash

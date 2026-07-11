@@ -6,6 +6,8 @@
 
 ## Install
 
+These package commands are specific to `resume-interview-generator`. For repository-wide trial guidance, see [Install and Trial](../../../docs/install-and-trial.md).
+
 OpenClaw:
 
 ```bash

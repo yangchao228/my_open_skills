@@ -4,7 +4,7 @@
 
 这个仓库收集从本地工作流中清理、泛化并沉淀出来的公开 AI Agent Skills。
 
-这不是一个单独 skill 的发布包，而是一个按工作流领域长期维护的开放技能库。
+这个仓库按工作流领域长期维护，承载的是一组公开 skills，并非单个 skill 发布包。
 
 ## 为什么有这个仓库
 
@@ -15,6 +15,14 @@
 - 后续工程、发布和验证工作流
 
 每个公开 skill 都应该让新用户能看懂、能安全分享，并能用一个小示例测试。
+
+## 我亲手打造的 Skills 公开系列
+
+这是一个面向知乎和小红书的中文公开构建系列。每一期都从一个公开输入出发，保留实际输出、设计判断、能力边界和复现路径，用真实案例介绍仓库里的 skills。
+
+- [第一季规划](docs/series/handcrafted-skills/series-plan.md)
+- [Case Pack 模板](docs/series/handcrafted-skills/case-pack-template.md)
+- [第 01 期：小红书选题生成器](docs/series/handcrafted-skills/season-01/01-xiaohongshu-topic-generator/case-pack.md)
 
 ## Skill 分类
 
@@ -62,7 +70,9 @@
 
 ## 安装
 
-当前公开包名按 skill 分别维护。`resume-interview-generator` 现有安装命令保留：
+仓库级说明见 [安装与试用](docs/install-and-trial.md)。
+
+包安装命令按 skill 分别维护。目前已记录的包命令属于 `resume-interview-generator`：
 
 ```bash
 npx @skills-hub-ai/cli install resume-interview-generator-2
@@ -73,6 +83,8 @@ clawhub install resume-interview-generator
 ```
 
 本地开发时，克隆本仓库，并把需要的 skill 文件夹链接或复制到你的 agent runtime 使用的 skill 目录中。
+
+没有明确记录包安装命令时，先阅读对应 skill 的 `SKILL.md`、`examples/minimal-input.md` 和 `examples/expected-output-notes.md`。公开系列的 Case Pack 会补充端到端复现路径，但不承诺所有运行环境都支持统一的一键安装。
 
 ## 校验
 
@@ -92,3 +104,7 @@ clawhub install resume-interview-generator
 本地工作流只作为经验来源。进入本仓前，公开 skill 必须重写并泛化。
 
 详见 [docs/publishing-policy.md](docs/publishing-policy.md)。
+
+## 许可证
+
+MIT。详见 [LICENSE](LICENSE)。

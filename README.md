@@ -16,6 +16,14 @@ Good agent work needs reusable process, not one-off prompts. This repo collects 
 
 Each public skill should be understandable by a new user, safe to share, and testable with a small example.
 
+## Handcrafted Skills Public Series
+
+`我亲手打造的 Skills` is a Chinese Zhihu and Xiaohongshu series that demonstrates this library through reproducible cases. Each episode starts from one public input and records the actual output, design decisions, boundaries, and a reproduction path.
+
+- [Season 1 plan](docs/series/handcrafted-skills/series-plan.md)
+- [Case Pack template](docs/series/handcrafted-skills/case-pack-template.md)
+- [Episode 01: Xiaohongshu Topic Generator](docs/series/handcrafted-skills/season-01/01-xiaohongshu-topic-generator/case-pack.md)
+
 ## Skill Groups
 
 ### Content
@@ -62,7 +70,9 @@ Publishing and distribution helper skills will be added later. See [skills/publi
 
 ## Install
 
-Current public package names are maintained per skill. Existing install commands for `resume-interview-generator` remain:
+Use [Install and Trial](docs/install-and-trial.md) as the repository-level guide.
+
+Package commands are maintained per skill. Current documented package commands exist for `resume-interview-generator`:
 
 ```bash
 npx @skills-hub-ai/cli install resume-interview-generator-2
@@ -73,6 +83,8 @@ clawhub install resume-interview-generator
 ```
 
 For local development, clone this repo and link or copy the skill folders into the skill directory used by your agent runtime.
+
+For skills without a documented package command, start by reading that skill's `SKILL.md`, `examples/minimal-input.md`, and `examples/expected-output-notes.md`. The public series Case Packs provide an additional end-to-end reproduction path without claiming a universal one-command installer.
 
 ## Validate
 
@@ -92,3 +104,7 @@ Public skills in this repo should not contain private files, local absolute path
 Local workflows are used only as source experience. Public skills are rewritten and generalized before they are added here.
 
 See [docs/publishing-policy.md](docs/publishing-policy.md).
+
+## License
+
+MIT. See [LICENSE](LICENSE).
