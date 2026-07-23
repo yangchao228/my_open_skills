@@ -363,7 +363,7 @@
       "path": "skills/content/wechat-to-cards",
       "display_name": "WeChat To Cards",
       "risk": "medium",
-      "status": "planned",
+      "status": "submitted",
       "remote_latest_version": null,
       "target_version": "1.0.0",
       "categories": [
@@ -381,7 +381,9 @@
       "tags": [
         "latest"
       ],
-      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics."
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics.",
+      "submitted_at": "2026-07-23T13:55:13Z",
+      "source_commit": "8c260d194ec040c7e4cce1d40713a097a740976c"
     },
     {
       "order": 14,
