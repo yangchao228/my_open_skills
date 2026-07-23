@@ -549,8 +549,8 @@
       "path": "skills/content/wenchang-publish-check",
       "display_name": "Wenchang Publish Check",
       "risk": "medium",
-      "status": "submitted",
-      "remote_latest_version": null,
+      "status": "public",
+      "remote_latest_version": "1.0.0",
       "target_version": "1.0.0",
       "categories": [
         "productivity",
@@ -569,7 +569,8 @@
       ],
       "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics.",
       "submitted_at": "2026-07-23T14:00:10Z",
-      "source_commit": "176fc261bb7f46ef3d0d8ac2d50fd1affed323bb"
+      "source_commit": "176fc261bb7f46ef3d0d8ac2d50fd1affed323bb",
+      "public_at": "2026-07-23T17:08:47Z"
     },
     {
       "order": 20,
