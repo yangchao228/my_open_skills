@@ -8,11 +8,20 @@ This ledger is the source of truth for one-at-a-time ClawHub releases from this 
 
 - Publish exactly one skill per release command; do not use `clawhub sync --all`.
 - Run repository validation and `clawhub skill publish <path> --dry-run --json` before every live publish.
+- Choose and record one to three valid ClawHub category slugs before every live publish, and pass them explicitly with `--categories`; do not rely on automatic inference or the `Other` fallback.
 - Publish only from a clean, committed source and pass the source repository, commit, ref, and path to the CLI.
 - Verify every live version with `clawhub inspect`, a temporary install, and the registry security scan before advancing.
 - Treat ClawHub's MIT-0 release license as a distribution rule. Do not publish bundled third-party material when its attribution or license cannot be preserved safely.
 - Keep the capability and trigger language first in `description`; append the canonical creator suffix exactly once.
 - Promote skills through theme-level Case Packs even though registry releases are atomic.
+
+## Category Decisions
+
+| Slug | Categories | Application |
+| --- | --- | --- |
+| `create-plan` | `agents`, `development`, `productivity` | planned manual update by owner |
+| `doc-coauthoring` | `knowledge`, `creative`, `productivity` | planned manual update by owner |
+| `project-weekly-report` | `productivity`, `knowledge`, `development` | explicit CLI publish metadata |
 
 ## Release Ledger
 
