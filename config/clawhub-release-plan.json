@@ -282,8 +282,8 @@
       "path": "skills/content/xiaohongshu-topic-generator",
       "display_name": "Xiaohongshu Topic Generator",
       "risk": "low",
-      "status": "submitted",
-      "remote_latest_version": null,
+      "status": "public",
+      "remote_latest_version": "1.0.0",
       "target_version": "1.0.0",
       "categories": [
         "creative",
@@ -302,7 +302,8 @@
       ],
       "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics.",
       "submitted_at": "2026-07-23T13:46:02Z",
-      "source_commit": "5609d2a7eb24271661e369d10b3325fd68bbda27"
+      "source_commit": "5609d2a7eb24271661e369d10b3325fd68bbda27",
+      "public_at": "2026-07-23T15:36:53Z"
     },
     {
       "order": 10,
