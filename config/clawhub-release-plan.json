@@ -559,7 +559,7 @@
       "path": "skills/content/wenchang-orchestrator",
       "display_name": "Wenchang Orchestrator",
       "risk": "medium",
-      "status": "planned",
+      "status": "submitted",
       "remote_latest_version": null,
       "target_version": "1.0.0",
       "categories": [
@@ -577,7 +577,9 @@
       "tags": [
         "latest"
       ],
-      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics."
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics.",
+      "submitted_at": "2026-07-23T14:01:06Z",
+      "source_commit": "717d357eb2305b6c3eadc896bc6c6780d2fd9d2a"
     },
     {
       "order": 21,

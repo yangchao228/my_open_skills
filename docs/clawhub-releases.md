@@ -66,7 +66,7 @@ This ledger is the reader-facing source of truth for one-at-a-time ClawHub relea
 | 17 | `chatgpt-image-handoff` | `skills/content/chatgpt-image-handoff` | high | `1.0.0` | submitted (2026-07-23 21:58 CST) | pending | — | [page](https://clawhub.ai/yangchao228/skills/chatgpt-image-handoff) |
 | 18 | `wenchang-router` | `skills/content/wenchang-router` | medium | `1.0.0` | submitted (2026-07-23 21:59 CST) | pending | — | [page](https://clawhub.ai/yangchao228/skills/wenchang-router) |
 | 19 | `wenchang-publish-check` | `skills/content/wenchang-publish-check` | medium | `1.0.0` | submitted (2026-07-23 22:00 CST) | pending | — | [page](https://clawhub.ai/yangchao228/skills/wenchang-publish-check) |
-| 20 | `wenchang-orchestrator` | `skills/content/wenchang-orchestrator` | medium | `1.0.0` | prepared | pending | — | [page](https://clawhub.ai/yangchao228/skills/wenchang-orchestrator) |
+| 20 | `wenchang-orchestrator` | `skills/content/wenchang-orchestrator` | medium | `1.0.0` | submitted (2026-07-23 22:01 CST) | pending | — | [page](https://clawhub.ai/yangchao228/skills/wenchang-orchestrator) |
 | 21 | `md-img-r2` | `skills/publishing/md-img-r2` | high | `1.0.4` | prepared | pending | — | [page](https://clawhub.ai/yangchao228/skills/md-img-r2) |
 
 Status values: `prepared`, `submitted`, `public`, `verified`, `blocked`. `submitted` means ClawHub accepted the upload. `public` means the page, metadata, Topics, creator hooks, and exact-version install passed. `verified` additionally means registry hashes, security workers, and Skill Card passed. A skill-specific block does not authorize weakening validation or changing the skill's safety boundary.
