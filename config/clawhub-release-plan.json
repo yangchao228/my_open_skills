@@ -419,7 +419,7 @@
       "path": "skills/content/cards-to-images",
       "display_name": "Cards To Images",
       "risk": "medium",
-      "status": "planned",
+      "status": "submitted",
       "remote_latest_version": null,
       "target_version": "1.0.0",
       "categories": [
@@ -437,7 +437,9 @@
       "tags": [
         "latest"
       ],
-      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics."
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics.",
+      "submitted_at": "2026-07-23T13:56:58Z",
+      "source_commit": "aaea316111e9268be8c407f00e1100d5b84d02be"
     },
     {
       "order": 16,
