@@ -1,0 +1,11 @@
+# Open Weave
+
+Open Weave treats information as a visible network of durable artifacts. Forms behave like files, nodes, routes, and public addresses: rectangles carry weight, thin lines show transfer, and circles mark moments of verification. Large areas of warm negative space keep the system legible. Every connection should feel deliberately engineered and meticulously crafted, as though each alignment has been refined through countless careful passes.
+
+The palette combines paper-like ivory, near-black ink, electric cobalt, and a restrained mineral orange. Cobalt represents movement and public linkage; orange marks stored assets and human confirmation. Color appears in concentrated signals instead of decorative washes. The final balance must show master-level chromatic judgment, with painstaking calibration between quiet ground and decisive accents.
+
+Scale creates rhythm. Monumental numerals, short Chinese phrases, and compact technical labels alternate with small repeated modules. Dense clusters sit beside generous breathing room so the eye can understand sequence before reading. Typography acts as architecture: Chinese text is direct and stable, while monospaced labels create an archival trace. Every word earns its position, and the typesetting must look labored over by someone at the top of their field.
+
+Composition follows a modular ledger rather than a conventional presentation template. Each canvas contains an underlying grid, but selected elements cross columns to reveal flow and transformation. Repeated reference marks, route codes, and file edges suggest an imaginary discipline for tracking how ideas move. The system should feel deeply expert, never mechanical, with painstaking attention given to optical spacing, stroke weight, and the tension between order and motion.
+
+Craft is visible through restraint. No graphic exists only to fill space; every line describes a relationship and every block carries state. The work should reward close viewing through tiny registration marks and precise junctions, while remaining immediately readable at thumbnail size. The finished series must feel like a museum-quality field manual: meticulously constructed, visually quiet, and unmistakably the product of countless hours of master-level execution.

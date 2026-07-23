@@ -1,6 +1,6 @@
 ---
 name: long-to-cards
-description: Transform long-form content, outlines, transcripts, research notes, or article drafts into reusable card-based social content packages. Use when the user asks to turn a long article into cards, carousel copy, image-card scripts, social card outlines, 小红书图文卡片, 微信图文卡片, or multi-platform card assets.
+description: Transform long-form content, outlines, transcripts, research notes, or article drafts into a standard card package and platform publishing copy, then hand publish-ready packages to cards-to-images. Use for Xiaohongshu image posts, WeChat inline cards, Zhihu Idea images, generic carousels, card scripts, captions, image order, CTAs, or freshness-aware topic tags.
 ---
 
 # Long To Cards
@@ -11,17 +11,21 @@ Convert long-form source material into a clear card-based content package.
 
 Preserve the source argument and evidence. Compress, sequence, and adapt the material for skimmable cards without inventing facts or turning the content into shallow slogans.
 
+Use `delivery_mode=publish_ready` by default. In that mode, this skill finishes the content package and hands it to `cards-to-images`; the distribution workflow continues until real images and a checked manifest exist. Use `delivery_mode=copy_only` only when the user explicitly requests card copy, scripts, or visual prompts without image production.
+
 ## Inputs
 
 Collect:
 
 - source material: article, outline, transcript, notes, or research brief
-- target platform: Xiaohongshu, WeChat image cards, LinkedIn carousel, Instagram carousel, or generic cards
+- `delivery_mode`: `publish_ready` by default or explicit `copy_only`
+- `platform_profile`: `xiaohongshu`, `wechat-inline`, `zhihu-idea`, or `generic`
+- `asset_url_policy`: `local` by default or `public` when stable URLs are required
 - audience
 - desired card count
 - content goal: explain, persuade, teach, summarize, promote, or archive
 - tone and claims to avoid
-- whether the user wants only copy or also visual direction
+- reviewed publish-package fields when available
 
 If the source material is missing, ask for it before producing final cards. If the material is too long to process safely, first create a section map and ask which sections to prioritize.
 
@@ -67,8 +71,8 @@ Create a card sequence:
 Adjust the sequence to the target platform:
 
 - Xiaohongshu: stronger hook, practical takeaway, save-worthy checklist
-- WeChat image cards: clearer logic, fewer claims per card, stronger summary
-- LinkedIn carousel: professional framing, concise business or workflow value
+- WeChat inline cards: clearer logic, fewer claims per card, stronger summary, adaptive vertical-card or horizontal-diagram shape
+- Zhihu Idea: one defensible judgment per card, enough context to stand alone, 3:4 by default
 - Generic cards: prioritize clarity and reuse
 
 ### 4. Write Card Copy
@@ -86,13 +90,42 @@ Keep each card focused on one idea. If a card needs more than one paragraph, spl
 
 ### 5. Add Publishing Assets
 
-Add:
+Add the publishing fields required by the selected profile:
 
-- caption or post intro
-- hashtags or topic tags
+- cover title and first-line hook
+- body caption or post description
+- image order and CTA
+- grouped topic tags with freshness state when the platform uses tags
 - alt text guidance
 - source caveats
 - optional follow-up card ideas
+
+Use these tag groups:
+
+- `core_tags`: stable topic terms
+- `scene_tags`: reader situation or use case
+- `series_tags`: recurring author or content-series label
+- `verified_hot_tags`: only current tags supported by a source and check time
+
+When current trend evidence is unavailable, leave `verified_hot_tags.values` empty and set its status to `unverified`. Do not infer current popularity from model memory.
+
+### 6. Hand Off Image Production
+
+Write a complete image-production handoff containing:
+
+- delivery mode and platform profile
+- ordered card ids
+- exact card copy and approved visual direction
+- source anchors and factual constraints
+- target ratio and dimensions
+- stable output filenames
+- alt text
+- visual-system constraints
+- asset URL policy
+
+With `delivery_mode=publish_ready`, set the next skill to `cards-to-images`. Do not report the package as an uploadable card delivery until real files and a `cards-manifest` return from that skill.
+
+With explicit `delivery_mode=copy_only`, stop after the card package and record that image production was intentionally skipped.
 
 ## Output Format
 
@@ -109,7 +142,9 @@ Use this structure:
 - Claims needing verification:
 
 ## Card Strategy
-- Target platform:
+- Delivery mode:
+- Platform profile:
+- Asset URL policy:
 - Audience:
 - Card count:
 - Narrative structure:
@@ -127,11 +162,31 @@ Use this structure:
 ...
 
 ## Publishing Assets
-- Caption:
-- Tags:
+- Cover title:
+- First-line hook:
+- Body caption:
+- Image order:
+- CTA:
+- Core tags:
+- Scene tags:
+- Series tags:
+- Verified hot tags:
+  - Status:
+  - Checked at:
+  - Source:
+  - Values:
 - Alt text guidance:
 - Source caveats:
 - Follow-up ideas:
+
+## Image Production Handoff
+- Next skill: cards-to-images / none
+- Ordered card ids:
+- Target ratio and dimensions:
+- Stable filenames:
+- Visual-system constraints:
+- Human decision needed:
+- Stop condition:
 ```
 
 ## Quality Rules
@@ -142,11 +197,15 @@ Use this structure:
 - Preserve uncertainty and source caveats.
 - Convert dense paragraphs into reader-facing steps, contrasts, examples, or checklists.
 - Keep visual direction practical: layout, emphasis, icon idea, chart idea, or image type.
+- Keep the approved publish package as the source of truth when one exists; report proposed metadata changes instead of silently replacing it.
+- Keep one canonical card package across rendering and final publish checks.
 
 ## Boundaries
 
 - Do not invent examples, data, quotes, or results absent from the source.
-- Do not generate final image files unless the user explicitly asks for image production.
+- Do not stop at copy in the distribution workflow when `delivery_mode=publish_ready`.
+- Do not claim that image assets exist before `cards-to-images` returns real checked files.
 - Do not include private paths, private accounts, or unpublished personal material unless the user supplied it for the current task.
 - Do not optimize for a platform in ways that distort the source argument.
 - Do not claim the package is ready to publish if source claims still need verification.
+- Do not claim a tag is currently hot without a current source and check time.

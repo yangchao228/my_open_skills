@@ -11,7 +11,7 @@
   ],
   "user_needs": [
     "turn a confirmed topic into a WeChat article draft",
-    "generate titles, hooks, outline, and sharing copy",
+    "generate title candidates, hooks, an outline, and a reviewed body draft",
     "write with reader value and evidence"
   ],
   "source_dir": "skills/content/wenchang-wechat-writer",

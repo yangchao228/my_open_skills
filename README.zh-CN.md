@@ -22,13 +22,14 @@
 
 - [第一季规划](docs/series/handcrafted-skills/series-plan.md)
 - [Case Pack 模板](docs/series/handcrafted-skills/case-pack-template.md)
+- [主题 01：一篇长文怎样成为跨平台内容资产](docs/series/handcrafted-skills/themes/01-content-asset-pipeline/case-pack.md)
 - [第 01 期：小红书选题生成器](docs/series/handcrafted-skills/season-01/01-xiaohongshu-topic-generator/case-pack.md)
 
 ## Skill 分类
 
 ### Content
 
-第一个公开工作流是 `Wenchang`。它是一套内容创作系统，可以把选题、草稿或外部材料路由到研究、采证、起稿、诊文和发布检查。
+第一个公开工作流是 `Wenchang`。它是一套内容创作系统，可以把选题、草稿或外部材料路由到研究、采证、起稿、诊文、平台适配、长文插图、可恢复生图后端、publish-ready 卡片成图和发布检查。
 
 推荐入口：
 
@@ -40,12 +41,17 @@
 - [zhihu-topic-hunter](skills/content/zhihu-topic-hunter)
 - [xiaohongshu-topic-generator](skills/content/xiaohongshu-topic-generator)
 - [long-to-cards](skills/content/long-to-cards)
+- [redbook-cards-skill](skills/content/redbook-cards-skill)
+- [cards-to-images](skills/content/cards-to-images)
+- [resilient-imagegen](skills/content/resilient-imagegen)
+- [chatgpt-image-handoff](skills/content/chatgpt-image-handoff)
 - [wechat-to-cards](skills/content/wechat-to-cards)
+- [article-to-illustrations](skills/content/article-to-illustrations)
 - [storm-research](skills/content/storm-research)
 - [wenchang-research](skills/content/wenchang-research)
 - [wenchang-wechat-writer](skills/content/wenchang-wechat-writer)
 - [wenchang-review](skills/content/wenchang-review)
-- [wenchang-publish-check](skills/content/wenchang-publish-check)
+- [wenchang-publish-check](skills/content/wenchang-publish-check) - 生成发布预检包并执行最终发布门禁
 
 详见 [skills/content/README.md](skills/content/README.md)。
 
@@ -66,7 +72,11 @@
 
 ### Publishing
 
-发布和分发辅助 skills 后续发布。详见 [skills/publishing/README.md](skills/publishing/README.md)。
+发布和分发辅助 skills 用于把内容资产整理成可公开引用、可跨平台交付的形态。
+
+- [md-img-r2](skills/publishing/md-img-r2) - 扫描 Markdown 本地图片、先生成 dry-run 公网 URL 计划，再在明确确认后写入 R2 或兼容对象存储的替换结果。
+
+详见 [skills/publishing/README.md](skills/publishing/README.md)。
 
 ## 安装
 

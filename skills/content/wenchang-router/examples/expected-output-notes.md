@@ -1,6 +1,8 @@
 # Expected Output Notes
 
-- Identify platform as long-form article by default.
-- Identify stage as topic selection.
-- Produce a brief with angle, hook, subpoints, what to avoid, suggested format, and storm trigger.
-- Recommend `storm-research` if the angle is still broad.
+- Identify the platform branch and current artifact stage.
+- Recognize topic, research, draft, review, preflight, illustration, card authoring, card rendering, visual QA, human confirmation, image URL, apply, and final-check stages.
+- Route a `publish_ready` card package with no real images to `cards-to-images`.
+- Route to `md-img-r2` only when checked local assets need public URLs.
+- Return accepted inputs, ignored or stale context, a compact `content_state`, and the next action.
+- Stop before unresolved human or external-write gates.

@@ -2,17 +2,22 @@
   "slug": "wenchang-publish-check",
   "title": "Wenchang Publish Check",
   "category": "content",
-  "summary": "Checks final publish assets, platform fit, and knowledge asset value for near-final drafts.",
+  "summary": "Builds publish packages and verifies long-form images, real card files, manifests, human gates, and release readiness.",
   "keywords": [
     "publish check",
     "title",
     "summary",
-    "distribution"
+    "distribution",
+    "preflight",
+    "final check",
+    "cards manifest",
+    "visual QA"
   ],
   "user_needs": [
-    "prepare a draft for publishing",
-    "check title, summary, tags, images, and sharing copy",
-    "identify blockers before publishing"
+    "generate platform-specific titles, summaries, captions, tags, and image decisions",
+    "prepare a multi-platform draft before image production",
+    "verify real images, cards manifests, public URLs, and blockers before publishing",
+    "keep publish-ready card packages in review until visual QA and human confirmation pass"
   ],
   "source_dir": "skills/content/wenchang-publish-check",
   "entry": "SKILL.md",

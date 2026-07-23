@@ -1,0 +1,4 @@
+interface:
+  display_name: "Article To Illustrations"
+  short_description: "Plan and insert evidence-safe long-form illustrations"
+  default_prompt: "Use $article-to-illustrations to plan, generate, and insert illustrations for this reviewed long-form article."

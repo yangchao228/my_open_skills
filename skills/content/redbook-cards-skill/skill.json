@@ -1,0 +1,25 @@
+{
+  "slug": "redbook-cards-skill",
+  "title": "Redbook Cards Skill",
+  "category": "content",
+  "summary": "Turn articles or plain text into Xiaohongshu-style HTML card pages for browser preview and screenshot workflows.",
+  "keywords": [
+    "Xiaohongshu",
+    "Rednote",
+    "Redbook",
+    "HTML cards",
+    "article slicing",
+    "social cards"
+  ],
+  "user_needs": [
+    "turn an article into Xiaohongshu-style visual cards",
+    "create a browser-previewable HTML page for card screenshots",
+    "slice long-form content into cover, content, and quote cards",
+    "preserve the source argument while making it easier to skim"
+  ],
+  "source_dir": "skills/content/redbook-cards-skill",
+  "entry": "SKILL.md",
+  "package_strategy": "on-demand",
+  "package_format": "skill",
+  "status": "ready"
+}

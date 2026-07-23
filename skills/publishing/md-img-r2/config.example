@@ -1,0 +1,8 @@
+# Export these values in your shell before a confirmed upload. Do not commit real values.
+R2_ACCESS_KEY_ID=replace-me
+R2_SECRET_ACCESS_KEY=replace-me
+R2_BUCKET=replace-me
+R2_PUBLIC_BASE_URL=https://img.example.com
+R2_ENDPOINT=https://account-id.r2.cloudflarestorage.com
+R2_REGION=auto
+R2_KEY_PREFIX=md-assets

@@ -1,64 +1,93 @@
 ---
 name: wenchang-router
-description: Route content creation requests to the right Wenchang skill. Use when the user gives a topic, draft, platform target, publishing task, research need, or asks what content workflow step should happen next.
+description: Route a content request or content_state to the next Wenchang stage. Use when the user gives a topic, source, draft, reviewed article, illustration plan, card package, card-image manifest, R2 report, publishing task, or asks what should run next for WeChat, Zhihu, Zhihu Idea, Xiaohongshu, blog, or multi-platform delivery.
 ---
 
 # Wenchang Router
 
-Wenchang Router identifies the current content stage and recommends the next skill. It does not write the final article.
+Identify the current stage, active platform branch, missing evidence, and next skill. Do not perform the downstream task inside the routing response.
 
 ## Stage Routing
 
 | Stage | Signals | Route to |
 | --- | --- | --- |
-| topic discovery | "what should I write", broad direction, recent trends | platform-specific topic skill or topic brief |
-| topic selection | candidate topics, one clear theme, external link | `storm-research` if angle is not settled; otherwise evidence or outline |
-| storm research | trend, product, external article, complex question | `storm-research` |
-| evidence | claims, data, sources, fact-heavy article | `wenchang-research` |
-| drafting | confirmed topic and outline | `wenchang-wechat-writer` or another platform writer |
-| review | existing draft | `wenchang-review` |
-| publish check | title, summary, tags, distribution, search title | `wenchang-publish-check` |
+| topic discovery | broad direction, “what should I write” | platform topic skill or topic brief |
+| storm research | external trend, product, article, or unsettled angle | `storm-research` |
+| evidence | fact-heavy claims, data, sources | `wenchang-research` |
+| drafting | confirmed topic, outline, and evidence | `wenchang-wechat-writer` or target-platform writer |
+| content review | existing draft, diagnosis, editing | `wenchang-review` |
+| publish preflight | reviewed draft needs titles, summaries, captions, tags, images | `wenchang-publish-check` in `preflight` mode |
+| long-form illustrations | WeChat or Zhihu draft has an accepted image need | `article-to-illustrations` |
+| card adaptation | long source needs Xiaohongshu, WeChat inline, Zhihu Idea, or generic card assets | `long-to-cards` |
+| card image production | `publish_ready` card package exists but real images or manifest do not | `cards-to-images` |
+| card image revision | images exist but visual QA is pending or failed | `cards-to-images` |
+| card human gate | visual QA passed and `human_confirmation=pending` | stop for user confirmation |
+| WeChat distribution adapter | Moments, community copy, or WeChat-specific insertion notes requested | `wechat-to-cards` |
+| image URL plan | checked local Markdown or card-manifest images exist and `asset_url_policy=public` | `md-img-r2` in plan mode |
+| confirmed image apply | reviewed plan plus explicit upload or rewrite confirmation | `md-img-r2` apply path |
+| final publish check | bodies, cards, images, and package are assembled | `wenchang-publish-check` in `final` mode |
 
-If the platform is not specified, default to a long-form article path and note that it can later be adapted to other platforms.
+If the platform is missing, default to a long-form source path and record platform adaptation as pending. Do not invent platform requirements.
 
-## Brief Rules
+## Routing Rules
 
-Routing and topic selection produce a brief, not a full article. A useful brief includes:
-
-- Angle: the core cut in one sentence
-- Hook: a first-line candidate
-- Subpoints: 3 supporting points
-- What to avoid: weak or misleading directions
-- Suggested format: platform, length, and shape
-- Storm trigger: whether research should run next
+- Route a changing argument back to review before illustration or publish packaging.
+- Route unsupported claims back to research before release work.
+- Require one illustration decision per long-form platform; do not reuse one platform's decision silently.
+- Route every card-based platform through `long-to-cards` with a platform profile.
+- When `delivery_mode=publish_ready`, route completed card copy to `cards-to-images`; allow a copy-stage stop only for explicit `copy_only`.
+- Keep the approved card package as the rendering and final-check source of truth.
+- Stop for human confirmation after every required card image passes visual QA.
+- Route to `md-img-r2` only after local image references exist in reviewed platform Markdown or a checked card manifest.
+- Route card images to `md-img-r2` only when `asset_url_policy=public`; direct platform upload may retain local files.
+- Stop before external upload, URL rewrite, paid generation, or platform publication unless the user explicitly approved it.
 
 ## Output Format
 
-```md
+````markdown
 ## Routing Decision
-- Platform:
-- Stage:
-- Recommended path:
+- Platform branch:
+- Current stage:
+- Recommended skill and mode:
 - Reason:
+- Blockers:
+- User decision needed:
 
-## Brief
-- Angle:
-- Hook:
-- Subpoints:
-- What to avoid:
-- Suggested format:
-- Storm trigger:
+## Accepted Inputs
+- ...
 
-## content_state
+## Ignored Or Stale Context
+- ...
+
+## content_state Update
 ```yaml
 content_state:
   request:
-    raw_intent:
     current_stage:
     target_platforms: []
-  distribution:
-    primary_platform:
-    secondary_platforms: []
+  source:
+    body_file:
+    fact_status:
+    review_status:
+  cards:
+    delivery_mode:
+    platform_profile:
+    package_file:
+    images_dir:
+    manifest_file:
+    render_status:
+    visual_qa_status:
+    human_confirmation:
+    asset_url_policy:
+    r2_state:
+  images:
+    plan_file:
+    manifest_file:
+    r2_status:
+  publish_gate:
+    mode:
+    status:
+    blockers: []
   next_step:
     skill:
     reason:
@@ -70,14 +99,12 @@ content_state:
     ignored_context: []
     stop_condition:
 ```
-
-## Next Action
-- <skill or user decision>
-```
+````
 
 ## Boundaries
 
-- Do not produce a final draft in the routing stage.
-- Do not skip evidence gathering for fact-heavy topics.
-- Do not invent platform requirements.
-- Do not turn a recommendation into a user decision.
+- Do not write the final article, cards, or images in the routing stage.
+- Do not skip evidence gathering for release-critical claims.
+- Do not treat a recommendation as user confirmation.
+- Do not route a `publish_ready` card package directly to final publishing while images or visual QA are missing.
+- Do not route around an unresolved human or external-write gate.

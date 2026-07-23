@@ -1,0 +1,23 @@
+{
+  "file": "workflow-v2-illustrated-sample.md",
+  "mode": "plan",
+  "project_root": ".",
+  "key_prefix": "my-open-skills/theme-01-v2",
+  "planned": [
+    {
+      "local": "assets/06-r2-assets.png",
+      "object_key": "my-open-skills/theme-01-v2/f490d5142f664f97-06-r2-assets.png",
+      "planned_url": "https://images.reai.group/my-open-skills/theme-01-v2/f490d5142f664f97-06-r2-assets.png",
+      "occurrences": 1
+    }
+  ],
+  "skipped_remote": [],
+  "issues": [],
+  "replacements": [
+    {
+      "kind": "markdown",
+      "source": "assets/06-r2-assets.png",
+      "object_key": "my-open-skills/theme-01-v2/f490d5142f664f97-06-r2-assets.png"
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+content_state:
+  request:
+    raw_intent: validate and publicly demonstrate a reusable multi-platform content asset workflow
+    current_stage: multi-platform-image-confirmation
+    target_platforms:
+      - wechat
+      - zhihu
+      - zhihu-idea
+      - xiaohongshu
+  source:
+    body_file: case-pack.md
+    fact_status: verified
+    review_status: reviewed
+  platforms:
+    wechat:
+      body_file: wechat-draft.md
+      publish_package_file: publish-check.md
+      illustration_status: generated_and_inserted
+      inline_cards_file: wechat-inline-cards.md
+      inline_manifest_file: wechat-inline-manifest.md
+    zhihu:
+      body_file: zhihu-draft.md
+      publish_package_file: publish-check.md
+      illustration_status: generated_and_inserted
+    zhihu_idea:
+      cards_file: zhihu-idea-cards.md
+      manifest_file: zhihu-idea-manifest.md
+      caption_status: ready
+      tag_freshness: unverified
+    xiaohongshu:
+      cards_file: xiaohongshu-cards.md
+      manifest_file: xiaohongshu-upload-manifest.md
+      caption_status: ready
+      tag_freshness: unverified
+  cards:
+    xiaohongshu:
+      delivery_mode: publish_ready
+      platform_profile: xiaohongshu
+      package_file: xiaohongshu-cards.md
+      images_dir: assets
+      manifest_file: xiaohongshu-upload-manifest.md
+      image_count: 8
+      render_status: generated
+      visual_qa_status: passed
+      human_confirmation: pending
+      asset_url_policy: local
+      r2_state: not_planned
+    wechat_inline:
+      delivery_mode: publish_ready
+      platform_profile: wechat-inline
+      package_file: wechat-inline-cards.md
+      images_dir: assets/wechat-inline
+      manifest_file: wechat-inline-manifest.md
+      image_count: 3
+      render_status: generated
+      visual_qa_status: passed
+      human_confirmation: pending
+      asset_url_policy: local
+      r2_state: not_planned
+    zhihu_idea:
+      delivery_mode: publish_ready
+      platform_profile: zhihu-idea
+      package_file: zhihu-idea-cards.md
+      images_dir: assets/zhihu-idea
+      manifest_file: zhihu-idea-manifest.md
+      image_count: 5
+      render_status: generated
+      visual_qa_status: passed
+      human_confirmation: pending
+      asset_url_policy: local
+      r2_state: not_planned
+  images:
+    plan_file: illustration-plan-v2.md
+    manifest_file: image-manifest-v2.md
+    longform_image_count: 4
+    total_formal_image_count: 20
+    r2_report_file:
+      wechat: wechat-draft.md.image-publish-plan.json
+      zhihu: zhihu-draft.md.image-publish-plan.json
+    r2_status: partially_verified
+    r2_status_by_platform:
+      wechat: verified
+      zhihu: planned
+    r2_scope: longform_only
+  publish_gate:
+    mode: final
+    status: needs_review
+    blockers:
+      - confirm the eight Xiaohongshu images before platform upload
+      - confirm the three WeChat inline cards before article insertion
+      - confirm the Zhihu Idea copy and five images before editor handoff
+      - verify current hot tags on the publication day if hot tags are required
+      - confirm the two remaining Zhihu long-form R2 uploads and Markdown URL rewrites
+      - complete final editor layout and link checks before platform publishing
+  next_step:
+    skill: wenchang-publish-check
+    reason: rerun final after human confirmation of all card sets and the remaining Zhihu R2 decision
+    user_decision_needed: true
+  handoff:
+    from_stage: cards-to-images
+    to_stage: multi-platform-image-confirmation
+    accepted_inputs:
+      - image-manifest-v2.md
+      - xiaohongshu-upload-manifest.md
+      - wechat-inline-manifest.md
+      - zhihu-idea-manifest.md
+      - wechat-draft.md.image-publish-plan.json
+      - zhihu-draft.md.image-publish-plan.json
+    ignored_context:
+      - account sessions
+      - private R2 credentials
+    stop_condition: stop before the remaining Zhihu R2 upload, platform image upload, article insertion, or platform publishing

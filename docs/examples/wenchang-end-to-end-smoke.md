@@ -1,158 +1,162 @@
 # Wenchang End-to-End Smoke
 
-This smoke example shows how the first public Wenchang skills work together. It uses a generic public topic and avoids private account context.
+This public smoke shows how Wenchang turns one reviewed source into WeChat, Zhihu, Xiaohongshu, and Zhihu Idea delivery artifacts. Publish-ready card branches continue to real checked images. The smoke stops before human image approval, external upload, and platform publishing.
 
 ## Input
 
 ```text
-I want to write a WeChat-style long-form article about:
+I have a source-backed article about turning a personal knowledge base from a collection folder into a reusable workbench.
 
-"Why personal knowledge bases often become collection folders instead of reusable workbenches."
-
-Please route the topic, research it, gather evidence requirements, draft, review, and prepare publish assets. Stop before any real publishing action.
+Adapt it for WeChat, Zhihu, Xiaohongshu, and Zhihu Idea. Prepare titles, summaries, captions and tags, decide whether the two long-form versions need illustrations, turn publish-ready card packages into checked local images, prepare an R2 dry-run only where public URLs are useful, and run a final check. Stop before human approval and external writes.
 ```
 
 ## 1. Route With `wenchang-router`
 
+The source is reviewed, so the workflow enters at publish preflight instead of repeating topic discovery and drafting.
+
 ```yaml
 content_state:
   request:
-    raw_intent: write a long-form article about personal knowledge bases becoming collection folders
-    current_stage: topic-selection
-    target_platforms:
-      - WeChat long-form article
-  distribution:
-    primary_platform: WeChat
-    secondary_platforms: []
-  topic:
-    core_angle: A knowledge base becomes useful only when it supports repeated retrieval, judgment, and production.
-    why_now: AI tools make it easier to collect information, but that can increase unused accumulation.
-    long_term_value: Can become a reusable essay about personal knowledge systems.
+    current_stage: publish-preflight
+    target_platforms: [wechat, zhihu, xiaohongshu]
+  source:
+    body_file: source.md
+    fact_status: verified
+    review_status: reviewed
+  cards:
+    delivery_mode: publish_ready
+    platform_profile: xiaohongshu
+    render_status: not_started
+    visual_qa_status: pending
+    human_confirmation: pending
+    asset_url_policy: local
+    r2_state: not_planned
+  images:
+    r2_status: not_planned
+  publish_gate:
+    mode: preflight
+    status: blocked
+    blockers: []
   next_step:
-    skill: storm-research
-    reason: The topic has several plausible causes and needs a contradiction map before evidence gathering.
+    skill: wenchang-publish-check
+    reason: generate the multi-platform package and illustration decisions
     user_decision_needed: false
-  handoff:
-    from_stage: routing
-    to_stage: storm-research
-    accepted_inputs:
-      - topic.core_angle
-      - request.target_platforms
-    ignored_context:
-      - unconfirmed title ideas
-    stop_condition: pause if more than three equally strong angles appear
 ```
 
-## 2. Research Map With `storm-research`
+## 2. Preflight With `wenchang-publish-check`
 
 ```md
-## Research Decision
-- Fit for next stage: yes
-- Recommended next step: wenchang-research
-- Main reason: The topic has a clear writing angle, but claims about behavior and workflow need sources or examples.
+## Decision
+- Mode: preflight
+- Status: blocked
+- Blockers: illustration plan and platform bodies are not complete
 
-## Perspectives
-| Perspective | Core concern | Supports | Challenges | Unique information | Needs verification |
-| --- | --- | --- | --- | --- | --- |
-| Practitioner | Daily use and retrieval | Collection without reuse creates drag | Some users do benefit from lightweight saving | Workflow examples | What repeatable workflow improves reuse? |
-| Researcher | Memory and retrieval | Retrieval practice matters | A personal archive can still reduce search cost | Cognitive load framing | Which learning or knowledge-management sources apply? |
-| Skeptic | Tool overpromise | Tools do not create judgment | Better UI can help | Failure cases | Are failures mainly habits or tool design? |
-| Economic observer | Cost of maintaining systems | Complex systems create maintenance cost | Reuse can save future work | Time-cost tradeoff | What minimum system has positive return? |
-| Historical observer | Previous note-taking waves | This pattern predates AI | AI changes capture speed | Zettelkasten and PKM cycles | Which analogies are useful without overclaiming? |
+## WeChat
+- Title: Turn Your Knowledge Base Into A Reusable Workbench
+- Search title: Personal Knowledge Base Workflow: From Collection To Reuse
+- Summary: A practical workflow for turning saved information into repeated judgment and output.
+- Illustration decision: required; one mechanism diagram
+
+## Zhihu
+- Question title: Why Do Personal Knowledge Bases Become Collection Folders?
+- Opening lead: More capture does not guarantee more retrieval, judgment, or output.
+- Summary: A source-backed explanation and a small workflow readers can test.
+- Illustration decision: recommended; one comparison diagram
+
+## Xiaohongshu
+- Cover title: Your Knowledge Base Needs A Reuse Loop
+- First-line hook: If your notes keep growing but your output does not, inspect the workflow before adding another tool.
+- Body caption: <platform-adapted caption>
+- Image order: cover -> problem -> mechanism -> checklist -> CTA
+- Core tags: [personal knowledge management, writing workflow]
+- Scene tags: [note reuse, knowledge work]
+- Series tags: []
+- Verified hot tags: unverified
 ```
 
-## 3. Evidence Plan With `wenchang-research`
+## 3. Run Platform Branches
 
-```md
-## Evidence Decision
-- Support level: weak until checked
-- Main reason: The argument is plausible, but needs primary or high-trust support and grounded examples.
+### WeChat And Zhihu
 
-## Sources To Check
-1. Cognitive science sources on retrieval practice and active recall.
-2. Knowledge-management writing from primary practitioners or tool makers.
-3. User workflow examples showing collect-only versus production-oriented systems.
+Use `article-to-illustrations` to create separate decisions and slots. Each slot includes a body anchor, reader purpose, factual constraints, ratio, prompt, alt text, and status.
 
-## Key Facts Needed
-- A source-backed distinction between storing information and retrieving it for use.
-- A concrete workflow example where notes become output.
-- A counterpoint showing when simple collection is enough.
+After the user approves the plan, generate or accept local images, inspect them, insert relative references into each formal platform body, and write an image manifest.
 
-## Contrarian Evidence / Limits
-- Some users only need lightweight bookmarking.
-- Over-engineered personal systems can become another form of procrastination.
-- The right workflow depends on output frequency and stakes.
+### Xiaohongshu
+
+Use `long-to-cards` with `delivery_mode=publish_ready` and `platform_profile=xiaohongshu` to produce the card sequence, cover title, first-line hook, body caption, image order, CTA, freshness-aware tags, and image-production handoff.
+
+### WeChat Inline Cards And Zhihu Idea
+
+Use the same canonical card path with `platform_profile=wechat-inline` or `zhihu-idea`. Use `wechat-to-cards` for Moments copy, community sharing, and WeChat-specific insertion notes around the shared card package.
+
+## 4. Render Card Images With `cards-to-images`
+
+For every `publish_ready` card package:
+
+```text
+approved card package
+  -> deterministic render or resilient-imagegen backend routing
+  -> optional chatgpt-image-handoff through Computer Use or manual pack
+  -> imported real local PNG or JPG files
+  -> per-image visual QA and revision
+  -> cards-manifest
+  -> human confirmation gate
 ```
 
-## 4. Draft With `wenchang-wechat-writer`
+The workflow may stop after card copy only when the user explicitly selects `delivery_mode=copy_only`.
 
-```md
-## Draft Brief
-- Reader: People who collect articles, tools, and notes but rarely reuse them.
-- Core angle: A useful knowledge base is a workbench for repeated judgment, not a warehouse for saved links.
-- Evidence status: Needs source-backed support before final publishing.
+Use `generation_backend=auto` for generative or mixed cards. Capability inspection and Handoff Pack preparation may proceed locally; pause immediately before the first Computer Use prompt submission or reference upload. Every branch must rejoin at a real local file before visual QA.
 
-## Title Candidates
-1. Why Your Knowledge Base Became a Collection Folder
-2. A Knowledge Base Is Useful Only When It Becomes a Workbench
-3. Stop Saving Everything: Build a System You Can Reuse
+## 5. Plan Public Image URLs With `md-img-r2`
 
-## Outline
-1. The failure is not lack of tools; it is lack of reuse.
-2. A collection folder gives comfort, but not capability.
-3. A workbench has retrieval, decision, and output loops.
-4. Keep the system small enough to maintain.
-5. Start with one repeatable use case.
+Run `md-img-r2` only after checked local images exist and `asset_url_policy=public`:
 
-## Draft
-<Draft body would be generated here. It should mark unsupported claims and avoid pretending the evidence has already been verified.>
+```text
+reviewed platform Markdown
+  -> local relative image references
+  -> md-img-r2 plan
+  -> human review
+  -> optional confirmed apply
+  -> public URL verification
 ```
 
-## 5. Review With `wenchang-review`
+Direct Xiaohongshu, WeChat, or Zhihu Idea upload can use local files. The optional public-URL branch ends after plan mode and records object keys, predicted URLs, missing files, and issues without uploading or rewriting Markdown.
+
+## 6. Final Check With `wenchang-publish-check`
 
 ```md
-## Review Decision
-- Recommended action: light edit after evidence is added
-- Main reason: The argument is clear, but the draft needs concrete examples and at least one counterpoint.
-
-## Key Issues
-1. The opening should reach the practical pain faster.
-2. Claims about knowledge reuse need nearby evidence or examples.
-3. The ending should give one small next action, not a broad summary.
-
-## Minimum Fixes
-1. Add one personal or anonymized workflow example.
-2. Add one counterpoint about lightweight bookmarking.
-3. Rewrite the ending into a one-week experiment.
-```
-
-## 6. Publish Check With `wenchang-publish-check`
-
-```md
-## Publish Decision
-- Recommendation: publish after fixes
+## Decision
+- Mode: final
+- Status: needs_review
 - Blockers:
-  - Missing source-backed support for the retrieval claim.
-  - Missing final title choice.
+  - card images await human confirmation
+  - public URL apply was not authorized
+  - current hot tags were not checked
 
-## Publish Package
-- Title: Why Your Knowledge Base Became a Collection Folder
-- Search title: Personal Knowledge Base Workflow: From Collection Folder to Reusable Workbench
-- Social title: You Do Not Need More Notes. You Need a Workbench.
-- Summary: A practical article about turning saved information into reusable judgment and output.
-- Tags:
-  - personal knowledge management
-  - writing workflow
-  - AI productivity
-- Cover copy: From Collection Folder to Workbench
-- Image plan: one diagram comparing collection, retrieval, judgment, and output.
-- Sharing copy: If your notes keep growing but your output does not, the issue may be the workflow, not the tool.
+## Verified
+- source facts and review status
+- one formal body per platform
+- WeChat and Zhihu illustration decisions
+- Xiaohongshu caption, card order, CTA, and ordinary topic tags
+- real card files, dimensions, per-image visual QA, and cards manifest
+- local image references and manifest
+- md-img-r2 dry-run report
+
+## Human Decisions
+- approve any image upload or Markdown URL rewrite
+- check hot tags only if they are useful on publication day
+- approve final platform publishing
 ```
 
 ## Smoke Result
 
-- The workflow can be represented by the first-phase public skills.
-- The handoff shape stays compact through `content_state`.
-- The chain does not jump straight from topic to final publishing.
-- Evidence gaps remain visible instead of being hidden by writing quality.
-- No private account identity, private local path, or real publishing action is required.
+- The workflow enters at the earliest supported stage.
+- Publish metadata is generated once in a separate package.
+- WeChat and Zhihu receive separate illustration decisions.
+- Card-based platforms receive a canonical card package, real local images, per-image QA, and a manifest.
+- The `publish_ready` path cannot end at card copy or visual prompts.
+- Human confirmation remains distinct from automated visual QA.
+- Local images reach `md-img-r2` only after review and insertion.
+- Dry-run, upload confirmation, URL verification, and platform publishing remain distinct states.
+- Full bodies stay in platform files; `content_state` keeps only pointers and statuses.

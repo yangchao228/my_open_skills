@@ -1,0 +1,229 @@
+{
+  "run_id": "theme01-chatgpt-images-v1",
+  "backend": "auto",
+  "preferred_backend": "chatgpt_computer_use",
+  "local_renderer": "available",
+  "platform_profile": "xiaohongshu",
+  "dimensions": "1080x1440",
+  "fact_sensitivity": "medium",
+  "render_strategy": "auto",
+  "text_policy": {
+    "mode": "allowlist",
+    "extra_readable_text": "reject",
+    "forbidden_patterns": [
+      "SHA256",
+      "BLAKE3",
+      "checksum",
+      "hash",
+      "commit ID",
+      "timestamp",
+      "version number",
+      "unapproved file path",
+      "unapproved numeric identifier"
+    ]
+  },
+  "style_prompt": "为‘我亲手打造的 Skills’设计一套当代中文编辑风格的小红书竖版信息图。保持同一系列的视觉语言，同时让每页拥有独立的构图和视觉隐喻。整体具有独立杂志、技术档案、手工印刷或 Risograph 气质，使用奶油白、深蓝、信号红和芥末黄为主要配色。请充分发挥画面创意，优先保证主题、核心事实和主要文字清楚。",
+  "jobs": [
+    {
+      "job_id": "CARD-01",
+      "source_id": "four-release-assets",
+      "intended_filename": "01-cover-chatgpt.png",
+      "prompt": "设计系列封面。主标题：‘一篇母稿，变成 4 种发布资产’。副标题：‘我用一个真实案例，跑通了这套开源 Skills’。画面表现一份‘审核母稿’继续生成‘公众号长文’、‘知乎长文’、‘知乎想法’和‘小红书图文’四种资产。请创造一个具有强封面感的内容生产隐喻。页码：‘01 / 08’。",
+      "text_policy": {
+        "allowed_text": [
+          "我亲手打造的 Skills",
+          "一篇母稿，变成 4 种发布资产",
+          "我用一个真实案例，跑通了这套开源 Skills",
+          "审核母稿",
+          "公众号长文",
+          "知乎长文",
+          "知乎想法",
+          "小红书图文",
+          "01 / 08"
+        ]
+      },
+      "reference_paths": []
+    },
+    {
+      "job_id": "CARD-02",
+      "source_id": "real-assets",
+      "intended_filename": "02-real-assets-chatgpt.png",
+      "prompt": "主标题：‘这次我留下了真实文件’。副标题：‘每一步都能回到仓库复查’。重点呈现‘1 篇审核母稿’、‘4 种发布形态’、‘20 张本地成图’、‘4 份 Manifest’，以及文件名‘wechat-draft.md’、‘zhihu-draft.md’、‘zhihu-idea-cards.md’、‘xiaohongshu-cards.md’。画面传达真实档案、数字资产仓库和可复查证据的感觉。页码：‘02 / 08’。允许使用与主题有关的装饰性档案标签，但不要生成哈希、校验值、模型参数、时间戳、版本号或未经提供的技术标识。",
+      "fact_sensitivity": "high",
+      "render_strategy": "generative",
+      "text_policy": {
+        "allowed_text": [
+          "这次我留下了真实文件",
+          "每一步都能回到仓库复查",
+          "1 篇审核母稿",
+          "4 种发布形态",
+          "20 张本地成图",
+          "4 份 Manifest",
+          "wechat-draft.md",
+          "zhihu-draft.md",
+          "zhihu-idea-cards.md",
+          "xiaohongshu-cards.md",
+          "02 / 08",
+          "MASTER",
+          "MANIFEST",
+          "已归档",
+          "可追溯",
+          "可复查",
+          "01",
+          "02",
+          "03",
+          "04",
+          "TRACE LOG",
+          "SOURCE  1 审核母稿 / 4 种发布形态",
+          "OUTPUT  20 张本地成图 / 4 份 MANIFEST"
+        ]
+      },
+      "reference_paths": []
+    },
+    {
+      "job_id": "CARD-03",
+      "source_id": "four-layers",
+      "intended_filename": "03-four-layers-chatgpt.png",
+      "prompt": "主标题：‘技能包按 4 层协作’。副标题：‘先理解职责，再看具体 Skill 名’。四层依次为：‘01 内容诊断 / 事实、论点与材料取舍’、‘02 平台适配 / 长文、想法与卡片叙事’、‘03 图片生产 / 插图、成图与逐图 QA’、‘04 发布门禁 / 字段、URL 与人工确认’。可以呈现‘COMPOSABLE · CHECKABLE · REUSABLE’。请把四层设计成一套具有创造力的协作生产系统。页码：‘03 / 08’。",
+      "fact_sensitivity": "high",
+      "render_strategy": "generative",
+      "text_policy": {
+        "allowed_text": [
+          "技能包按 4 层协作",
+          "先理解职责，再看具体 Skill 名",
+          "01 内容诊断",
+          "事实、论点与材料取舍",
+          "02 平台适配",
+          "长文、想法与卡片叙事",
+          "03 图片生产",
+          "插图、成图与逐图 QA",
+          "04 发布门禁",
+          "字段、URL 与人工确认",
+          "COMPOSABLE · CHECKABLE · REUSABLE",
+          "03 / 08"
+        ]
+      },
+      "reference_paths": []
+    },
+    {
+      "job_id": "CARD-04",
+      "source_id": "two-production-paths",
+      "intended_filename": "04-two-paths-chatgpt.png",
+      "prompt": "主标题：‘长文和卡片走两条生产链’。副标题：‘共享事实基线，分别生成平台产物’。共同起点是‘审核母稿’。长文分支包含‘公众号与知乎长文 → 插图判断 → 本地成图 → 正文插入 → R2 公网引用’；卡片分支包含‘小红书、知乎想法、公众号贴图 → long-to-cards → cards-to-images → 本地 PNG → 人工上传’。请自由设计一份母稿进入两条生产路径的视觉隐喻。页码：‘04 / 08’。",
+      "fact_sensitivity": "high",
+      "render_strategy": "generative",
+      "text_policy": {
+        "allowed_text": [
+          "长文和卡片走两条生产链",
+          "共享事实基线，分别生成平台产物",
+          "审核母稿",
+          "公众号与知乎长文",
+          "插图判断",
+          "本地成图",
+          "正文插入",
+          "R2 公网引用",
+          "小红书、知乎想法、公众号贴图",
+          "long-to-cards",
+          "cards-to-images",
+          "本地 PNG",
+          "人工上传",
+          "04 / 08"
+        ]
+      },
+      "reference_paths": []
+    },
+    {
+      "job_id": "CARD-05",
+      "source_id": "cards-to-real-images",
+      "intended_filename": "05-cards-to-images-chatgpt.png",
+      "prompt": "主标题：‘卡片稿要继续走到真实图片’。副标题：‘publish_ready 不停在视觉建议’。完整链路：‘卡片包 → 真实 PNG → 逐图 QA → Cards Manifest → 人工确认’。请把它设计成真正运行的内容生产线，让读者理解卡片文案只是中间产物。页码：‘05 / 08’。",
+      "render_strategy": "generative",
+      "text_policy": {
+        "allowed_text": [
+          "卡片稿要继续走到真实图片",
+          "publish_ready 不停在视觉建议",
+          "卡片包",
+          "真实 PNG",
+          "逐图 QA",
+          "Cards Manifest",
+          "人工确认",
+          "05 / 08"
+        ]
+      },
+      "reference_paths": []
+    },
+    {
+      "job_id": "CARD-06",
+      "source_id": "r2-conditional-layer",
+      "intended_filename": "06-r2-layer-chatgpt.png",
+      "prompt": "主标题：‘R2 只进入长文插图链’。副标题：‘长文用公网引用，平台图包用本地 PNG’。共同起点是‘已检查图片’。平台直传路径包含‘公众号贴图 / 小红书 / 知乎想法 → 本地 PNG → 人工上传’；长文公网引用路径包含‘公众号与知乎长文 → 4 张插图 → md-img-r2 plan → 人工确认 → R2 URL’。需要体现‘dry-run 只生成计划，不代表已经上传’。请自由设计两条图片交付路线。页码：‘06 / 08’。",
+      "fact_sensitivity": "high",
+      "render_strategy": "generative",
+      "text_policy": {
+        "allowed_text": [
+          "R2 只进入长文插图链",
+          "长文用公网引用，平台图包用本地 PNG",
+          "已检查图片",
+          "公众号贴图 / 小红书 / 知乎想法",
+          "本地 PNG",
+          "人工上传",
+          "公众号与知乎长文",
+          "4 张插图",
+          "md-img-r2 plan",
+          "人工确认",
+          "R2 URL",
+          "dry-run 只生成计划，不代表已经上传",
+          "06 / 08"
+        ]
+      },
+      "reference_paths": []
+    },
+    {
+      "job_id": "CARD-07",
+      "source_id": "human-publish-gate",
+      "intended_filename": "07-human-gate-chatgpt.png",
+      "prompt": "主标题：‘自动化准备证据，人保留发布决定’。副标题：‘这次真实停在人工确认前’。已完成：‘事实核验’、‘平台正文’、‘本地图片’、‘逐图 QA’。待判断：‘确认三组平台图包’、‘检查发布当天链接’、‘确认 4 张长文插图 R2 上传’、‘进入外部平台发布’。当前状态：‘STATUS / NEEDS REVIEW’。请表现自动化系统到达最后一道人工门禁的视觉张力。页码：‘07 / 08’。",
+      "render_strategy": "generative",
+      "text_policy": {
+        "allowed_text": [
+          "自动化准备证据，人保留发布决定",
+          "这次真实停在人工确认前",
+          "已完成",
+          "事实核验",
+          "平台正文",
+          "本地图片",
+          "逐图 QA",
+          "待判断",
+          "确认三组平台图包",
+          "检查发布当天链接",
+          "确认 4 张长文插图 R2 上传",
+          "进入外部平台发布",
+          "STATUS / NEEDS REVIEW",
+          "07 / 08"
+        ]
+      },
+      "reference_paths": []
+    },
+    {
+      "job_id": "CARD-08",
+      "source_id": "reproduction-entry",
+      "intended_filename": "08-reproduce-chatgpt.png",
+      "prompt": "主标题：‘换成你的一篇长文，复现一次’。副标题：‘从真实输入开始，停在外部发布之前’。公开仓库：‘yangchao228/my_open_skills’。三个阶段：‘输入公开长文’、‘生成平台资产’、‘停在人工确认’。呈现复现提示词：‘请用文昌内容流程处理这篇已审核长文，生成公众号、知乎长文、知乎想法和小红书发布资产；补齐需要的插图与卡片成图，逐图 QA，输出 Manifest，并停在三组平台图包确认、4 张长文插图 R2 上传和平台发布之前。’请创造具有行动邀请、开源入口和系列收尾感的画面。页码：‘08 / 08’。",
+      "fact_sensitivity": "high",
+      "render_strategy": "generative",
+      "text_policy": {
+        "allowed_text": [
+          "换成你的一篇长文，复现一次",
+          "从真实输入开始，停在外部发布之前",
+          "yangchao228/my_open_skills",
+          "输入公开长文",
+          "生成平台资产",
+          "停在人工确认",
+          "请用文昌内容流程处理这篇已审核长文，生成公众号、知乎长文、知乎想法和小红书发布资产；补齐需要的插图与卡片成图，逐图 QA，输出 Manifest，并停在三组平台图包确认、4 张长文插图 R2 上传和平台发布之前。",
+          "08 / 08"
+        ]
+      },
+      "reference_paths": []
+    }
+  ]
+}

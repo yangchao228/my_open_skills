@@ -1,6 +1,6 @@
 ---
 name: wenchang-wechat-writer
-description: Draft WeChat-style long-form articles from a confirmed topic, outline, evidence pack, or content_state. Use when the user wants titles, hooks, outline, article draft, ending, illustration suggestions, sharing copy, and follow-up topics.
+description: Draft WeChat-style long-form articles from a confirmed topic, outline, evidence pack, or content_state. Use when the user wants title candidates, hooks, an outline, a complete article body, an ending, structural visual anchors, and follow-up topics before content review and publish packaging.
 ---
 
 # Wenchang WeChat Writer
@@ -24,9 +24,8 @@ If the topic is fact-heavy and has no evidence pack, route to `wenchang-research
 3. article outline
 4. full draft
 5. ending and discussion prompt
-6. illustration suggestions
-7. social sharing copy
-8. follow-up topics
+6. structural visual anchors that may deserve later illustration assessment
+7. follow-up topics
 
 ## Writing Rules
 
@@ -60,11 +59,8 @@ If the topic is fact-heavy and has no evidence pack, route to `wenchang-research
 ## Ending
 <ending and discussion prompt>
 
-## Illustration Suggestions
-- <where and what>
-
-## Sharing Copy
-- <short social copy>
+## Structural Visual Anchors
+- <section or mechanism that may benefit from a later illustration decision>
 
 ## Follow-up Topics
 - <topic>
@@ -93,5 +89,5 @@ content_state:
 
 - Do not invent facts to make the draft stronger.
 - Do not bury missing evidence.
-- Do not produce final publish assets; use `wenchang-publish-check` after review.
+- Do not produce final summaries, sharing copy, tags, cover copy, or illustration plans; use `wenchang-publish-check` after review and `article-to-illustrations` after preflight.
 - Do not use private account identity or private project material unless the user provides it for the current run.

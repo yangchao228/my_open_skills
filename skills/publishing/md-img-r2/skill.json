@@ -1,0 +1,24 @@
+{
+  "slug": "md-img-r2",
+  "title": "Markdown Images to R2",
+  "category": "publishing",
+  "summary": "Prepare local Markdown images for R2 or S3-compatible public URLs with dry-run planning, explicit upload confirmation, backups, and reports.",
+  "keywords": [
+    "Markdown images",
+    "Cloudflare R2",
+    "object storage",
+    "image URLs",
+    "content distribution"
+  ],
+  "user_needs": [
+    "inspect local image references before publishing Markdown",
+    "upload article images to R2 after reviewing a plan",
+    "replace local image paths with public URLs safely",
+    "prepare image assets for multi-platform content distribution"
+  ],
+  "source_dir": "skills/publishing/md-img-r2",
+  "entry": "SKILL.md",
+  "package_strategy": "on-demand",
+  "package_format": "skill",
+  "status": "ready"
+}

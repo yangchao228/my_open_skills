@@ -1,0 +1,34 @@
+{
+  "file": "wechat-draft.md",
+  "mode": "plan",
+  "project_root": ".",
+  "key_prefix": "my-open-skills/theme-01/longform-v2",
+  "planned": [
+    {
+      "local": "assets/longform-v2/01-content-flow-wechat-16x9.png",
+      "object_key": "my-open-skills/theme-01/longform-v2/bc8d4f1ba0353efe-01-content-flow-wechat-16x9.png",
+      "planned_url": "https://images.reai.group/my-open-skills/theme-01/longform-v2/bc8d4f1ba0353efe-01-content-flow-wechat-16x9.png",
+      "occurrences": 1
+    },
+    {
+      "local": "assets/longform-v2/03-r2-flow-wechat-16x9.png",
+      "object_key": "my-open-skills/theme-01/longform-v2/c04e5e3564c94346-03-r2-flow-wechat-16x9.png",
+      "planned_url": "https://images.reai.group/my-open-skills/theme-01/longform-v2/c04e5e3564c94346-03-r2-flow-wechat-16x9.png",
+      "occurrences": 1
+    }
+  ],
+  "skipped_remote": [],
+  "issues": [],
+  "replacements": [
+    {
+      "kind": "markdown",
+      "source": "assets/longform-v2/01-content-flow-wechat-16x9.png",
+      "object_key": "my-open-skills/theme-01/longform-v2/bc8d4f1ba0353efe-01-content-flow-wechat-16x9.png"
+    },
+    {
+      "kind": "markdown",
+      "source": "assets/longform-v2/03-r2-flow-wechat-16x9.png",
+      "object_key": "my-open-skills/theme-01/longform-v2/c04e5e3564c94346-03-r2-flow-wechat-16x9.png"
+    }
+  ]
+}

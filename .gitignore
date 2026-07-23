@@ -1,0 +1,13 @@
+.DS_Store
+.agents/
+.baoyu-skills/
+.chatgpt-handoff/
+__pycache__/
+*.py[cod]
+*.md.bak
+*.md.replace-report.json
+
+# Theme 01 local experiments and superseded release plans
+docs/series/handcrafted-skills/themes/01-content-asset-pipeline/image-cards/theme01-screenprint-preview/
+docs/series/handcrafted-skills/themes/01-content-asset-pipeline/card02-mixed-overlay-plan.json
+docs/series/handcrafted-skills/themes/01-content-asset-pipeline/xiaohongshu-upload-manifest.md.image-publish-plan.json

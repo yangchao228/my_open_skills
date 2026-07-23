@@ -22,13 +22,14 @@ Each public skill should be understandable by a new user, safe to share, and tes
 
 - [Season 1 plan](docs/series/handcrafted-skills/series-plan.md)
 - [Case Pack template](docs/series/handcrafted-skills/case-pack-template.md)
+- [Theme 01: Turn one long-form article into cross-platform content assets](docs/series/handcrafted-skills/themes/01-content-asset-pipeline/case-pack.md)
 - [Episode 01: Xiaohongshu Topic Generator](docs/series/handcrafted-skills/season-01/01-xiaohongshu-topic-generator/case-pack.md)
 
 ## Skill Groups
 
 ### Content
 
-The first public workflow is `Wenchang`, a content creation system that routes a topic or draft through research, evidence gathering, drafting, review, and publish checks.
+The first public workflow is `Wenchang`, a content creation system that routes a topic or draft through research, evidence gathering, drafting, review, platform adaptation, long-form illustration, recoverable image-generation backends, publish-ready card rendering, and publish checks.
 
 Start here:
 
@@ -40,12 +41,17 @@ Core content skills:
 - [zhihu-topic-hunter](skills/content/zhihu-topic-hunter)
 - [xiaohongshu-topic-generator](skills/content/xiaohongshu-topic-generator)
 - [long-to-cards](skills/content/long-to-cards)
+- [redbook-cards-skill](skills/content/redbook-cards-skill)
+- [cards-to-images](skills/content/cards-to-images)
+- [resilient-imagegen](skills/content/resilient-imagegen)
+- [chatgpt-image-handoff](skills/content/chatgpt-image-handoff)
 - [wechat-to-cards](skills/content/wechat-to-cards)
+- [article-to-illustrations](skills/content/article-to-illustrations)
 - [storm-research](skills/content/storm-research)
 - [wenchang-research](skills/content/wenchang-research)
 - [wenchang-wechat-writer](skills/content/wenchang-wechat-writer)
 - [wenchang-review](skills/content/wenchang-review)
-- [wenchang-publish-check](skills/content/wenchang-publish-check)
+- [wenchang-publish-check](skills/content/wenchang-publish-check) - create preflight platform packages and run the final release gate
 
 See [skills/content/README.md](skills/content/README.md).
 
@@ -66,7 +72,11 @@ Engineering workflow skills will be added later. See [skills/engineering/README.
 
 ### Publishing
 
-Publishing and distribution helper skills will be added later. See [skills/publishing/README.md](skills/publishing/README.md).
+Publishing and distribution helpers make content assets ready for public URLs and platform delivery.
+
+- [md-img-r2](skills/publishing/md-img-r2) - inspect local Markdown images, create a dry-run public-URL plan, and apply reviewed R2 or S3-compatible replacements behind an explicit confirmation gate.
+
+See [skills/publishing/README.md](skills/publishing/README.md).
 
 ## Install
 

@@ -1,0 +1,221 @@
+{
+  "visual_system": "Open Weave",
+  "sets": [
+    {
+      "id": "wechat-inline",
+      "profile": "WECHAT INLINE 16:9",
+      "width": 1600,
+      "height": 900,
+      "output_dir": "assets/wechat-inline",
+      "contact_sheet": "assets/wechat-inline/contact-sheet.png",
+      "cards": [
+        {
+          "filename": "01-four-release-forms.png",
+          "accent": "blue",
+          "layout": "matrix",
+          "title": "一篇母稿，形成四种发布资产",
+          "subtitle": "共享事实基线，按平台重新组织交付结构",
+          "source": "审核母稿",
+          "outputs": ["公众号长文", "知乎长文", "知乎想法", "小红书图文"],
+          "footer": "ONE SOURCE / FOUR RELEASE FORMS"
+        },
+        {
+          "filename": "02-copy-to-checked-images.png",
+          "accent": "orange",
+          "layout": "pipeline",
+          "title": "卡片文案，要继续走到真实图片",
+          "subtitle": "publish_ready 在人工确认前持续推进",
+          "steps": ["卡片叙事", "真实 PNG", "逐图 QA", "Manifest", "人工确认"],
+          "labels": ["long-to-cards", "cards-to-images", "inspect", "record", "human gate"],
+          "footer": "COPY → IMAGE → QA → MANIFEST"
+        },
+        {
+          "filename": "03-local-or-public.png",
+          "accent": "orange",
+          "layout": "branch",
+          "title": "图片是否上 R2，取决于交付方式",
+          "subtitle": "本地文件是默认交付，公网引用按需进入",
+          "source": "已检查图片",
+          "branches": [
+            {"title": "平台直传", "items": ["保留本地 PNG", "进入平台编辑器"], "tag": "LOCAL"},
+            {"title": "公网引用", "items": ["dry-run plan", "人工确认", "R2 / URL"], "tag": "PUBLIC"}
+          ],
+          "footer": "LOCAL BY DEFAULT / PUBLIC WHEN NEEDED"
+        }
+      ]
+    },
+    {
+      "id": "zhihu-idea",
+      "profile": "ZHIHU IDEA 3:4",
+      "width": 1080,
+      "height": 1440,
+      "output_dir": "assets/zhihu-idea",
+      "contact_sheet": "assets/zhihu-idea/contact-sheet.png",
+      "cards": [
+        {
+          "filename": "01-one-source-four-assets.png",
+          "accent": "blue",
+          "layout": "matrix",
+          "title": "一篇母稿\n怎样变成四种发布资产？",
+          "subtitle": "真实正文、真实图片、真实交付状态",
+          "source": "审核母稿",
+          "outputs": ["公众号长文", "知乎长文", "知乎想法", "小红书图文"],
+          "footer": "ONE SOURCE / FOUR RELEASE FORMS"
+        },
+        {
+          "filename": "02-two-production-branches.png",
+          "accent": "orange",
+          "layout": "split",
+          "title": "先分清长文和卡片\n两条生产链",
+          "subtitle": "事实基线共享，交付结构按平台重做",
+          "source": "审核母稿",
+          "branches": [
+            {"title": "长文分支", "tag": "LONGFORM", "items": ["插图判断", "本地成图", "正文插入"]},
+            {"title": "卡片分支", "tag": "CARDS", "items": ["卡片叙事", "真实图片", "逐图 QA"]}
+          ],
+          "footer": "ARTICLE-TO-ILLUSTRATIONS / LONG-TO-CARDS"
+        },
+        {
+          "filename": "03-copy-is-not-delivery.png",
+          "accent": "blue",
+          "layout": "pipeline",
+          "title": "卡片稿完成\n还不能算发布资产",
+          "subtitle": "真实图片、QA 和 Manifest 缺一不可",
+          "steps": ["卡片稿", "真实 PNG", "逐图 QA", "Manifest", "人工确认"],
+          "labels": ["COPY", "FILE", "CHECK", "STATE", "HUMAN"],
+          "footer": "COPY → PNG → QA → MANIFEST"
+        },
+        {
+          "filename": "04-r2-when-needed.png",
+          "accent": "orange",
+          "layout": "branch",
+          "title": "R2 是按需进入的\n图片资产层",
+          "subtitle": "外部写入始终保留人工门禁",
+          "source": "已检查图片",
+          "branches": [
+            {"title": "本地交付", "items": ["平台直接上传", "保留源文件"], "tag": "LOCAL"},
+            {"title": "公网资产", "items": ["dry-run 计划", "人工确认", "R2 公网 URL"], "tag": "PUBLIC"}
+          ],
+          "footer": "PLAN ≠ UPLOAD"
+        },
+        {
+          "filename": "05-human-final-gate.png",
+          "accent": "orange",
+          "layout": "gate",
+          "title": "Skills 负责组织\n人保留最终判断",
+          "subtitle": "准备、检查、交付状态都可见",
+          "completed": ["事实基线", "平台正文", "本地图片", "Manifest"],
+          "pending": ["角度确认", "图片确认", "外部上传", "平台发布"],
+          "repo": "yangchao228/my_open_skills",
+          "footer": "READY FOR REVIEW"
+        }
+      ]
+    },
+    {
+      "id": "xiaohongshu",
+      "profile": "XIAOHONGSHU 3:4",
+      "width": 1080,
+      "height": 1440,
+      "output_dir": "assets",
+      "contact_sheet": "assets/contact-sheet.png",
+      "cards": [
+        {
+          "filename": "01-cover.png",
+          "accent": "blue",
+          "layout": "matrix",
+          "title": "一篇母稿\n变成 4 种发布资产",
+          "subtitle": "我用一个真实案例，跑通了这套开源 Skills",
+          "source": "审核母稿",
+          "outputs": ["公众号", "知乎长文", "知乎想法", "小红书"],
+          "footer": "SOURCE → PLATFORM ASSETS"
+        },
+        {
+          "filename": "02-real-input.png",
+          "accent": "orange",
+          "layout": "evidence",
+          "title": "这次我留下了\n真实文件",
+          "subtitle": "每一步都能回到仓库复查",
+          "metrics": [
+            {"value": "1", "label": "篇审核母稿"},
+            {"value": "4", "label": "种发布形态"},
+            {"value": "20", "label": "张本地成图"},
+            {"value": "4", "label": "份 Manifest"}
+          ],
+          "artifacts": ["wechat-draft.md", "zhihu-draft.md", "zhihu-idea-cards.md", "xiaohongshu-cards.md"],
+          "footer": "FILES / IMAGES / MANIFESTS"
+        },
+        {
+          "filename": "03-four-layers.png",
+          "accent": "blue",
+          "layout": "layers",
+          "title": "技能包按 4 层协作",
+          "subtitle": "先理解职责，再看具体 Skill 名",
+          "layers": [
+            {"title": "内容诊断", "note": "事实、论点、取舍", "skills": "review / research"},
+            {"title": "平台适配", "note": "长文、想法、卡片", "skills": "writer / long-to-cards"},
+            {"title": "图片生产", "note": "插图、成图、QA", "skills": "illustrations / cards-to-images"},
+            {"title": "发布门禁", "note": "字段、URL、人工确认", "skills": "publish-check / md-img-r2"}
+          ],
+          "footer": "COMPOSABLE / CHECKABLE / REUSABLE"
+        },
+        {
+          "filename": "04-diagnose.png",
+          "accent": "orange",
+          "layout": "split",
+          "title": "长文和卡片\n走两条生产链",
+          "subtitle": "共享事实基线，分别生成平台产物",
+          "source": "审核母稿",
+          "branches": [
+            {"title": "长文分支", "tag": "ARTICLE", "items": ["公众号 / 知乎", "插图判断", "正文插入"]},
+            {"title": "卡片分支", "tag": "CARDS", "items": ["小红书 / 知乎想法", "公众号贴图", "逐图 QA"]}
+          ],
+          "footer": "ONE SOURCE / TWO PRODUCTION PATHS"
+        },
+        {
+          "filename": "05-platform-split.png",
+          "accent": "blue",
+          "layout": "pipeline",
+          "title": "卡片稿要继续走到\n真实图片",
+          "subtitle": "publish_ready 不停在视觉建议",
+          "steps": ["卡片包", "真实 PNG", "逐图 QA", "Manifest", "人工确认"],
+          "labels": ["COPY", "FILE", "CHECK", "STATE", "HUMAN"],
+          "footer": "LONG-TO-CARDS → CARDS-TO-IMAGES"
+        },
+        {
+          "filename": "06-r2-assets.png",
+          "accent": "orange",
+          "layout": "branch",
+          "title": "R2 是按需进入的\n图片资产层",
+          "subtitle": "直接上传与公网引用，使用不同交付路径",
+          "source": "已检查图片",
+          "branches": [
+            {"title": "平台直传", "items": ["本地 PNG", "直接进入编辑器"], "tag": "LOCAL"},
+            {"title": "公网引用", "items": ["md-img-r2 plan", "人工确认", "R2 URL"], "tag": "PUBLIC"}
+          ],
+          "footer": "PLAN ≠ UPLOAD"
+        },
+        {
+          "filename": "07-human-gate.png",
+          "accent": "orange",
+          "layout": "gate",
+          "title": "自动化准备证据\n人保留发布决定",
+          "subtitle": "这次真实停在人工确认前",
+          "completed": ["事实已核", "正文已成", "图片已生成", "逐图 QA 通过"],
+          "pending": ["确认图片", "检查链接", "可选 R2 上传", "进入平台发布"],
+          "repo": "STATUS / NEEDS REVIEW",
+          "footer": "HUMAN JUDGMENT IS A VISIBLE STEP"
+        },
+        {
+          "filename": "08-reproduce.png",
+          "accent": "blue",
+          "layout": "reproduce",
+          "title": "换成你的一篇长文\n复现一次",
+          "subtitle": "从真实输入开始，停在外部发布之前",
+          "prompt": "请用文昌内容流程处理这篇已审核长文，生成公众号、知乎长文、知乎想法和小红书发布资产；补齐需要的插图与卡片成图，逐图 QA，输出 Manifest，并停在人工确认、外部上传和平台发布之前。",
+          "repo": "yangchao228/my_open_skills",
+          "footer": "PUBLIC CASE PACK / REPRODUCIBLE WORKFLOW"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "slug": "article-to-illustrations",
+  "title": "Article To Illustrations",
+  "category": "content",
+  "summary": "Decide, plan, generate, insert, and hand off evidence-safe illustrations for reviewed long-form Markdown articles.",
+  "keywords": [
+    "article illustrations",
+    "Markdown images",
+    "image plan",
+    "WeChat",
+    "Zhihu",
+    "md-img-r2"
+  ],
+  "user_needs": [
+    "decide whether a long-form article needs illustrations",
+    "plan and generate platform-specific article images",
+    "insert local images into reviewed Markdown",
+    "prepare an image manifest for safe public URL publishing"
+  ],
+  "source_dir": "skills/content/article-to-illustrations",
+  "entry": "SKILL.md",
+  "package_strategy": "on-demand",
+  "package_format": "skill",
+  "status": "ready"
+}

@@ -1,0 +1,34 @@
+{
+  "file": "zhihu-draft.md",
+  "mode": "plan",
+  "project_root": ".",
+  "key_prefix": "my-open-skills/theme-01/longform-v2",
+  "planned": [
+    {
+      "local": "assets/longform-v2/02-content-flow-zhihu-3x4.png",
+      "object_key": "my-open-skills/theme-01/longform-v2/e010cfa319a0c622-02-content-flow-zhihu-3x4.png",
+      "planned_url": "https://images.reai.group/my-open-skills/theme-01/longform-v2/e010cfa319a0c622-02-content-flow-zhihu-3x4.png",
+      "occurrences": 1
+    },
+    {
+      "local": "assets/longform-v2/04-r2-flow-zhihu-3x4.png",
+      "object_key": "my-open-skills/theme-01/longform-v2/6606cb3e55ee861c-04-r2-flow-zhihu-3x4.png",
+      "planned_url": "https://images.reai.group/my-open-skills/theme-01/longform-v2/6606cb3e55ee861c-04-r2-flow-zhihu-3x4.png",
+      "occurrences": 1
+    }
+  ],
+  "skipped_remote": [],
+  "issues": [],
+  "replacements": [
+    {
+      "kind": "markdown",
+      "source": "assets/longform-v2/02-content-flow-zhihu-3x4.png",
+      "object_key": "my-open-skills/theme-01/longform-v2/e010cfa319a0c622-02-content-flow-zhihu-3x4.png"
+    },
+    {
+      "kind": "markdown",
+      "source": "assets/longform-v2/04-r2-flow-zhihu-3x4.png",
+      "object_key": "my-open-skills/theme-01/longform-v2/6606cb3e55ee861c-04-r2-flow-zhihu-3x4.png"
+    }
+  ]
+}
