@@ -150,7 +150,7 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - [x] Verify `create-plan@1.0.0` through inspect, exact-version temporary install, source-file hash comparison, security evidence, creator-link checks, and public-page HTTP 200
 - [x] Publish and verify `doc-coauthoring@1.0.0` through the same one-at-a-time release gate
 - [x] Verify `project-weekly-report@1.0.0` after publication through explicit category rendering, security evidence, temporary install, hashes, creator links, and the public page
-- [ ] Publish every remaining `planned` entry in `config/clawhub-release-plan.json` one at a time; advance after each upload reaches `submitted`
+- [x] Publish every remaining `planned` entry in `config/clawhub-release-plan.json` one at a time; advance after each upload reaches `submitted`
 - [x] Add a machine-readable release plan for the remaining 16 skills with explicit categories, remote baselines, target versions, tags, and changelogs
 - [x] Add a fail-closed single-skill preflight and publish script that requires a clean pushed source commit and an explicit live confirmation
 - [x] Add a state-change-only release watcher that verifies public metadata, exact installation, source hashes, security signals, and the generated Skill Card
@@ -207,6 +207,8 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - sales and after-sales documents
 
 ## Review
+
+- 2026-07-23: Completed the planned ClawHub upload queue after switching the foreground completion boundary to `submitted`. ClawHub accepted all 15 remaining plan entries one at a time, including the existing-slug patch update `md-img-r2@1.0.4`; every command passed repository validation, remote-baseline checks, explicit Categories and Topics, a real dry-run, and the authenticated live upload before its submitted ledger commit was pushed. The machine-readable plan now contains 5 verified and 15 submitted releases with no planned entries. `redbook-cards-skill` remains outside the release plan because of its third-party MIT attribution conflict. Public indexing, installation, scans, hashes, and Skill Cards for the 15 submitted releases remain a separate reconciliation backlog and are not claimed as complete.
 
 - 2026-07-23: Changed the release queue boundary after the owner chose throughput over waiting for ClawHub's public-index and Skill Card workers. Low, medium, and high risk releases now all advance after the live upload returns `published` and the repository records `submitted`; source, identity, metadata, credentials, dry-run, and one-live-upload-at-a-time checks remain mandatory. Entries that have not reached `public` or `verified` stay visible in the machine-readable plan and Markdown ledger, and the 15-minute reconciler continues processing them independently of later uploads.
 
