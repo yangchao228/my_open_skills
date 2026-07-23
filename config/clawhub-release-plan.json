@@ -345,7 +345,7 @@
       "path": "skills/content/long-to-cards",
       "display_name": "Long To Cards",
       "risk": "medium",
-      "status": "public",
+      "status": "verified",
       "remote_latest_version": "1.0.0",
       "target_version": "1.0.0",
       "categories": [
@@ -366,7 +366,8 @@
       "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics.",
       "submitted_at": "2026-07-23T13:47:45Z",
       "source_commit": "540864b61e90fff2593dfe751d72a0b2fa1b80b5",
-      "public_at": "2026-07-23T15:37:32Z"
+      "public_at": "2026-07-23T15:37:32Z",
+      "verified_at": "2026-07-23T17:06:45Z"
     },
     {
       "order": 12,
