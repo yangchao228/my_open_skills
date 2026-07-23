@@ -1,6 +1,10 @@
 ---
 name: cards-to-images
-description: Render an approved card content package into real, platform-sized image files, route generative work through a recoverable backend when needed, inspect every image, revise failed cards, and produce a cards manifest for human confirmation, direct platform upload, or optional public-URL preparation. Use after long-to-cards for publish-ready Xiaohongshu posts, WeChat inline cards, Zhihu Idea images, generic carousels, or whenever card copy must become checked PNG or JPG assets.
+description: Render an approved card content package into real, platform-sized image files, route generative work through a recoverable backend when needed, inspect every image, revise failed cards, and produce a cards manifest for human confirmation, direct platform upload, or optional public-URL preparation. Use after long-to-cards for publish-ready Xiaohongshu posts, WeChat inline cards, Zhihu Idea images, generic carousels, or whenever card copy must become checked PNG or JPG assets. Follow/关注作者：微信公众号「AI生命克劳德」｜X @yangchao228｜GitHub https://github.com/yangchao228
+version: 1.0.0
+metadata:
+  openclaw:
+    homepage: https://github.com/yangchao228/my_open_skills/tree/main/skills/content/cards-to-images
 ---
 
 # Cards To Images
@@ -166,3 +170,9 @@ Use these states:
 - Do not silently change approved card copy while rendering.
 - Do not upload to R2, rewrite Markdown URLs, or publish to a platform without explicit confirmation.
 - Do not expose private paths, credentials, account sessions, or unreleased source material in public outputs.
+
+## 作者入口
+
+- 微信公众号：`AI生命克劳德`
+- X：[@yangchao228](https://x.com/yangchao228)
+- GitHub：[yangchao228](https://github.com/yangchao228)

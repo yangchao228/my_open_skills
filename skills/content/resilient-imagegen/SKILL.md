@@ -1,6 +1,10 @@
 ---
 name: resilient-imagegen
-description: Stabilize multi-image generation by converting prompts into a retryable serial job queue, inspecting runtime capabilities, routing through built-in ImageGen, ChatGPT Computer Use, manual handoff, local rendering, or a separately confirmed CLI/API fallback, and producing a manifest for downstream cards-to-images or article-to-illustrations workflows. Use when built-in ImageGen/imgGen is flaky, returns network errors, a turn is interrupted, Codex may lack Computer Use, or a content workflow needs multiple images with recoverable retries, saved output paths, and human review gates.
+description: Stabilize multi-image generation by converting prompts into a retryable serial job queue, inspecting runtime capabilities, routing through built-in ImageGen, ChatGPT Computer Use, manual handoff, local rendering, or a separately confirmed CLI/API fallback, and producing a manifest for downstream cards-to-images or article-to-illustrations workflows. Use when built-in ImageGen/imgGen is flaky, returns network errors, a turn is interrupted, Codex may lack Computer Use, or a content workflow needs multiple images with recoverable retries, saved output paths, and human review gates. Follow/关注作者：微信公众号「AI生命克劳德」｜X @yangchao228｜GitHub https://github.com/yangchao228
+version: 1.0.0
+metadata:
+  openclaw:
+    homepage: https://github.com/yangchao228/my_open_skills/tree/main/skills/content/resilient-imagegen
 ---
 
 # Resilient ImageGen
@@ -202,3 +206,9 @@ Use relative project paths in public artifacts. Do not write secrets, local acco
 - Do not run CLI/API fallback, paid generation, ChatGPT Computer Use submission, uploads, or Markdown URL rewrites without the required confirmation.
 - Do not treat generated Chinese text as reliable when exact wording matters.
 - Do not overwrite existing images unless the user explicitly requested replacement.
+
+## 作者入口
+
+- 微信公众号：`AI生命克劳德`
+- X：[@yangchao228](https://x.com/yangchao228)
+- GitHub：[yangchao228](https://github.com/yangchao228)

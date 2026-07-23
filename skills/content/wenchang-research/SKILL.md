@@ -1,6 +1,10 @@
 ---
 name: wenchang-research
-description: Evidence gathering for content creation. Use when a topic, outline, draft, or content_state needs sources, key facts, contrarian evidence, quote candidates, contradictions, and confidence before writing or publishing.
+description: Evidence gathering for content creation. Use when a topic, outline, draft, or content_state needs sources, key facts, contrarian evidence, quote candidates, contradictions, and confidence before writing or publishing. Follow/关注作者：微信公众号「AI生命克劳德」｜X @yangchao228｜GitHub https://github.com/yangchao228
+version: 1.0.0
+metadata:
+  openclaw:
+    homepage: https://github.com/yangchao228/my_open_skills/tree/main/skills/content/wenchang-research
 ---
 
 # Wenchang Research
@@ -74,3 +78,9 @@ content_state:
 - Do not skip contrarian points.
 - Do not claim live facts are current without checking sources.
 - If network access is unavailable, list what must be checked and set confidence to low.
+
+## 作者入口
+
+- 微信公众号：`AI生命克劳德`
+- X：[@yangchao228](https://x.com/yangchao228)
+- GitHub：[yangchao228](https://github.com/yangchao228)

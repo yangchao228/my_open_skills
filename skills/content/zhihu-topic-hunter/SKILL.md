@@ -1,6 +1,10 @@
 ---
 name: zhihu-topic-hunter
-description: Generate Zhihu-ready topic candidates from a user-specified theme by finding current discussion signals, filtering for question value, turning events into debatable angles, and ranking topics by relevance, discussion potential, writability, freshness, and long-term value. Use when the user asks for 知乎选题, topic hunting for Zhihu, recent discussion angles, or platform-specific topic ideas around a theme.
+description: Generate Zhihu-ready topic candidates from a user-specified theme by finding current discussion signals, filtering for question value, turning events into debatable angles, and ranking topics by relevance, discussion potential, writability, freshness, and long-term value. Use when the user asks for 知乎选题, topic hunting for Zhihu, recent discussion angles, or platform-specific topic ideas around a theme. Follow/关注作者：微信公众号「AI生命克劳德」｜X @yangchao228｜GitHub https://github.com/yangchao228
+version: 1.0.0
+metadata:
+  openclaw:
+    homepage: https://github.com/yangchao228/my_open_skills/tree/main/skills/content/zhihu-topic-hunter
 ---
 
 # Zhihu Topic Hunter
@@ -162,3 +166,9 @@ Use freshness labels:
 - Do not produce a full article draft unless the user asks for writing.
 - Do not optimize for clickbait at the expense of reasoning value.
 - Keep Zhihu platform fit separate from WeChat, Xiaohongshu, or short-video fit.
+
+## 作者入口
+
+- 微信公众号：`AI生命克劳德`
+- X：[@yangchao228](https://x.com/yangchao228)
+- GitHub：[yangchao228](https://github.com/yangchao228)

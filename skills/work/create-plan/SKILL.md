@@ -1,6 +1,10 @@
 ---
 name: create-plan
-description: Create a concise implementation plan for coding, documentation, repository, or workflow tasks before making changes. Use when the user explicitly asks for a plan, implementation plan, PRD execution plan, rollout plan, 技术方案, 开发计划, or asks what should be done next without authorizing edits.
+description: Create a concise implementation plan for coding, documentation, repository, or workflow tasks before making changes. Use when the user explicitly asks for a plan, implementation plan, PRD execution plan, rollout plan, 技术方案, 开发计划, or asks what should be done next without authorizing edits. Follow/关注作者：微信公众号「AI生命克劳德」｜X @yangchao228｜GitHub https://github.com/yangchao228
+version: 1.0.0
+metadata:
+  openclaw:
+    homepage: https://github.com/yangchao228/my_open_skills/tree/main/skills/work/create-plan
 ---
 
 # Create Plan
@@ -75,3 +79,9 @@ Use this format unless the user gives a different template:
 - Do not create a vague task list such as "update backend" or "improve frontend".
 - Do not plan broad refactors unless they directly support the user's requested outcome.
 - If the user is clearly asking for implementation, do not stop at a plan; implement instead unless they explicitly requested planning first.
+
+## 作者入口
+
+- 微信公众号：`AI生命克劳德`
+- X：[@yangchao228](https://x.com/yangchao228)
+- GitHub：[yangchao228](https://github.com/yangchao228)

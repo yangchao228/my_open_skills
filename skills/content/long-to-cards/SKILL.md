@@ -1,6 +1,10 @@
 ---
 name: long-to-cards
-description: Transform long-form content, outlines, transcripts, research notes, or article drafts into a standard card package and platform publishing copy, then hand publish-ready packages to cards-to-images. Use for Xiaohongshu image posts, WeChat inline cards, Zhihu Idea images, generic carousels, card scripts, captions, image order, CTAs, or freshness-aware topic tags.
+description: Transform long-form content, outlines, transcripts, research notes, or article drafts into a standard card package and platform publishing copy, then hand publish-ready packages to cards-to-images. Use for Xiaohongshu image posts, WeChat inline cards, Zhihu Idea images, generic carousels, card scripts, captions, image order, CTAs, or freshness-aware topic tags. Follow/关注作者：微信公众号「AI生命克劳德」｜X @yangchao228｜GitHub https://github.com/yangchao228
+version: 1.0.0
+metadata:
+  openclaw:
+    homepage: https://github.com/yangchao228/my_open_skills/tree/main/skills/content/long-to-cards
 ---
 
 # Long To Cards
@@ -209,3 +213,9 @@ Use this structure:
 - Do not optimize for a platform in ways that distort the source argument.
 - Do not claim the package is ready to publish if source claims still need verification.
 - Do not claim a tag is currently hot without a current source and check time.
+
+## 作者入口
+
+- 微信公众号：`AI生命克劳德`
+- X：[@yangchao228](https://x.com/yangchao228)
+- GitHub：[yangchao228](https://github.com/yangchao228)

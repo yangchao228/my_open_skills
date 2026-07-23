@@ -41,7 +41,7 @@
 - [zhihu-topic-hunter](skills/content/zhihu-topic-hunter)
 - [xiaohongshu-topic-generator](skills/content/xiaohongshu-topic-generator)
 - [long-to-cards](skills/content/long-to-cards)
-- [redbook-cards-skill](skills/content/redbook-cards-skill)
+- [redbook-cards-skill](skills/content/redbook-cards-skill) - 仓库候选；第三方许可证复核完成前不发布到 ClawHub
 - [cards-to-images](skills/content/cards-to-images)
 - [resilient-imagegen](skills/content/resilient-imagegen)
 - [chatgpt-image-handoff](skills/content/chatgpt-image-handoff)
@@ -82,14 +82,22 @@
 
 仓库级说明见 [安装与试用](docs/install-and-trial.md)。
 
-包安装命令按 skill 分别维护。目前已记录的包命令属于 `resume-interview-generator`：
+ClawHub skills 以 `@yangchao228` 为发布者逐项发布。安装具体 slug 前先查看 [ClawHub 发布台账](docs/clawhub-releases.md)：
+
+```bash
+clawhub install @yangchao228/create-plan
+```
+
+OpenClaw 也可以直接安装同一份带发布者限定的 skill：
+
+```bash
+openclaw skills install @yangchao228/create-plan
+```
+
+`resume-interview-generator` 原有的 npm 包安装命令继续保留：
 
 ```bash
 npx @skills-hub-ai/cli install resume-interview-generator-2
-```
-
-```bash
-clawhub install resume-interview-generator
 ```
 
 本地开发时，克隆本仓库，并把需要的 skill 文件夹链接或复制到你的 agent runtime 使用的 skill 目录中。
@@ -103,7 +111,7 @@ clawhub install resume-interview-generator
 ./scripts/validate-skills.sh
 ```
 
-校验会检查 skill 元数据、路径、示例、JSON、README 中文版本和常见私有内容泄漏。
+校验会检查 skill 元数据、ClawHub 作者钩子、semver、homepage、包体积、路径、示例、JSON、README 中文版本和常见私有内容泄漏。
 
 第一个文昌工作流端到端 smoke 记录在 [docs/examples/wenchang-end-to-end-smoke.md](docs/examples/wenchang-end-to-end-smoke.md)。
 
@@ -117,4 +125,4 @@ clawhub install resume-interview-generator
 
 ## 许可证
 
-MIT。详见 [LICENSE](LICENSE)。
+GitHub 仓库采用 MIT，详见 [LICENSE](LICENSE)。发布到 ClawHub 的各版本采用平台规定的 MIT-0，详见 [发布政策](docs/clawhub-releases.md)。

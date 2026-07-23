@@ -1,6 +1,10 @@
 ---
 name: storm-research
-description: STORM-style pre-research for content creation. Use to break a topic, trend, external article, product question, or learning area into perspectives, contradiction maps, research briefs, confidence reviews, and evidence plans before writing.
+description: STORM-style pre-research for content creation. Use to break a topic, trend, external article, product question, or learning area into perspectives, contradiction maps, research briefs, confidence reviews, and evidence plans before writing. Follow/关注作者：微信公众号「AI生命克劳德」｜X @yangchao228｜GitHub https://github.com/yangchao228
+version: 1.0.0
+metadata:
+  openclaw:
+    homepage: https://github.com/yangchao228/my_open_skills/tree/main/skills/content/storm-research
 ---
 
 # STORM Research
@@ -118,3 +122,9 @@ content_state:
 ## Stop Conditions
 
 Pause if there are more than three equally strong angles, if the topic involves high-stakes advice, or if core claims cannot be verified with primary sources.
+
+## 作者入口
+
+- 微信公众号：`AI生命克劳德`
+- X：[@yangchao228](https://x.com/yangchao228)
+- GitHub：[yangchao228](https://github.com/yangchao228)

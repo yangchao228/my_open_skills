@@ -138,6 +138,17 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - [x] Confirm no valid archive exists, record the optional ZIP limitation, and route the jobs to ordinary Chat
 - [x] Generate, import, and complete strict local QA for `CARD-05` through `CARD-08` one image at a time
 
+## Phase 11: ClawHub One-by-One Releases
+
+- [x] Freeze and commit the reviewed public candidate baseline
+- [x] Install ClawHub CLI 0.23.1 and verify the authenticated publisher as `yangchao228`
+- [x] Add the canonical creator profile and one-at-a-time release ledger
+- [x] Add the creator description suffix, `1.0.0`, source homepage, and creator footer to every release-ready skill
+- [x] Extend repository validation for creator metadata, semver, homepage, package size, credentials, and ClawHub local state
+- [x] Move `redbook-cards-skill` back to incubation because its third-party MIT attribution conflicts with ClawHub MIT-0 packaging
+- [ ] Publish each remaining ready skill through dry-run, live publish, inspect, temporary install, and security scan
+- [ ] Update the release ledger with verified versions, timestamps, URLs, and any skill-specific blocks
+
 ## Ready Skills
 
 - `skills/work/resume-interview-generator`
@@ -147,7 +158,6 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - `skills/content/zhihu-topic-hunter`
 - `skills/content/xiaohongshu-topic-generator`
 - `skills/content/long-to-cards`
-- `skills/content/redbook-cards-skill`
 - `skills/content/cards-to-images`
 - `skills/content/resilient-imagegen`
 - `skills/content/chatgpt-image-handoff`
@@ -164,6 +174,7 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 
 ## Candidate Pool
 
+- `skills/content/redbook-cards-skill` (incubating; resolve third-party MIT attribution before ClawHub publication)
 - `skills/publishing/bilibili-publish-package-check`
 - `skills/publishing/markdown-blog-importer`
 - `skills/engineering/playwright`

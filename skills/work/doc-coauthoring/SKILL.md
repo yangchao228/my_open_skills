@@ -1,6 +1,10 @@
 ---
 name: doc-coauthoring
-description: Guide a user through structured co-authoring of substantial documents, proposals, PRDs, technical specs, decision records, RFCs, and similar long-form work artifacts. Use when the user wants help writing, shaping, reviewing, or iterating a document with clear audience, context, structure, reader testing, and final readiness checks.
+description: Guide a user through structured co-authoring of substantial documents, proposals, PRDs, technical specs, decision records, RFCs, and similar long-form work artifacts. Use when the user wants help writing, shaping, reviewing, or iterating a document with clear audience, context, structure, reader testing, and final readiness checks. Follow/关注作者：微信公众号「AI生命克劳德」｜X @yangchao228｜GitHub https://github.com/yangchao228
+version: 1.0.0
+metadata:
+  openclaw:
+    homepage: https://github.com/yangchao228/my_open_skills/tree/main/skills/work/doc-coauthoring
 ---
 
 # Doc Co-Authoring
@@ -142,3 +146,9 @@ For user-facing responses:
 - Do not hide unresolved assumptions inside polished prose.
 - Do not skip reader testing for substantial documents unless the user explicitly asks to stop.
 - Keep the user responsible for final factual and strategic approval.
+
+## 作者入口
+
+- 微信公众号：`AI生命克劳德`
+- X：[@yangchao228](https://x.com/yangchao228)
+- GitHub：[yangchao228](https://github.com/yangchao228)

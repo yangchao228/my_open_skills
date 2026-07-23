@@ -4,6 +4,8 @@ Status values: `ready`, `draft`, `incubating`, `private-source`, `deprecated`.
 
 Invocation values: `model-invoked`, `user-invoked`, `router-only`.
 
+ClawHub publication status and verified install links are maintained in [ClawHub Releases](clawhub-releases.md).
+
 ## Content
 
 | Skill | Status | Invocation | Purpose |
@@ -19,7 +21,7 @@ Invocation values: `model-invoked`, `user-invoked`, `router-only`.
 | [zhihu-topic-hunter](../skills/content/zhihu-topic-hunter) | ready | user-invoked | Generate ranked Zhihu topic candidates from a theme |
 | [xiaohongshu-topic-generator](../skills/content/xiaohongshu-topic-generator) | ready | user-invoked | Generate Xiaohongshu-ready topic candidates and card outlines |
 | [long-to-cards](../skills/content/long-to-cards) | ready | user-invoked | Transform long-form content into cards, captions, and freshness-aware tags |
-| [redbook-cards-skill](../skills/content/redbook-cards-skill) | ready | user-invoked | Slice articles into Xiaohongshu-style HTML card pages |
+| [redbook-cards-skill](../skills/content/redbook-cards-skill) | incubating | user-invoked | License review required before ClawHub MIT-0 publication |
 | [cards-to-images](../skills/content/cards-to-images) | ready | model-invoked | Render approved card packages into checked image files and a cards manifest |
 | [resilient-imagegen](../skills/content/resilient-imagegen) | ready | model-invoked | Route and recover serial image-generation jobs across available backends |
 | [chatgpt-image-handoff](../skills/content/chatgpt-image-handoff) | ready | model-invoked | Prepare, execute, or manually bridge external image generation into stable local import and QA |

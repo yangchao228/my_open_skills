@@ -38,7 +38,7 @@ wenchang-orchestrator
 - [zhihu-topic-hunter](zhihu-topic-hunter)：基于主题的知乎选题发现与排序
 - [xiaohongshu-topic-generator](xiaohongshu-topic-generator)：小红书选题生成和卡片大纲规划
 - [long-to-cards](long-to-cards)：把长文材料复用为卡片式社交内容包
-- [redbook-cards-skill](redbook-cards-skill)：把文章切成可在浏览器预览和截图的小红书 HTML 卡片页
+- [redbook-cards-skill](redbook-cards-skill)：文章转小红书 HTML 卡片的仓库候选；第三方许可证复核完成前不发布到 ClawHub
 - [cards-to-images](cards-to-images)：把审核后的卡片包渲染成经过检查的平台图片和 cards manifest
 - [resilient-imagegen](resilient-imagegen)：路由并恢复逐张执行的多图生成任务
 - [chatgpt-image-handoff](chatgpt-image-handoff)：自适应选择 Computer Use、内置生图、手动 ChatGPT 交接或本地渲染，并把结果导回 QA
@@ -53,3 +53,7 @@ wenchang-orchestrator
 ## 边界
 
 这些 skills 不会执行外部发布，也不会在缺少用户确认时做最终不可逆决策。可选的 Computer Use 提交和参考图上传需要操作前确认，账号与运行状态始终留在本地。
+
+## ClawHub
+
+可发布的内容 skills 以 `@yangchao228` 为发布者逐项发布，状态以仓库 [发布台账](../../docs/clawhub-releases.md) 为准。ClawHub 条目统一带精简作者入口，对外内容宣传继续按主题 Case Pack 组织。

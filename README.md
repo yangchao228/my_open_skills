@@ -41,7 +41,7 @@ Core content skills:
 - [zhihu-topic-hunter](skills/content/zhihu-topic-hunter)
 - [xiaohongshu-topic-generator](skills/content/xiaohongshu-topic-generator)
 - [long-to-cards](skills/content/long-to-cards)
-- [redbook-cards-skill](skills/content/redbook-cards-skill)
+- [redbook-cards-skill](skills/content/redbook-cards-skill) - repository candidate; ClawHub release blocked pending third-party license review
 - [cards-to-images](skills/content/cards-to-images)
 - [resilient-imagegen](skills/content/resilient-imagegen)
 - [chatgpt-image-handoff](skills/content/chatgpt-image-handoff)
@@ -82,14 +82,22 @@ See [skills/publishing/README.md](skills/publishing/README.md).
 
 Use [Install and Trial](docs/install-and-trial.md) as the repository-level guide.
 
-Package commands are maintained per skill. Current documented package commands exist for `resume-interview-generator`:
+ClawHub releases are published one at a time under `@yangchao228`. Check the [ClawHub release ledger](docs/clawhub-releases.md) before installing a specific slug:
+
+```bash
+clawhub install @yangchao228/create-plan
+```
+
+OpenClaw can install the same owner-qualified release directly:
+
+```bash
+openclaw skills install @yangchao228/create-plan
+```
+
+The separate npm package command for `resume-interview-generator` remains available:
 
 ```bash
 npx @skills-hub-ai/cli install resume-interview-generator-2
-```
-
-```bash
-clawhub install resume-interview-generator
 ```
 
 For local development, clone this repo and link or copy the skill folders into the skill directory used by your agent runtime.
@@ -103,7 +111,7 @@ For skills without a documented package command, start by reading that skill's `
 ./scripts/validate-skills.sh
 ```
 
-Validation checks skill metadata, paths, examples, JSON, README Chinese counterparts, and common private-content leaks.
+Validation checks skill metadata, ClawHub creator hooks, semver, homepage URLs, bundle size, paths, examples, JSON, README Chinese counterparts, and common private-content leaks.
 
 The first Wenchang workflow smoke is documented in [docs/examples/wenchang-end-to-end-smoke.md](docs/examples/wenchang-end-to-end-smoke.md).
 
@@ -117,4 +125,4 @@ See [docs/publishing-policy.md](docs/publishing-policy.md).
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+The GitHub repository is MIT. See [LICENSE](LICENSE). Individual releases published to ClawHub use the registry's MIT-0 release license; see the [release policy](docs/clawhub-releases.md).

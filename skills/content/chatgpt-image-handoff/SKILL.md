@@ -1,6 +1,10 @@
 ---
 name: chatgpt-image-handoff
-description: Route a multi-image content job through the best available generation backend, prepare a resumable prompt pack with readable-text fact boundaries, optionally operate an approved ordinary ChatGPT browser session with Computer Use, test an optional multi-image ZIP delivery when the active surface supports it, repair useful generated backgrounds with an allowlist-only mixed overlay, import outputs under stable names, and resume visual QA. Use when built-in ImageGen is unavailable or flaky, Codex may or may not have Computer Use, a user needs a manual ChatGPT fallback, repeated browser round trips should be reduced, exact names or numbers must not be invented, or external image outputs must re-enter a checked local asset pipeline without losing job state.
+description: Route a multi-image content job through the best available generation backend, prepare a resumable prompt pack with readable-text fact boundaries, optionally operate an approved ordinary ChatGPT browser session with Computer Use, test an optional multi-image ZIP delivery when the active surface supports it, repair useful generated backgrounds with an allowlist-only mixed overlay, import outputs under stable names, and resume visual QA. Use when built-in ImageGen is unavailable or flaky, Codex may or may not have Computer Use, a user needs a manual ChatGPT fallback, repeated browser round trips should be reduced, exact names or numbers must not be invented, or external image outputs must re-enter a checked local asset pipeline without losing job state. Follow/关注作者：微信公众号「AI生命克劳德」｜X @yangchao228｜GitHub https://github.com/yangchao228
+version: 1.0.0
+metadata:
+  openclaw:
+    homepage: https://github.com/yangchao228/my_open_skills/tree/main/skills/content/chatgpt-image-handoff
 ---
 
 # ChatGPT Image Handoff
@@ -309,3 +313,9 @@ Require a local file, checksum, dimensions, and visual QA before claiming succes
 - Do not send sensitive or unreviewed material to ChatGPT.
 - Do not overwrite reviewed images silently.
 - Stop at human image confirmation before any external publication.
+
+## 作者入口
+
+- 微信公众号：`AI生命克劳德`
+- X：[@yangchao228](https://x.com/yangchao228)
+- GitHub：[yangchao228](https://github.com/yangchao228)

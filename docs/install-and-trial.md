@@ -6,14 +6,19 @@ This repository has two supported usage paths.
 
 Use a package command only when a skill documents that exact command.
 
-Currently documented package commands:
+ClawHub skills are released one at a time under `@yangchao228`. Check the [release ledger](clawhub-releases.md) for verified slugs, then use an owner-qualified command:
+
+```bash
+clawhub install @yangchao228/create-plan
+```
+
+Current additional package command:
 
 | Skill | Runtime | Command |
 | --- | --- | --- |
-| `resume-interview-generator` | OpenClaw | `openclaw skills install resume-interview-generator` |
 | `resume-interview-generator` | Codex / Claude Code | `npx @skills-hub-ai/cli install resume-interview-generator-2` |
 
-Do not assume every ready skill has a marketplace package.
+Do not treat a prepared or blocked ledger row as a verified marketplace release.
 
 ## 2. Local Trial
 
@@ -65,14 +70,19 @@ Use case packs when you want to understand what a skill should produce before in
 
 只有当某个 skill 明确记录了安装命令时，才使用对应包命令。
 
-当前已记录的包安装命令：
+ClawHub skills 以 `@yangchao228` 为发布者逐项发布。先查看 [发布台账](clawhub-releases.md) 中已经验证的 slug，再使用带发布者限定的命令：
+
+```bash
+clawhub install @yangchao228/create-plan
+```
+
+当前额外保留的包安装命令：
 
 | Skill | Runtime | 命令 |
 | --- | --- | --- |
-| `resume-interview-generator` | OpenClaw | `openclaw skills install resume-interview-generator` |
 | `resume-interview-generator` | Codex / Claude Code | `npx @skills-hub-ai/cli install resume-interview-generator-2` |
 
-不要假设所有 ready skills 都已经有 marketplace package。
+不要把台账中的 `prepared` 或 `blocked` 当成已经验证的 marketplace release。
 
 ## 2. 本地试用
 

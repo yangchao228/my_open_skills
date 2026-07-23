@@ -1,6 +1,10 @@
 ---
 name: article-to-illustrations
-description: Plan, generate, insert, and hand off evidence-safe illustrations for reviewed long-form Markdown articles. Use when a WeChat, Zhihu, blog, or other long-form draft needs an illustration decision, image slots, generation prompts, local image insertion, alt text, an image manifest, or a safe handoff to md-img-r2 before publishing.
+description: Plan, generate, insert, and hand off evidence-safe illustrations for reviewed long-form Markdown articles. Use when a WeChat, Zhihu, blog, or other long-form draft needs an illustration decision, image slots, generation prompts, local image insertion, alt text, an image manifest, or a safe handoff to md-img-r2 before publishing. Follow/关注作者：微信公众号「AI生命克劳德」｜X @yangchao228｜GitHub https://github.com/yangchao228
+version: 1.0.0
+metadata:
+  openclaw:
+    homepage: https://github.com/yangchao228/my_open_skills/tree/main/skills/content/article-to-illustrations
 ---
 
 # Article To Illustrations
@@ -147,3 +151,9 @@ Update only compact pointers and statuses in `content_state`; keep full copy in 
 - Do not upload images, rewrite Markdown with public URLs, or publish externally without explicit confirmation.
 - Do not expose private paths, credentials, account details, or unreleased assets.
 - Stop when an image source is missing, the target platform requirement is uncertain and materially affects production, or the planned image could mislead readers.
+
+## 作者入口
+
+- 微信公众号：`AI生命克劳德`
+- X：[@yangchao228](https://x.com/yangchao228)
+- GitHub：[yangchao228](https://github.com/yangchao228)

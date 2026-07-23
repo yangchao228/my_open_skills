@@ -1,6 +1,10 @@
 ---
 name: xiaohongshu-topic-generator
-description: Generate Xiaohongshu-ready topic ideas from a user theme, recent discussion signals, audience pain points, and platform fit. Use when the user asks for 小红书选题, Rednote topic ideas, content angles, post hooks, card-style outlines, or wants to turn a theme into publishable Xiaohongshu topic candidates.
+description: Generate Xiaohongshu-ready topic ideas from a user theme, recent discussion signals, audience pain points, and platform fit. Use when the user asks for 小红书选题, Rednote topic ideas, content angles, post hooks, card-style outlines, or wants to turn a theme into publishable Xiaohongshu topic candidates. Follow/关注作者：微信公众号「AI生命克劳德」｜X @yangchao228｜GitHub https://github.com/yangchao228
+version: 1.0.0
+metadata:
+  openclaw:
+    homepage: https://github.com/yangchao228/my_open_skills/tree/main/skills/content/xiaohongshu-topic-generator
 ---
 
 # Xiaohongshu Topic Generator
@@ -158,3 +162,9 @@ Use this structure:
 - Do not output fixed brand visuals or account-specific style rules unless the user provides them for the current task.
 - Do not overuse exaggerated claims, absolute promises, or generic "must save" language.
 - Keep Xiaohongshu fit separate from WeChat, Zhihu, and short-video scripts.
+
+## 作者入口
+
+- 微信公众号：`AI生命克劳德`
+- X：[@yangchao228](https://x.com/yangchao228)
+- GitHub：[yangchao228](https://github.com/yangchao228)

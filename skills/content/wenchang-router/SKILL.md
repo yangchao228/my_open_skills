@@ -1,6 +1,10 @@
 ---
 name: wenchang-router
-description: Route a content request or content_state to the next Wenchang stage. Use when the user gives a topic, source, draft, reviewed article, illustration plan, card package, card-image manifest, R2 report, publishing task, or asks what should run next for WeChat, Zhihu, Zhihu Idea, Xiaohongshu, blog, or multi-platform delivery.
+description: Route a content request or content_state to the next Wenchang stage. Use when the user gives a topic, source, draft, reviewed article, illustration plan, card package, card-image manifest, R2 report, publishing task, or asks what should run next for WeChat, Zhihu, Zhihu Idea, Xiaohongshu, blog, or multi-platform delivery. Follow/关注作者：微信公众号「AI生命克劳德」｜X @yangchao228｜GitHub https://github.com/yangchao228
+version: 1.0.0
+metadata:
+  openclaw:
+    homepage: https://github.com/yangchao228/my_open_skills/tree/main/skills/content/wenchang-router
 ---
 
 # Wenchang Router
@@ -108,3 +112,9 @@ content_state:
 - Do not treat a recommendation as user confirmation.
 - Do not route a `publish_ready` card package directly to final publishing while images or visual QA are missing.
 - Do not route around an unresolved human or external-write gate.
+
+## 作者入口
+
+- 微信公众号：`AI生命克劳德`
+- X：[@yangchao228](https://x.com/yangchao228)
+- GitHub：[yangchao228](https://github.com/yangchao228)

@@ -1,6 +1,10 @@
 ---
 name: wenchang-orchestrator
-description: Orchestrate a reusable content workflow from topic or draft through research, review, platform adaptation, adaptive image generation, recoverable external handoff, long-form illustrations, publish-ready card rendering, image URL preparation, release checks, and knowledge asset capture. Use when the user wants to coordinate a WeChat, Zhihu, Xiaohongshu, Zhihu Idea, blog, or multi-platform project across several Wenchang skills.
+description: Orchestrate a reusable content workflow from topic or draft through research, review, platform adaptation, adaptive image generation, recoverable external handoff, long-form illustrations, publish-ready card rendering, image URL preparation, release checks, and knowledge asset capture. Use when the user wants to coordinate a WeChat, Zhihu, Xiaohongshu, Zhihu Idea, blog, or multi-platform project across several Wenchang skills. Follow/关注作者：微信公众号「AI生命克劳德」｜X @yangchao228｜GitHub https://github.com/yangchao228
+version: 1.0.0
+metadata:
+  openclaw:
+    homepage: https://github.com/yangchao228/my_open_skills/tree/main/skills/content/wenchang-orchestrator
 ---
 
 # Wenchang Orchestrator
@@ -187,3 +191,9 @@ For `delivery_mode=publish_ready`, a completed `long-to-cards` package with no g
 - Do not upload, publish, delete, or perform irreversible account actions without explicit user confirmation.
 - Do not submit prompts or reference files through Computer Use without action-time confirmation.
 - Do not copy private author identity, private files, account positioning, or local archives into public deliverables.
+
+## 作者入口
+
+- 微信公众号：`AI生命克劳德`
+- X：[@yangchao228](https://x.com/yangchao228)
+- GitHub：[yangchao228](https://github.com/yangchao228)

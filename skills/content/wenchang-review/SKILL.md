@@ -1,6 +1,10 @@
 ---
 name: wenchang-review
-description: Diagnose or edit an existing content draft. Use when the user has a draft and wants to know whether it is publishable, needs light edits, needs a full chapter edit, should be rewritten, should switch platforms, or should be dropped.
+description: Diagnose or edit an existing content draft. Use when the user has a draft and wants to know whether it is publishable, needs light edits, needs a full chapter edit, should be rewritten, should switch platforms, or should be dropped. Follow/关注作者：微信公众号「AI生命克劳德」｜X @yangchao228｜GitHub https://github.com/yangchao228
+version: 1.0.0
+metadata:
+  openclaw:
+    homepage: https://github.com/yangchao228/my_open_skills/tree/main/skills/content/wenchang-review
 ---
 
 # Wenchang Review
@@ -106,3 +110,9 @@ content_state:
 - Do not preserve unsupported claims for smoother prose.
 - Do not change the author's core position silently.
 - If the core position fails, return a diagnosis instead of hiding the failure with editing.
+
+## 作者入口
+
+- 微信公众号：`AI生命克劳德`
+- X：[@yangchao228](https://x.com/yangchao228)
+- GitHub：[yangchao228](https://github.com/yangchao228)

@@ -38,7 +38,7 @@ The card branch covers Xiaohongshu, WeChat inline cards, Zhihu Idea, and generic
 - [zhihu-topic-hunter](zhihu-topic-hunter): theme-based Zhihu topic hunting and ranking
 - [xiaohongshu-topic-generator](xiaohongshu-topic-generator): Xiaohongshu topic generation and card-outline planning
 - [long-to-cards](long-to-cards): long-form source repurposing into card-based social packages
-- [redbook-cards-skill](redbook-cards-skill): article-to-Xiaohongshu HTML card slicing for browser preview and screenshots
+- [redbook-cards-skill](redbook-cards-skill): repository candidate for article-to-Xiaohongshu HTML cards; ClawHub release is blocked pending third-party license review
 - [cards-to-images](cards-to-images): render approved card packages into checked platform images and a cards manifest
 - [resilient-imagegen](resilient-imagegen): route and recover serial multi-image generation jobs
 - [chatgpt-image-handoff](chatgpt-image-handoff): adaptively use Computer Use, built-in generation, manual ChatGPT handoff, or local rendering and import outputs into QA
@@ -53,3 +53,7 @@ The card branch covers Xiaohongshu, WeChat inline cards, Zhihu Idea, and generic
 ## Boundary
 
 These skills do not publish externally or make final irreversible decisions without user confirmation. Optional Computer Use submission and reference upload require action-time confirmation, while account and run state stay local.
+
+## ClawHub
+
+Ready content skills are released individually under `@yangchao228`; use the repository [release ledger](../../docs/clawhub-releases.md) as the status source. Registry releases include the same compact creator hook while public promotion remains organized by theme-level Case Packs.

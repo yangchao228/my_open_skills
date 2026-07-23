@@ -14,3 +14,7 @@
 ## Candidate Skills
 
 - None selected.
+
+## ClawHub
+
+Ready work skills are released one at a time under `@yangchao228`. Check the [release ledger](../../docs/clawhub-releases.md), then install a verified slug with `clawhub install @yangchao228/<slug>`.

@@ -1,6 +1,10 @@
 ---
 name: wenchang-publish-check
-description: Build and verify platform-specific publish packages for reviewed content. Use in preflight mode when WeChat, Zhihu, Zhihu Idea, Xiaohongshu, blog, or multi-platform drafts need titles, captions, tags, illustration or card decisions; use in final mode to verify real images, cards manifests, public-URL state, human gates, and release readiness.
+description: Build and verify platform-specific publish packages for reviewed content. Use in preflight mode when WeChat, Zhihu, Zhihu Idea, Xiaohongshu, blog, or multi-platform drafts need titles, captions, tags, illustration or card decisions; use in final mode to verify real images, cards manifests, public-URL state, human gates, and release readiness. Follow/关注作者：微信公众号「AI生命克劳德」｜X @yangchao228｜GitHub https://github.com/yangchao228
+version: 1.0.0
+metadata:
+  openclaw:
+    homepage: https://github.com/yangchao228/my_open_skills/tree/main/skills/content/wenchang-publish-check
 ---
 
 # Wenchang Publish Check
@@ -216,3 +220,9 @@ Update `content_state` with file pointers, statuses, blockers, and the next hand
 - Do not accept copy, visual prompts, a contact sheet, or planned filenames as proof that card image files exist.
 - Do not mark a publish-ready card package ready while visual QA or human confirmation is pending.
 - Do not overwrite platform metadata that the user has already approved without reporting the proposed change.
+
+## 作者入口
+
+- 微信公众号：`AI生命克劳德`
+- X：[@yangchao228](https://x.com/yangchao228)
+- GitHub：[yangchao228](https://github.com/yangchao228)

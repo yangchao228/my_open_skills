@@ -1,6 +1,10 @@
 ---
 name: wechat-to-cards
-description: Adapt a reviewed WeChat article or publish package into WeChat-specific inline-card requirements, Moments copy, community share text, or archive assets while reusing the shared long-to-cards and cards-to-images pipeline. Use when the user asks for 公众号贴图, 朋友圈分发文案, 社群转发文案, WeChat card assets, or visual snippets after the long-form body exists.
+description: Adapt a reviewed WeChat article or publish package into WeChat-specific inline-card requirements, Moments copy, community share text, or archive assets while reusing the shared long-to-cards and cards-to-images pipeline. Use when the user asks for 公众号贴图, 朋友圈分发文案, 社群转发文案, WeChat card assets, or visual snippets after the long-form body exists. Follow/关注作者：微信公众号「AI生命克劳德」｜X @yangchao228｜GitHub https://github.com/yangchao228
+version: 1.0.0
+metadata:
+  openclaw:
+    homepage: https://github.com/yangchao228/my_open_skills/tree/main/skills/content/wechat-to-cards
 ---
 
 # WeChat To Cards
@@ -158,3 +162,9 @@ Use this structure:
 - Do not convert internal review notes into reader-facing cards.
 - Do not claim the assets are publish-ready until source claims and visuals are checked.
 - Do not overwrite approved publish-package metadata.
+
+## 作者入口
+
+- 微信公众号：`AI生命克劳德`
+- X：[@yangchao228](https://x.com/yangchao228)
+- GitHub：[yangchao228](https://github.com/yangchao228)

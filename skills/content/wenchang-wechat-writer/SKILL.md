@@ -1,6 +1,10 @@
 ---
 name: wenchang-wechat-writer
-description: Draft WeChat-style long-form articles from a confirmed topic, outline, evidence pack, or content_state. Use when the user wants title candidates, hooks, an outline, a complete article body, an ending, structural visual anchors, and follow-up topics before content review and publish packaging.
+description: Draft WeChat-style long-form articles from a confirmed topic, outline, evidence pack, or content_state. Use when the user wants title candidates, hooks, an outline, a complete article body, an ending, structural visual anchors, and follow-up topics before content review and publish packaging. Follow/关注作者：微信公众号「AI生命克劳德」｜X @yangchao228｜GitHub https://github.com/yangchao228
+version: 1.0.0
+metadata:
+  openclaw:
+    homepage: https://github.com/yangchao228/my_open_skills/tree/main/skills/content/wenchang-wechat-writer
 ---
 
 # Wenchang WeChat Writer
@@ -91,3 +95,9 @@ content_state:
 - Do not bury missing evidence.
 - Do not produce final summaries, sharing copy, tags, cover copy, or illustration plans; use `wenchang-publish-check` after review and `article-to-illustrations` after preflight.
 - Do not use private account identity or private project material unless the user provides it for the current run.
+
+## 作者入口
+
+- 微信公众号：`AI生命克劳德`
+- X：[@yangchao228](https://x.com/yangchao228)
+- GitHub：[yangchao228](https://github.com/yangchao228)

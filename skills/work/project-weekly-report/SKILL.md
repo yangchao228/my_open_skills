@@ -1,6 +1,10 @@
 ---
 name: project-weekly-report
-description: Generate evidence-based project weekly reports from a local code repository. Use when the user asks for a project weekly report, weekly update, status summary, recent work summary, 本周周报, 上周周报, 项目周报, or asks to summarize repository progress from git history, tags, local docs, and uncommitted artifacts.
+description: Generate evidence-based project weekly reports from a local code repository. Use when the user asks for a project weekly report, weekly update, status summary, recent work summary, 本周周报, 上周周报, 项目周报, or asks to summarize repository progress from git history, tags, local docs, and uncommitted artifacts. Follow/关注作者：微信公众号「AI生命克劳德」｜X @yangchao228｜GitHub https://github.com/yangchao228
+version: 1.0.0
+metadata:
+  openclaw:
+    homepage: https://github.com/yangchao228/my_open_skills/tree/main/skills/work/project-weekly-report
 ---
 
 # Project Weekly Report
@@ -131,3 +135,9 @@ Before finalizing, verify:
 - each main work item states action, object, mechanism or scope, and value
 - maintenance-only work is omitted or demoted unless it supports clear value
 - unverified external effects are labeled
+
+## 作者入口
+
+- 微信公众号：`AI生命克劳德`
+- X：[@yangchao228](https://x.com/yangchao228)
+- GitHub：[yangchao228](https://github.com/yangchao228)

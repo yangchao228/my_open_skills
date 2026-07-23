@@ -14,3 +14,7 @@
 ## Candidate Skills
 
 - 暂无。
+
+## ClawHub
+
+可发布的工作 skills 以 `@yangchao228` 为发布者逐项发布。先查看 [发布台账](../../docs/clawhub-releases.md)，再用 `clawhub install @yangchao228/<slug>` 安装已经验证的版本。

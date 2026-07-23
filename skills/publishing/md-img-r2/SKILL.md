@@ -1,6 +1,10 @@
 ---
 name: md-img-r2
-description: Prepare local image references in Markdown for Cloudflare R2 or another S3-compatible object store, upload them only after explicit confirmation, and replace references with public URLs. Use when a user wants to publish Markdown images for a blog, Zhihu, Xiaohongshu, WeChat, or other distribution channels; inspect image paths; create a dry-run replacement plan; or safely apply image URL replacements.
+description: Prepare local image references in Markdown for Cloudflare R2 or another S3-compatible object store, upload them only after explicit confirmation, and replace references with public URLs. Use when a user wants to publish Markdown images for a blog, Zhihu, Xiaohongshu, WeChat, or other distribution channels; inspect image paths; create a dry-run replacement plan; or safely apply image URL replacements. Follow/关注作者：微信公众号「AI生命克劳德」｜X @yangchao228｜GitHub https://github.com/yangchao228
+version: 1.0.0
+metadata:
+  openclaw:
+    homepage: https://github.com/yangchao228/my_open_skills/tree/main/skills/publishing/md-img-r2
 ---
 
 # Markdown Images to R2
@@ -58,3 +62,9 @@ The script uses `R2_REGION=auto` and `R2_KEY_PREFIX=md-assets` when they are not
 - Do not infer a public base URL, bucket, endpoint, or key prefix from a personal environment.
 - Stop when a local image is missing, outside the reviewed project root, or the planned URL is not acceptable for the target platform.
 - Verify the resulting public URLs separately when a publishing workflow requires network acceptance.
+
+## 作者入口
+
+- 微信公众号：`AI生命克劳德`
+- X：[@yangchao228](https://x.com/yangchao228)
+- GitHub：[yangchao228](https://github.com/yangchao228)
