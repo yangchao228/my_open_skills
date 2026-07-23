@@ -155,9 +155,9 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - [x] Add a fail-closed single-skill preflight and publish script that requires a clean pushed source commit and an explicit live confirmation
 - [x] Add a state-change-only release watcher that verifies public metadata, exact installation, source hashes, security signals, and the generated Skill Card
 - [x] Validate the optimized workflow locally and with a real ClawHub dry-run before continuing to the fifth live release
-- [ ] Add three to five explicit ClawHub Topics to every ready skill while keeping version tags separate
-- [ ] Pass Topics through dry-run and live publication, then preserve the requested catalog metadata in receipts
-- [ ] Verify Topics through ClawHub's public skill API and page before finalizing a release
+- [x] Add three to five explicit ClawHub Topics to every ready skill while keeping version tags separate
+- [x] Pass Topics through dry-run and live publication, then preserve the requested catalog metadata in receipts
+- [x] Verify Topics through ClawHub's public skill API and page before finalizing a release
 - [x] Record the pilot's submitted state and the `redbook-cards-skill` license block in the release ledger
 - [ ] Update the release ledger with verified versions, timestamps, URLs, and any later skill-specific blocks
 
@@ -202,6 +202,8 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - sales and after-sales documents
 
 ## Review
+
+- 2026-07-23: Added ClawHub Topics as first-class release metadata before the fifth live release. Release-plan schema v2 now assigns five ordered, lowercase kebab-case Topics to all 20 ready skills, enforces ClawHub's five-topic and 48-character limits plus reserved-topic rules, keeps version Tags separate, and blocks plan/ledger drift. The runner passes `--topics` in dry-run and live modes and writes a v2 preflight receipt containing the exact Categories, Topics, Tags, changelog, source commit, and ClawHub result. Because CLI 0.23.1 strips Topics from `inspect`, the watcher now checks all five against ClawHub's public skill API and checks the first four rendered by the current page UI. A real read-only regression against the manually updated `doc-coauthoring@1.0.0` passed Categories, all five API Topics, four page Topics, exact installation, hashes, security, and Skill Card; this also caught and corrected the page's four-topic display limit. From pushed source `3c1ee3c`, `storm-research@1.0.0` again returned `would-publish` for four files with fingerprint `ae3fe382...`, now carrying `deep-research`, `source-synthesis`, `citation-workflow`, `contradiction-mapping`, and `research-brief`. No fifth skill was published.
 
 - 2026-07-23: Replaced the repetitive manual ClawHub release loop with a fail-closed, single-skill pipeline. Added a machine-readable plan covering all 20 ready skills (4 verified, 16 planned), explicit categories and discovery tags, remote version baselines, and `md-img-r2` target `1.0.4`. The release runner now requires the first planned slug, a clean pushed `main`, matching publisher identity and remote baseline, a successful dry-run, explicit `--publish --yes`, and an atomic live-publish lock. The state-change-only watcher was proven end to end against the existing `resume-interview-generator@1.0.1`, including public metadata, exact install, source and registry hashes, security, and Skill Card; its finalizer also passed in an isolated repository. From pushed source `176c558`, the real `storm-research@1.0.0` dry-run returned `would-publish` for four files with fingerprint `ae3fe382...` and explicit `research`, `knowledge`, and `productivity` categories. A preoccupied-lock live-flag test stopped before upload as designed. No fifth skill was published.
 
