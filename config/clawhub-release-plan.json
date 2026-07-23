@@ -587,7 +587,7 @@
       "path": "skills/publishing/md-img-r2",
       "display_name": "Markdown Images to R2",
       "risk": "high",
-      "status": "planned",
+      "status": "submitted",
       "remote_latest_version": "1.0.3",
       "target_version": "1.0.4",
       "categories": [
@@ -608,7 +608,9 @@
         "markdown",
         "r2"
       ],
-      "changelog": "Refresh public safety boundaries, creator channels, source metadata, examples, and explicit catalog categories and topics."
+      "changelog": "Refresh public safety boundaries, creator channels, source metadata, examples, and explicit catalog categories and topics.",
+      "submitted_at": "2026-07-23T14:01:56Z",
+      "source_commit": "cae647f724e5f7de2b201e5af7fbed5d5ed7097a"
     }
   ]
 }
