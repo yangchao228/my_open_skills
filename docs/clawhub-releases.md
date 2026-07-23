@@ -61,7 +61,7 @@ This ledger is the reader-facing source of truth for one-at-a-time ClawHub relea
 | 12 | `wechat-to-cards` | `skills/content/wechat-to-cards` | medium | `1.0.0` | public (2026-07-24 01:07 CST) | pending | 2026-07-23 21:55:13 CST | [page](https://clawhub.ai/yangchao228/skills/wechat-to-cards) |
 | 13 | `redbook-cards-skill` | `skills/content/redbook-cards-skill` | blocked | — | blocked: third-party MIT attribution conflicts with ClawHub MIT-0 packaging | not run | — | — |
 | 14 | `article-to-illustrations` | `skills/content/article-to-illustrations` | medium | `1.0.0` | public (2026-07-24 01:07 CST) | pending | 2026-07-23 21:56:07 CST | [page](https://clawhub.ai/yangchao228/skills/article-to-illustrations) |
-| 15 | `cards-to-images` | `skills/content/cards-to-images` | medium | `1.0.0` | submitted (2026-07-23 21:56 CST) | pending | — | [page](https://clawhub.ai/yangchao228/skills/cards-to-images) |
+| 15 | `cards-to-images` | `skills/content/cards-to-images` | medium | `1.0.0` | public (2026-07-24 01:07 CST) | pending | 2026-07-23 21:56:57 CST | [page](https://clawhub.ai/yangchao228/skills/cards-to-images) |
 | 16 | `resilient-imagegen` | `skills/content/resilient-imagegen` | medium | `1.0.0` | submitted (2026-07-23 21:57 CST) | pending | — | [page](https://clawhub.ai/yangchao228/skills/resilient-imagegen) |
 | 17 | `chatgpt-image-handoff` | `skills/content/chatgpt-image-handoff` | high | `1.0.0` | submitted (2026-07-23 21:58 CST) | pending | — | [page](https://clawhub.ai/yangchao228/skills/chatgpt-image-handoff) |
 | 18 | `wenchang-router` | `skills/content/wenchang-router` | medium | `1.0.0` | submitted (2026-07-23 21:59 CST) | pending | — | [page](https://clawhub.ai/yangchao228/skills/wenchang-router) |
