@@ -475,7 +475,7 @@
       "path": "skills/content/chatgpt-image-handoff",
       "display_name": "ChatGPT Image Handoff",
       "risk": "high",
-      "status": "planned",
+      "status": "submitted",
       "remote_latest_version": null,
       "target_version": "1.0.0",
       "categories": [
@@ -493,7 +493,9 @@
       "tags": [
         "latest"
       ],
-      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics."
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics.",
+      "submitted_at": "2026-07-23T13:58:44Z",
+      "source_commit": "e1688df081b127dbbec57f1062ef5ca41c853d56"
     },
     {
       "order": 18,
