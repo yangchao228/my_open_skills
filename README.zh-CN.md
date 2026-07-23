@@ -82,7 +82,7 @@
 
 仓库级说明见 [安装与试用](docs/install-and-trial.md)。
 
-ClawHub skills 以 `@yangchao228` 为发布者逐项发布，并在发布计划中显式维护 Categories 和 Topics。安装具体 slug 前先查看 [ClawHub 发布台账](docs/clawhub-releases.md)：
+ClawHub skills 以 `@yangchao228` 为发布者逐项提交，并在发布计划中显式维护 Categories 和 Topics；公开索引、安全扫描和 Skill Card 验证由后台异步对账。安装具体 slug 前先查看 [ClawHub 发布台账](docs/clawhub-releases.md)：
 
 ```bash
 clawhub install @yangchao228/create-plan

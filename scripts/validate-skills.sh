@@ -61,18 +61,26 @@ else
   plan_state_dir="$(jq -r '.state_dir // empty' "$release_plan_file")"
   plan_poll_seconds="$(jq -r '.poll_interval_seconds // empty' "$release_plan_file")"
   plan_timeout_minutes="$(jq -r '.timeout_minutes // empty' "$release_plan_file")"
+  plan_reconcile_minutes="$(jq -r '.reconcile_interval_minutes // empty' "$release_plan_file")"
+  low_gate="$(jq -r '.release_gate_policy.low // empty' "$release_plan_file")"
+  medium_gate="$(jq -r '.release_gate_policy.medium // empty' "$release_plan_file")"
+  high_gate="$(jq -r '.release_gate_policy.high // empty' "$release_plan_file")"
   topic_min_count="$(jq -r '.topic_policy.min_count // empty' "$release_plan_file")"
   topic_max_count="$(jq -r '.topic_policy.max_count // empty' "$release_plan_file")"
   topic_max_length="$(jq -r '.topic_policy.max_length // empty' "$release_plan_file")"
   topic_format="$(jq -r '.topic_policy.format // empty' "$release_plan_file")"
 
-  [ "$plan_schema_version" = "2" ] || error "$release_plan_file schema_version must be 2"
+  [ "$plan_schema_version" = "3" ] || error "$release_plan_file schema_version must be 3"
   [ "$plan_publisher" = "yangchao228" ] || error "$release_plan_file publisher_handle must be yangchao228"
   [ "$plan_source_repository" = "yangchao228/my_open_skills" ] || error "$release_plan_file source_repository must be yangchao228/my_open_skills"
   [ "$plan_source_ref" = "main" ] || error "$release_plan_file source_ref must be main"
   [ "$plan_state_dir" = ".clawhub-release-state" ] || error "$release_plan_file state_dir must be .clawhub-release-state"
   [[ "$plan_poll_seconds" =~ ^[1-9][0-9]*$ ]] || error "$release_plan_file poll_interval_seconds must be a positive integer"
   [[ "$plan_timeout_minutes" =~ ^[1-9][0-9]*$ ]] || error "$release_plan_file timeout_minutes must be a positive integer"
+  [ "$plan_reconcile_minutes" = "15" ] || error "$release_plan_file reconcile_interval_minutes must be 15"
+  [ "$low_gate" = "submitted" ] || error "$release_plan_file low-risk gate must be submitted"
+  [ "$medium_gate" = "public" ] || error "$release_plan_file medium-risk gate must be public"
+  [ "$high_gate" = "verified" ] || error "$release_plan_file high-risk gate must be verified"
   [ "$topic_min_count" = "3" ] || error "$release_plan_file topic_policy.min_count must be 3"
   [ "$topic_max_count" = "5" ] || error "$release_plan_file topic_policy.max_count must match ClawHub's limit of 5"
   [ "$topic_max_length" = "48" ] || error "$release_plan_file topic_policy.max_length must match ClawHub's limit of 48"
@@ -107,6 +115,9 @@ else
     plan_risk="$(jq -r '.risk // empty' <<<"$release_json")"
     plan_status="$(jq -r '.status // empty' <<<"$release_json")"
     plan_blocked_reason="$(jq -r '.blocked_reason // empty' <<<"$release_json")"
+    plan_submitted_at="$(jq -r '.submitted_at // empty' <<<"$release_json")"
+    plan_public_at="$(jq -r '.public_at // empty' <<<"$release_json")"
+    plan_source_commit="$(jq -r '.source_commit // empty' <<<"$release_json")"
     plan_remote_version="$(jq -r '.remote_latest_version // empty' <<<"$release_json")"
     plan_target_version="$(jq -r '.target_version // empty' <<<"$release_json")"
     category_count="$(jq '.categories | length' <<<"$release_json")"
@@ -137,11 +148,20 @@ else
       *) error "$release_plan_file has unsupported risk '$plan_risk' for $plan_slug" ;;
     esac
     case "$plan_status" in
-      planned|verified|blocked) ;;
+      planned|submitted|public|verified|blocked) ;;
       *) error "$release_plan_file has unsupported status '$plan_status' for $plan_slug" ;;
     esac
     if [ "$plan_status" = "blocked" ] && [ -z "$plan_blocked_reason" ]; then
       error "$release_plan_file blocked entry '$plan_slug' requires blocked_reason"
+    fi
+    if [ "$plan_status" = "submitted" ] || [ "$plan_status" = "public" ]; then
+      [[ "$plan_submitted_at" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$ ]] ||
+        error "$release_plan_file $plan_status entry '$plan_slug' requires submitted_at in UTC ISO format"
+      [[ "$plan_source_commit" =~ ^[0-9a-f]{40}$ ]] ||
+        error "$release_plan_file $plan_status entry '$plan_slug' requires a 40-character source_commit"
+    fi
+    if [ "$plan_status" = "public" ] && ! [[ "$plan_public_at" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$ ]]; then
+      error "$release_plan_file public entry '$plan_slug' requires public_at in UTC ISO format"
     fi
 
     if ! [[ "$plan_target_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
@@ -155,7 +175,7 @@ else
     [ "$skill_version" = "$plan_target_version" ] ||
       error "$plan_path/SKILL.md version '$skill_version' does not match release target '$plan_target_version'"
 
-    if [ "$plan_status" = "planned" ] || [ "$plan_status" = "blocked" ]; then
+    if [ "$plan_status" = "planned" ] || [ "$plan_status" = "submitted" ] || [ "$plan_status" = "blocked" ]; then
       if [ -z "$plan_remote_version" ]; then
         expected_target="1.0.0"
       else
@@ -165,7 +185,7 @@ else
       [ "$plan_target_version" = "$expected_target" ] ||
         error "$release_plan_file target '$plan_target_version' is not next version '$expected_target' for $plan_slug"
     elif [ "$plan_remote_version" != "$plan_target_version" ]; then
-      error "$release_plan_file verified release '$plan_slug' must have remote_latest_version equal to target_version"
+      error "$release_plan_file $plan_status release '$plan_slug' must have remote_latest_version equal to target_version"
     fi
 
     if [ "$category_count" -lt 1 ] || [ "$category_count" -gt 3 ]; then
@@ -216,6 +236,20 @@ else
     if ! grep -Fq "$ledger_prefix" docs/clawhub-releases.md; then
       error "docs/clawhub-releases.md ledger row is missing or stale for $plan_slug"
     fi
+    case "$plan_status" in
+      planned)
+        grep -Fq "$ledger_prefix prepared |" docs/clawhub-releases.md ||
+          error "docs/clawhub-releases.md must mark planned release '$plan_slug' as prepared"
+        ;;
+      submitted|public|verified)
+        grep -Fq "$ledger_prefix $plan_status (" docs/clawhub-releases.md ||
+          error "docs/clawhub-releases.md must mark '$plan_slug' as $plan_status"
+        ;;
+      blocked)
+        grep -Fq "$ledger_prefix blocked:" docs/clawhub-releases.md ||
+          error "docs/clawhub-releases.md must record the block for '$plan_slug'"
+        ;;
+    esac
 
     release_plan_paths+=("$plan_path")
   done < <(jq -c '.releases[]' "$release_plan_file")
@@ -429,11 +463,26 @@ fi
 if ! grep -Fqx '.clawhub-release-state/' .gitignore; then
   error ".gitignore must exclude .clawhub-release-state/"
 fi
-for release_script in scripts/clawhub-release-one.sh scripts/clawhub-watch-release.sh; do
+for release_script in scripts/clawhub-release-one.sh scripts/clawhub-watch-release.sh scripts/clawhub-reconcile-releases.sh; do
   if [ ! -x "$release_script" ]; then
     error "$release_script must be executable"
   fi
 done
+
+if [ ! -f ".github/workflows/clawhub-release-reconcile.yml" ]; then
+  error "missing scheduled ClawHub release reconciliation workflow"
+else
+  grep -Fq 'cron: "7,22,37,52 * * * *"' .github/workflows/clawhub-release-reconcile.yml ||
+    error "ClawHub reconciliation workflow must run every 15 minutes"
+  grep -Fq 'uses: actions/checkout@v7' .github/workflows/clawhub-release-reconcile.yml ||
+    error "ClawHub reconciliation workflow must use the pinned checkout major"
+  grep -Fq 'uses: actions/setup-node@v7' .github/workflows/clawhub-release-reconcile.yml ||
+    error "ClawHub reconciliation workflow must use the pinned setup-node major"
+  grep -Fq 'npm install --global clawhub@0.23.1' .github/workflows/clawhub-release-reconcile.yml ||
+    error "ClawHub reconciliation workflow must pin CLI 0.23.1"
+  grep -Fq './scripts/clawhub-reconcile-releases.sh' .github/workflows/clawhub-release-reconcile.yml ||
+    error "ClawHub reconciliation workflow must invoke the repository reconciler"
+fi
 
 for path in README.md CONTEXT.md docs/catalog.md docs/clawhub-releases.md docs/examples/wenchang-end-to-end-smoke.md skills/content/README.md skills/work/README.md skills/engineering/README.md skills/publishing/README.md; do
   if [ ! -f "$path" ]; then

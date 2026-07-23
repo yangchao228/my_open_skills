@@ -8,6 +8,8 @@ plan_file="config/clawhub-release-plan.json"
 publish_live=0
 confirmed=0
 watch_release=0
+watch_until="verified"
+watch_option_count=0
 finalize_release=0
 push_release=0
 slug=""
@@ -17,12 +19,13 @@ usage() {
   cat <<'EOF'
 Usage:
   scripts/clawhub-release-one.sh <slug>
-  scripts/clawhub-release-one.sh <slug> --publish --yes [--watch] [--finalize] [--push]
+  scripts/clawhub-release-one.sh <slug> --publish --yes [--watch-public | --watch]
 
 Default mode is a fail-closed dry-run. Live publication requires both
---publish and --yes. --finalize updates the release plan and Markdown ledger
-after category, topic, install, hash, security, and Skill Card verification.
---push also commits and pushes those finalization changes.
+--publish and --yes. A successful upload is recorded and pushed as submitted,
+then the command exits. --watch-public waits for public page/install readiness;
+--watch waits through security and Skill Card verification. Legacy --finalize
+and --push flags remain accepted with --watch.
 EOF
 }
 
@@ -41,11 +44,78 @@ cleanup_release_lock() {
   fi
 }
 
+replace_ledger_row() {
+  local replacement="$1"
+  local ledger_tmp
+  ledger_tmp="$(mktemp)"
+  awk -v target_slug="$slug" -v replacement="$replacement" '
+    /^## Release Ledger$/ { in_ledger = 1 }
+    /^Status values:/ { in_ledger = 0 }
+    in_ledger && $0 ~ /^\| [0-9]+ \|/ && index($0, "`" target_slug "`") {
+      print replacement
+      replaced = 1
+      next
+    }
+    { print }
+    END {
+      if (!replaced) {
+        exit 42
+      }
+    }
+  ' docs/clawhub-releases.md >"$ledger_tmp" || {
+    rm -f "$ledger_tmp"
+    die "could not update the release ledger row for $slug"
+  }
+  mv "$ledger_tmp" docs/clawhub-releases.md
+}
+
+record_submission() {
+  local submitted_at submitted_at_display replacement plan_tmp page_url
+
+  if [ -n "$(git status --porcelain=v1 --untracked-files=all)" ]; then
+    git status --short >&2
+    die "cannot record submission with unrelated worktree changes"
+  fi
+
+  submitted_at="$(jq -r '.submitted_at' "$receipt_dir/submission.json")"
+  submitted_at_display="$(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M CST')"
+  page_url="https://clawhub.ai/$publisher_handle/skills/$slug"
+  replacement="| $order | \`$slug\` | \`$skill_path\` | $risk | \`$target_version\` | submitted ($submitted_at_display) | pending | — | [page]($page_url) |"
+  replace_ledger_row "$replacement"
+
+  plan_tmp="$(mktemp)"
+  jq \
+    --arg slug "$slug" \
+    --arg submitted_at "$submitted_at" \
+    --arg source_commit "$head_commit" \
+    '
+      (.releases[] | select(.slug == $slug) | .status) = "submitted"
+      | (.releases[] | select(.slug == $slug) | .submitted_at) = $submitted_at
+      | (.releases[] | select(.slug == $slug) | .source_commit) = $source_commit
+    ' "$plan_file" >"$plan_tmp"
+  mv "$plan_tmp" "$plan_file"
+
+  "$repo/scripts/validate-skills.sh"
+  git diff --check
+  git add "$plan_file" docs/clawhub-releases.md
+  git commit -m "Submit $slug $target_version to ClawHub"
+  git push origin "$source_ref"
+}
+
 while [ "$#" -gt 0 ]; do
   case "$1" in
     --publish) publish_live=1 ;;
     --yes) confirmed=1 ;;
-    --watch) watch_release=1 ;;
+    --watch)
+      watch_release=1
+      watch_until="verified"
+      watch_option_count=$((watch_option_count + 1))
+      ;;
+    --watch-public)
+      watch_release=1
+      watch_until="public"
+      watch_option_count=$((watch_option_count + 1))
+      ;;
     --finalize) finalize_release=1 ;;
     --push) push_release=1 ;;
     -h|--help)
@@ -70,13 +140,14 @@ done
   exit 1
 }
 [ -f "$plan_file" ] || die "missing $plan_file"
+[ "$watch_option_count" -le 1 ] || die "use either --watch-public or --watch"
 
 for command_name in jq git clawhub curl shasum diff rg; do
   need_command "$command_name"
 done
 
 if [ "$publish_live" -eq 0 ] && { [ "$watch_release" -eq 1 ] || [ "$finalize_release" -eq 1 ] || [ "$push_release" -eq 1 ]; }; then
-  die "--watch, --finalize, and --push require --publish"
+  die "--watch-public, --watch, --finalize, and --push require --publish"
 fi
 if [ "$publish_live" -eq 1 ] && [ "$confirmed" -ne 1 ]; then
   die "live publication requires --publish --yes"
@@ -101,6 +172,7 @@ timeout_minutes="$(jq -r '.timeout_minutes' "$plan_file")"
 skill_path="$(jq -r '.path' <<<"$release_json")"
 display_name="$(jq -r '.display_name' <<<"$release_json")"
 risk="$(jq -r '.risk' <<<"$release_json")"
+order="$(jq -r '.order' <<<"$release_json")"
 release_status="$(jq -r '.status' <<<"$release_json")"
 configured_remote="$(jq -r '.remote_latest_version // ""' <<<"$release_json")"
 target_version="$(jq -r '.target_version' <<<"$release_json")"
@@ -113,11 +185,29 @@ changelog="$(jq -r '.changelog' <<<"$release_json")"
 [ -f "$skill_path/SKILL.md" ] || die "missing $skill_path/SKILL.md"
 [ "$release_status" = "planned" ] || die "$slug@$target_version has release status '$release_status'; only planned entries may be published"
 
-next_planned_slug="$(
-  jq -r '[.releases[] | select(.status == "planned")] | sort_by(.order) | .[0].slug // empty' "$plan_file"
+blocking_prior="$(
+  jq -ce --arg slug "$slug" '
+    (.releases[] | select(.slug == $slug) | .order) as $target_order
+    | [
+        .releases[]
+        | select(.order < $target_order)
+        | select(
+            .status == "planned"
+            or (.risk == "medium" and .status == "submitted")
+            or (.risk == "high" and (.status == "submitted" or .status == "public"))
+          )
+      ]
+    | sort_by(.order)
+    | .[0] // empty
+  ' "$plan_file" 2>/dev/null || true
 )"
-[ "$slug" = "$next_planned_slug" ] ||
-  die "strict release order requires '$next_planned_slug' before '$slug'"
+if [ -n "$blocking_prior" ]; then
+  blocking_slug="$(jq -r '.slug' <<<"$blocking_prior")"
+  blocking_risk="$(jq -r '.risk' <<<"$blocking_prior")"
+  blocking_status="$(jq -r '.status' <<<"$blocking_prior")"
+  required_gate="$(jq -r --arg risk "$blocking_risk" '.release_gate_policy[$risk]' "$plan_file")"
+  die "release order is blocked by '$blocking_slug' ($blocking_risk, $blocking_status); required gate is '$required_gate'"
+fi
 
 local_version="$(sed -n 's/^version:[[:space:]]*//p' "$skill_path/SKILL.md" | head -n 1)"
 [ "$local_version" = "$target_version" ] || die "$skill_path/SKILL.md version '$local_version' does not match planned target '$target_version'"
@@ -259,17 +349,24 @@ jq -n \
     publish: $publish[0]
   }' >"$receipt_dir/submission.json"
 
-printf 'published: %s@%s\n' "$slug" "$target_version"
-printf 'receipt: %s\n' "$receipt_dir/submission.json"
+record_submission
+
+printf 'submitted: %s@%s\n' "$slug" "$target_version"
+printf 'submission receipt: %s\n' "$receipt_dir/submission.json"
 
 if [ "$watch_release" -eq 1 ]; then
-  watch_args=("$slug" --poll-seconds "$poll_seconds" --timeout-minutes "$timeout_minutes")
-  [ "$finalize_release" -eq 1 ] && watch_args+=(--finalize)
-  if [ "$push_release" -eq 1 ]; then
-    watch_args+=(--push --yes)
-  fi
+  watch_args=(
+    "$slug"
+    --until "$watch_until"
+    --poll-seconds "$poll_seconds"
+    --timeout-minutes "$timeout_minutes"
+    --finalize
+    --push
+    --yes
+  )
   "$repo/scripts/clawhub-watch-release.sh" "${watch_args[@]}"
   exit $?
 fi
 
-printf 'next: scripts/clawhub-watch-release.sh %s\n' "$slug"
+printf 'foreground release is complete; ClawHub public/security/Card workers continue asynchronously\n'
+printf 'background reconciliation will promote submitted -> public -> verified\n'

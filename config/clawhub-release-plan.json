@@ -1,11 +1,17 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "publisher_handle": "yangchao228",
   "source_repository": "yangchao228/my_open_skills",
   "source_ref": "main",
   "state_dir": ".clawhub-release-state",
   "poll_interval_seconds": 60,
   "timeout_minutes": 90,
+  "reconcile_interval_minutes": 15,
+  "release_gate_policy": {
+    "low": "submitted",
+    "medium": "public",
+    "high": "verified"
+  },
   "valid_categories": [
     "integrations",
     "automation",

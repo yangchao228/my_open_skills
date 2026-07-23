@@ -150,7 +150,7 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - [x] Verify `create-plan@1.0.0` through inspect, exact-version temporary install, source-file hash comparison, security evidence, creator-link checks, and public-page HTTP 200
 - [x] Publish and verify `doc-coauthoring@1.0.0` through the same one-at-a-time release gate
 - [x] Verify `project-weekly-report@1.0.0` after publication through explicit category rendering, security evidence, temporary install, hashes, creator links, and the public page
-- [ ] Publish every remaining `planned` entry in `config/clawhub-release-plan.json` one at a time; advance only after a verified receipt
+- [ ] Publish every remaining `planned` entry in `config/clawhub-release-plan.json` one at a time; advance according to the configured risk gate
 - [x] Add a machine-readable release plan for the remaining 16 skills with explicit categories, remote baselines, target versions, tags, and changelogs
 - [x] Add a fail-closed single-skill preflight and publish script that requires a clean pushed source commit and an explicit live confirmation
 - [x] Add a state-change-only release watcher that verifies public metadata, exact installation, source hashes, security signals, and the generated Skill Card
@@ -158,6 +158,11 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - [x] Add three to five explicit ClawHub Topics to every ready skill while keeping version tags separate
 - [x] Pass Topics through dry-run and live publication, then preserve the requested catalog metadata in receipts
 - [x] Verify Topics through ClawHub's public skill API and page before finalizing a release
+- [x] Split release state into `submitted`, `public`, and `verified` milestones
+- [x] Let foreground publication record and push `submitted` immediately instead of waiting for platform workers
+- [x] Apply risk gates: low after `submitted`, medium after `public`, and high after `verified`
+- [x] Add an idempotent background reconciler and scheduled GitHub Action for public/verified promotion
+- [x] Prove the asynchronous state machine without uploading another skill
 - [x] Record the pilot's submitted state and the `redbook-cards-skill` license block in the release ledger
 - [ ] Update the release ledger with verified versions, timestamps, URLs, and any later skill-specific blocks
 
@@ -202,6 +207,8 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - sales and after-sales documents
 
 ## Review
+
+- 2026-07-23: Shortened the interactive ClawHub release path to stop after the platform accepts an upload. Release-plan schema v3 now records `submitted`, `public`, and `verified` separately and advances the serial queue at risk-specific gates: low at submitted, medium at public, and high at verified. The runner automatically records, commits, and pushes submitted state before returning; optional `--watch-public` and `--watch` modes remain available. A new idempotent reconciler and 15-minute GitHub Action inspect only existing releases, promote submitted to public and public to verified, and never upload a new skill. The watcher now writes separate public and verification receipts and fails real network errors instead of silently treating them as platform delay. Repository validation, shell syntax, workflow YAML, live read-only public/verified checks against `storm-research@1.0.0`, a pending-publication check against `wenchang-research`, and isolated submitted-to-public-to-verified ledger transitions all passed. No new skill was uploaded.
 
 - 2026-07-23: Added ClawHub Topics as first-class release metadata before the fifth live release. Release-plan schema v2 now assigns five ordered, lowercase kebab-case Topics to all 20 ready skills, enforces ClawHub's five-topic and 48-character limits plus reserved-topic rules, keeps version Tags separate, and blocks plan/ledger drift. The runner passes `--topics` in dry-run and live modes and writes a v2 preflight receipt containing the exact Categories, Topics, Tags, changelog, source commit, and ClawHub result. Because CLI 0.23.1 strips Topics from `inspect`, the watcher now checks all five against ClawHub's public skill API and checks the first four rendered by the current page UI. A real read-only regression against the manually updated `doc-coauthoring@1.0.0` passed Categories, all five API Topics, four page Topics, exact installation, hashes, security, and Skill Card; this also caught and corrected the page's four-topic display limit. From pushed source `3c1ee3c`, `storm-research@1.0.0` again returned `would-publish` for four files with fingerprint `ae3fe382...`, now carrying `deep-research`, `source-synthesis`, `citation-workflow`, `contradiction-mapping`, and `research-brief`. No fifth skill was published.
 

@@ -82,7 +82,7 @@ See [skills/publishing/README.md](skills/publishing/README.md).
 
 Use [Install and Trial](docs/install-and-trial.md) as the repository-level guide.
 
-ClawHub releases are published one at a time under `@yangchao228`, with explicit Categories and Topics recorded in the release plan. Check the [ClawHub release ledger](docs/clawhub-releases.md) before installing a specific slug:
+ClawHub releases are submitted one at a time under `@yangchao228`, with explicit Categories and Topics recorded in the release plan. Public indexing, security scans, and Skill Card verification are reconciled asynchronously. Check the [ClawHub release ledger](docs/clawhub-releases.md) before installing a specific slug:
 
 ```bash
 clawhub install @yangchao228/create-plan

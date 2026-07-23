@@ -11,21 +11,22 @@ run_once=0
 finalize_release=0
 push_release=0
 confirmed=0
+until_stage="verified"
 poll_seconds=""
 timeout_minutes=""
 
 usage() {
   cat <<'EOF'
 Usage:
-  scripts/clawhub-watch-release.sh <slug>
-  scripts/clawhub-watch-release.sh <slug> --once
+  scripts/clawhub-watch-release.sh <slug> [--until public|verified]
+  scripts/clawhub-watch-release.sh <slug> --once [--until public|verified]
   scripts/clawhub-watch-release.sh <slug> --finalize [--push --yes]
 
-The watcher prints only state changes. It waits for public latest metadata,
-validates categories, all API Topics, the first four page Topics, and creator
-hooks, installs the exact version, compares source and registry hashes, waits
-for full security verification and the generated Skill Card, then writes a
-machine-readable receipt.
+The watcher prints only state changes. The public milestone validates latest
+metadata, categories, Topics, creator hooks, and an exact-version install. The
+verified milestone additionally checks registry hashes, security workers, and
+the generated Skill Card. --finalize promotes the plan and ledger to the
+highest milestone reached.
 EOF
 }
 
@@ -44,6 +45,11 @@ while [ "$#" -gt 0 ]; do
     --finalize) finalize_release=1 ;;
     --push) push_release=1 ;;
     --yes) confirmed=1 ;;
+    --until)
+      shift
+      [ "$#" -gt 0 ] || die "--until requires public or verified"
+      until_stage="$1"
+      ;;
     --poll-seconds)
       shift
       [ "$#" -gt 0 ] || die "--poll-seconds requires a value"
@@ -77,6 +83,8 @@ done
 }
 [ -f "$plan_file" ] || die "missing $plan_file"
 [ -f "$profile_file" ] || die "missing $profile_file"
+[ "$until_stage" = "public" ] || [ "$until_stage" = "verified" ] ||
+  die "--until must be public or verified"
 
 for command_name in jq git clawhub curl shasum diff rg awk; do
   need_command "$command_name"
@@ -87,6 +95,10 @@ if [ "$push_release" -eq 1 ] && [ "$finalize_release" -ne 1 ]; then
 fi
 if [ "$push_release" -eq 1 ] && [ "$confirmed" -ne 1 ]; then
   die "automatic commit and push require --push --yes"
+fi
+if [ "$finalize_release" -eq 1 ] && [ -n "$(git status --porcelain=v1 --untracked-files=all)" ]; then
+  git status --short >&2
+  die "cannot finalize with unrelated worktree changes"
 fi
 
 release_json="$(jq -ce --arg slug "$slug" '.releases[] | select(.slug == $slug)' "$plan_file" 2>/dev/null || true)"
@@ -217,26 +229,9 @@ verify_installed_source() {
     die "installed SKILL.md is missing the source homepage"
 }
 
-finalize_ledger() {
-  local verify_json="$1"
-  local verified_at published_at issue_count severity recommendation scan_text page_url
-  local replacement ledger_tmp plan_tmp
-
-  if [ -n "$(git status --porcelain=v1 --untracked-files=all)" ]; then
-    git status --short >&2
-    die "cannot finalize with unrelated worktree changes"
-  fi
-
-  verified_at="$(date '+%Y-%m-%d %H:%M CST')"
-  published_at="$(format_epoch_ms_cst "$(jq -r '.createdAt' "$verify_json")")"
-  issue_count="$(jq -r '.security.signals.skillSpector.issueCount // 0' "$verify_json")"
-  severity="$(jq -r '.security.signals.skillSpector.severity // "UNKNOWN"' "$verify_json")"
-  recommendation="$(jq -r '.security.signals.skillSpector.recommendation // "UNKNOWN"' "$verify_json")"
-  page_url="$(jq -r '.pageUrl' "$verify_json")"
-  scan_text="pass; static, VirusTotal, and SkillSpector clean; $recommendation/$severity ($issue_count notes)"
-  [ "$issue_count" = "1" ] && scan_text="pass; static, VirusTotal, and SkillSpector clean; $recommendation/$severity (1 note)"
-
-  replacement="| $order | \`$slug\` | \`$skill_path\` | $risk | \`$target_version\` | verified ($verified_at) | $scan_text | $published_at | [page]($page_url) |"
+replace_ledger_row() {
+  local replacement="$1"
+  local ledger_tmp
   ledger_tmp="$(mktemp)"
   awk -v target_slug="$slug" -v replacement="$replacement" '
     /^## Release Ledger$/ { in_ledger = 1 }
@@ -257,14 +252,10 @@ finalize_ledger() {
     die "could not update the release ledger row for $slug"
   }
   mv "$ledger_tmp" docs/clawhub-releases.md
+}
 
-  plan_tmp="$(mktemp)"
-  jq --arg slug "$slug" --arg version "$target_version" '
-    (.releases[] | select(.slug == $slug) | .status) = "verified"
-    | (.releases[] | select(.slug == $slug) | .remote_latest_version) = $version
-  ' "$plan_file" >"$plan_tmp"
-  mv "$plan_tmp" "$plan_file"
-
+commit_release_state() {
+  local message="$1"
   "$repo/scripts/validate-skills.sh"
   git diff --check
 
@@ -272,9 +263,83 @@ finalize_ledger() {
     current_branch="$(git branch --show-current)"
     [ "$current_branch" = "$source_ref" ] || die "current branch '$current_branch' does not match '$source_ref'"
     git add "$plan_file" docs/clawhub-releases.md
-    git commit -m "Verify $slug $target_version on ClawHub"
+    git diff --cached --quiet && return 0
+    git commit -m "$message"
     git push origin "$source_ref"
   fi
+}
+
+finalize_public() {
+  local catalog_json="$1"
+  local current_status public_at public_at_display published_at page_url replacement plan_tmp
+
+  current_status="$(jq -r --arg slug "$slug" '.releases[] | select(.slug == $slug) | .status' "$plan_file")"
+  case "$current_status" in
+    public|verified) return 0 ;;
+    submitted) ;;
+    *) die "cannot promote $slug from '$current_status' to public" ;;
+  esac
+
+  public_at="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
+  public_at_display="$(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M CST')"
+  published_at="$(format_epoch_ms_cst "$(jq -r '.latestVersion.createdAt' "$catalog_json")")"
+  page_url="https://clawhub.ai/$publisher_handle/skills/$slug"
+  replacement="| $order | \`$slug\` | \`$skill_path\` | $risk | \`$target_version\` | public ($public_at_display) | pending | $published_at | [page]($page_url) |"
+  replace_ledger_row "$replacement"
+
+  plan_tmp="$(mktemp)"
+  jq \
+    --arg slug "$slug" \
+    --arg version "$target_version" \
+    --arg public_at "$public_at" \
+    '
+      (.releases[] | select(.slug == $slug) | .status) = "public"
+      | (.releases[] | select(.slug == $slug) | .remote_latest_version) = $version
+      | (.releases[] | select(.slug == $slug) | .public_at) = $public_at
+    ' "$plan_file" >"$plan_tmp"
+  mv "$plan_tmp" "$plan_file"
+
+  commit_release_state "Mark $slug $target_version public on ClawHub"
+}
+
+finalize_verified() {
+  local verify_json="$1"
+  local current_status verified_at verified_at_display published_at issue_count severity recommendation scan_text page_url
+  local replacement plan_tmp
+
+  current_status="$(jq -r --arg slug "$slug" '.releases[] | select(.slug == $slug) | .status' "$plan_file")"
+  case "$current_status" in
+    verified) return 0 ;;
+    public) ;;
+    *) die "cannot promote $slug from '$current_status' to verified" ;;
+  esac
+
+  verified_at="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
+  verified_at_display="$(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M CST')"
+  published_at="$(format_epoch_ms_cst "$(jq -r '.createdAt' "$verify_json")")"
+  issue_count="$(jq -r '.security.signals.skillSpector.issueCount // 0' "$verify_json")"
+  severity="$(jq -r '.security.signals.skillSpector.severity // "UNKNOWN"' "$verify_json")"
+  recommendation="$(jq -r '.security.signals.skillSpector.recommendation // "UNKNOWN"' "$verify_json")"
+  page_url="$(jq -r '.pageUrl' "$verify_json")"
+  scan_text="pass; static, VirusTotal, and SkillSpector clean; $recommendation/$severity ($issue_count notes)"
+  [ "$issue_count" = "1" ] && scan_text="pass; static, VirusTotal, and SkillSpector clean; $recommendation/$severity (1 note)"
+
+  replacement="| $order | \`$slug\` | \`$skill_path\` | $risk | \`$target_version\` | verified ($verified_at_display) | $scan_text | $published_at | [page]($page_url) |"
+  replace_ledger_row "$replacement"
+
+  plan_tmp="$(mktemp)"
+  jq \
+    --arg slug "$slug" \
+    --arg version "$target_version" \
+    --arg verified_at "$verified_at" \
+    '
+      (.releases[] | select(.slug == $slug) | .status) = "verified"
+      | (.releases[] | select(.slug == $slug) | .remote_latest_version) = $version
+      | (.releases[] | select(.slug == $slug) | .verified_at) = $verified_at
+    ' "$plan_file" >"$plan_tmp"
+  mv "$plan_tmp" "$plan_file"
+
+  commit_release_state "Verify $slug $target_version on ClawHub"
 }
 
 while :; do
@@ -282,24 +347,54 @@ while :; do
   inspect_json="$receipt_dir/inspect.json"
   inspect_error="$receipt_dir/inspect.error.txt"
 
-  if ! clawhub inspect "@$publisher_handle/$slug" --version "$target_version" --files --json >"$inspect_tmp" 2>"$inspect_error"; then
-    emit_stage "pending-publication" "exact version is not inspectable yet"
+  if clawhub inspect "@$publisher_handle/$slug" --version "$target_version" --files --json >"$inspect_tmp" 2>"$inspect_error"; then
+    :
   else
+    if rg -qi 'not found|404|pending[ ._-]*publication' "$inspect_error"; then
+      emit_stage "pending-publication" "exact version is not inspectable yet"
+      wait_for_next_poll
+      continue
+    fi
+    cat "$inspect_error" >&2
+    die "inspect failed for a reason other than pending publication"
+  fi
+
+  if [ -f "$inspect_tmp" ]; then
     mv "$inspect_tmp" "$inspect_json"
     latest_version="$(jq -r '.latestVersion.version // empty' "$inspect_json")"
     if [ "$latest_version" != "$target_version" ]; then
       emit_stage "pending-latest" "exact version exists but latest is '$latest_version'"
     else
       public_html="$receipt_dir/public-page.html"
-      if ! curl -fsSL "https://clawhub.ai/$publisher_handle/skills/$slug" -o "$public_html"; then
-        emit_stage "pending-page" "public page is not available"
+      public_page_error="$receipt_dir/public-page.error.txt"
+      if curl -fsSL "https://clawhub.ai/$publisher_handle/skills/$slug" -o "$public_html" 2>"$public_page_error"; then
+        :
       else
-        catalog_tmp="$receipt_dir/catalog.tmp.json"
-        catalog_json="$receipt_dir/catalog.json"
-        if ! curl -fsSL "https://clawhub.ai/api/v1/skills/$slug?ownerHandle=$publisher_handle" -o "$catalog_tmp"; then
-          emit_stage "pending-catalog" "public skill metadata is not available"
+        curl_status=$?
+        if [ "$curl_status" -eq 22 ]; then
+          emit_stage "pending-page" "public page is not available"
           wait_for_next_poll
           continue
+        fi
+        cat "$public_page_error" >&2
+        die "public page request failed"
+      fi
+
+      if [ -f "$public_html" ]; then
+        catalog_tmp="$receipt_dir/catalog.tmp.json"
+        catalog_json="$receipt_dir/catalog.json"
+        catalog_error="$receipt_dir/catalog.error.txt"
+        if curl -fsSL "https://clawhub.ai/api/v1/skills/$slug?ownerHandle=$publisher_handle" -o "$catalog_tmp" 2>"$catalog_error"; then
+          :
+        else
+          curl_status=$?
+          if [ "$curl_status" -eq 22 ]; then
+            emit_stage "pending-catalog" "public skill metadata is not available"
+            wait_for_next_poll
+            continue
+          fi
+          cat "$catalog_error" >&2
+          die "public catalog request failed"
         fi
         jq . "$catalog_tmp" >/dev/null 2>&1 || die "public skill metadata is not valid JSON"
         mv "$catalog_tmp" "$catalog_json"
@@ -314,14 +409,45 @@ while :; do
           : >"$receipt_dir/source-verified"
         fi
 
+        jq -n \
+          --arg schema "my-open-skills.clawhub-public.v1" \
+          --arg public_at "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" \
+          --arg categories "$categories_csv" \
+          --arg topics "$topics_csv" \
+          --arg source_path "$skill_path" \
+          --slurpfile catalog "$catalog_json" \
+          --slurpfile inspect "$inspect_json" \
+          '{
+            schema: $schema,
+            public_at: $public_at,
+            categories: ($categories | split(",")),
+            topics: ($topics | split(",")),
+            source_path: $source_path,
+            catalog: $catalog[0],
+            inspect: $inspect[0]
+          }' >"$receipt_dir/public.json"
+
+        emit_stage "public" "latest metadata, categories, topics, creator hooks, and exact install passed"
+
+        if [ "$finalize_release" -eq 1 ]; then
+          finalize_public "$catalog_json"
+        fi
+
+        if [ "$until_stage" = "public" ]; then
+          printf 'public receipt: %s\n' "$receipt_dir/public.json"
+          exit 0
+        fi
+
         verify_tmp="$receipt_dir/verify.tmp.json"
         verify_json="$receipt_dir/verify.json"
         verify_error="$receipt_dir/verify.error.txt"
-        if clawhub skill verify "@$publisher_handle/$slug" --version "$target_version" --json >"$verify_tmp" 2>"$verify_error"; then
-          :
-        fi
+        clawhub skill verify "@$publisher_handle/$slug" --version "$target_version" --json >"$verify_tmp" 2>"$verify_error" || true
 
         if ! jq . "$verify_tmp" >/dev/null 2>&1; then
+          if rg -qi 'network request failed|fetch failed|econn|enotfound|etimedout|tls|certificate' "$verify_error"; then
+            cat "$verify_error" >&2
+            die "security verification request failed"
+          fi
           emit_stage "pending-security" "verification result is not available"
         else
           mv "$verify_tmp" "$verify_json"
@@ -364,7 +490,7 @@ while :; do
             emit_stage "verified" "categories, topics, install, hashes, security, and Skill Card passed"
 
             if [ "$finalize_release" -eq 1 ]; then
-              finalize_ledger "$verify_json"
+              finalize_verified "$verify_json"
             fi
 
             printf 'verification receipt: %s\n' "$receipt_dir/verification.json"

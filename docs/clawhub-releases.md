@@ -11,7 +11,9 @@ This ledger is the reader-facing source of truth for one-at-a-time ClawHub relea
 - Choose and record one to three valid ClawHub category slugs before every live publish, and pass them explicitly with `--categories`; do not rely on automatic inference or the `Other` fallback.
 - Choose three to five specific discovery topics before every live publish, order the most important four first for the current page UI, and pass them explicitly with `--topics`. Keep `--tags` for version aliases such as `latest`.
 - Publish only from a clean, committed source and pass the source repository, commit, ref, and path to the CLI.
-- Verify every live version with `clawhub inspect`, a temporary install, and the registry security scan before advancing.
+- Treat a successful ClawHub upload response as `submitted`, then let the platform finish public indexing, security scans, and Skill Card generation asynchronously.
+- Advance the serial release queue at the configured risk gate: low at `submitted`, medium at `public`, and high at `verified`. Every submitted version still progresses to full verification in the background.
+- Run the background reconciler every 15 minutes. It may inspect, install, verify, update the plan and ledger, commit, and push; it never uploads a new skill.
 - Treat ClawHub's MIT-0 release license as a distribution rule. Do not publish bundled third-party material when its attribution or license cannot be preserved safely.
 - Keep the capability and trigger language first in `description`; append the canonical creator suffix exactly once.
 - Promote skills through theme-level Case Packs even though registry releases are atomic.
@@ -67,7 +69,7 @@ This ledger is the reader-facing source of truth for one-at-a-time ClawHub relea
 | 20 | `wenchang-orchestrator` | `skills/content/wenchang-orchestrator` | medium | `1.0.0` | prepared | pending | — | [page](https://clawhub.ai/yangchao228/skills/wenchang-orchestrator) |
 | 21 | `md-img-r2` | `skills/publishing/md-img-r2` | high | `1.0.4` | prepared | pending | — | [page](https://clawhub.ai/yangchao228/skills/md-img-r2) |
 
-Status values: `prepared`, `pending-publication`, `published`, `verified`, `blocked`. `pending-publication` means ClawHub accepted the upload but still hides it from inspect/install while platform security workers finish. A skill-specific block does not authorize weakening validation or changing the skill's safety boundary.
+Status values: `prepared`, `submitted`, `public`, `verified`, `blocked`. `submitted` means ClawHub accepted the upload. `public` means the page, metadata, Topics, creator hooks, and exact-version install passed. `verified` additionally means registry hashes, security workers, and Skill Card passed. A skill-specific block does not authorize weakening validation or changing the skill's safety boundary.
 
 ## Optimized Single-Skill Runner
 
@@ -75,31 +77,35 @@ The automated path keeps live publication atomic and fail-closed:
 
 ```bash
 # Validate metadata, remote baseline, clean pushed source, and ClawHub dry-run.
-./scripts/clawhub-release-one.sh storm-research
+./scripts/clawhub-release-one.sh wenchang-research
 
-# Explicitly publish one version and keep watching until the full gate passes.
-./scripts/clawhub-release-one.sh storm-research --publish --yes --watch
+# Publish, record and push submitted state, then return immediately.
+./scripts/clawhub-release-one.sh wenchang-research --publish --yes
 
-# Optional: after verification, update the plan and ledger, commit, and push.
-./scripts/clawhub-release-one.sh storm-research --publish --yes --watch --finalize --push
+# Optional foreground waits.
+./scripts/clawhub-release-one.sh wenchang-research --publish --yes --watch-public
+./scripts/clawhub-release-one.sh wenchang-research --publish --yes --watch
 ```
 
 The watcher can also resume independently:
 
 ```bash
-./scripts/clawhub-watch-release.sh storm-research
-./scripts/clawhub-watch-release.sh storm-research --once
+./scripts/clawhub-watch-release.sh wenchang-research --until public
+./scripts/clawhub-watch-release.sh wenchang-research --once --until verified
+./scripts/clawhub-reconcile-releases.sh
 ```
 
-Transient preflight, public catalog API, inspect, page, install, scan, and Skill Card receipts are written under the ignored `.clawhub-release-state/` directory. The watcher verifies all planned Topics through the public API and the first four Topics rendered by the current page UI, and prints only state changes. Preparing the next skill is allowed while it waits, but another live publish still waits for the current skill's final `decision: pass`.
+Transient preflight, submission, public, inspect, page, install, scan, and Skill Card receipts are written under the ignored `.clawhub-release-state/` directory. The watcher verifies all planned Topics through the public API and the first four Topics rendered by the current page UI, and prints only state changes.
 
-The runner accepts only the first `planned` entry by release order and acquires an atomic live-publish lock. If a skill-specific gate cannot pass, record that plan entry as `blocked` with a `blocked_reason` and update its ledger row before advancing; publisher identity, creator-hook, or authentication failures stop the sequence.
+The runner accepts the next `planned` entry whose earlier releases have reached their configured risk gates, and it acquires an atomic live-publish lock. The scheduled GitHub Action runs at minutes 7, 22, 37, and 52, so platform work never holds the interactive terminal open. If a skill-specific gate cannot pass, record that plan entry as `blocked` with a `blocked_reason` and update its ledger row before advancing; publisher identity, creator-hook, or authentication failures stop the sequence.
 
 ## 中文说明
 
-- 每个 skill 独立执行 dry-run、发布、inspect、临时安装和安全扫描，完成后再进入下一项。
+- 每个 skill 独立执行 dry-run 和发布；ClawHub 接受上传后立即记为 `submitted`，前台任务完成。
+- 公开页面、临时安装、安全扫描和 Skill Card 由后台每 15 分钟对账，依次晋级为 `public` 和 `verified`。
+- 发布队列按风险门槛推进：低风险到 `submitted`，中风险到 `public`，高风险到 `verified`；所有版本最终仍需达到 `verified`。
 - ClawHub 描述统一追加公众号、X 和 GitHub 作者入口；能力和触发条件始终放在前面。
 - ClawHub 发布采用 MIT-0。含第三方版权或无法确认再许可边界的 skill 保持 `blocked`，不强行发布。
 - ClawHub 条目逐个发布，自媒体内容继续按主题 Case Pack 组织，避免把公开系列拆成零散功能介绍。
-- 默认脚本只执行 dry-run；正式发布必须显式传入 `--publish --yes`。自动改台账并推送还需要 `--finalize --push`，避免误触外部写入。
+- 默认脚本只执行 dry-run；正式发布必须显式传入 `--publish --yes`。上传成功后脚本自动更新并推送 `submitted` 台账；定时任务只对账已有发布，不会上传新 skill。
 - Categories 用于平台大类，Topics 用于细粒度发现，Tags 仅保留版本别名用途；发布前都从机器可读计划中显式传入。
