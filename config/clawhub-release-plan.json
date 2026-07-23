@@ -578,8 +578,8 @@
       "path": "skills/content/wenchang-orchestrator",
       "display_name": "Wenchang Orchestrator",
       "risk": "medium",
-      "status": "submitted",
-      "remote_latest_version": null,
+      "status": "public",
+      "remote_latest_version": "1.0.0",
       "target_version": "1.0.0",
       "categories": [
         "agents",
@@ -598,7 +598,8 @@
       ],
       "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics.",
       "submitted_at": "2026-07-23T14:01:06Z",
-      "source_commit": "717d357eb2305b6c3eadc896bc6c6780d2fd9d2a"
+      "source_commit": "717d357eb2305b6c3eadc896bc6c6780d2fd9d2a",
+      "public_at": "2026-07-23T17:09:04Z"
     },
     {
       "order": 21,
