@@ -9,8 +9,8 @@
   "reconcile_interval_minutes": 15,
   "release_gate_policy": {
     "low": "submitted",
-    "medium": "public",
-    "high": "verified"
+    "medium": "submitted",
+    "high": "submitted"
   },
   "valid_categories": [
     "integrations",

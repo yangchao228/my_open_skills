@@ -22,7 +22,7 @@ The validation script checks:
 - public files do not contain common private-path or credential markers
 - every `ready` skill appears exactly once in `config/clawhub-release-plan.json`
 - every release has a valid ordered status (`planned`, `submitted`, `public`, `verified`, or reasoned `blocked`), risk, next semver, one to three explicit non-`other` categories, three to five topics, tags, and a changelog
-- risk gates remain fixed at low=`submitted`, medium=`public`, and high=`verified`
+- release gates remain fixed at `submitted` for low, medium, and high risk; full verification continues asynchronously
 - every topic uses lowercase ASCII kebab-case, stays within ClawHub's 48-character limit, avoids reserved platform slugs, and does not duplicate a broad category
 - release-plan categories, topics, order, source path, risk, and target version match `docs/clawhub-releases.md`
 - every ready skill has the canonical creator suffix and footer exactly once, a source homepage, and a package under ClawHub's size limit

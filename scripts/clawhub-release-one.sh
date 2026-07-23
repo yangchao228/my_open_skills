@@ -187,15 +187,20 @@ changelog="$(jq -r '.changelog' <<<"$release_json")"
 
 blocking_prior="$(
   jq -ce --arg slug "$slug" '
+    def status_rank($status):
+      if $status == "planned" then 0
+      elif $status == "submitted" then 1
+      elif $status == "public" then 2
+      elif $status == "verified" then 3
+      else 4
+      end;
     (.releases[] | select(.slug == $slug) | .order) as $target_order
+    | .release_gate_policy as $gate_policy
     | [
         .releases[]
         | select(.order < $target_order)
-        | select(
-            .status == "planned"
-            or (.risk == "medium" and .status == "submitted")
-            or (.risk == "high" and (.status == "submitted" or .status == "public"))
-          )
+        | select(.status != "blocked")
+        | select(status_rank(.status) < status_rank($gate_policy[.risk]))
       ]
     | sort_by(.order)
     | .[0] // empty

@@ -150,7 +150,7 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - [x] Verify `create-plan@1.0.0` through inspect, exact-version temporary install, source-file hash comparison, security evidence, creator-link checks, and public-page HTTP 200
 - [x] Publish and verify `doc-coauthoring@1.0.0` through the same one-at-a-time release gate
 - [x] Verify `project-weekly-report@1.0.0` after publication through explicit category rendering, security evidence, temporary install, hashes, creator links, and the public page
-- [ ] Publish every remaining `planned` entry in `config/clawhub-release-plan.json` one at a time; advance according to the configured risk gate
+- [ ] Publish every remaining `planned` entry in `config/clawhub-release-plan.json` one at a time; advance after each upload reaches `submitted`
 - [x] Add a machine-readable release plan for the remaining 16 skills with explicit categories, remote baselines, target versions, tags, and changelogs
 - [x] Add a fail-closed single-skill preflight and publish script that requires a clean pushed source commit and an explicit live confirmation
 - [x] Add a state-change-only release watcher that verifies public metadata, exact installation, source hashes, security signals, and the generated Skill Card
@@ -160,7 +160,7 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - [x] Verify Topics through ClawHub's public skill API and page before finalizing a release
 - [x] Split release state into `submitted`, `public`, and `verified` milestones
 - [x] Let foreground publication record and push `submitted` immediately instead of waiting for platform workers
-- [x] Apply risk gates: low after `submitted`, medium after `public`, and high after `verified`
+- [x] Advance every risk level after `submitted`; keep unresolved public/verification work in the background backlog
 - [x] Add an idempotent background reconciler and scheduled GitHub Action for public/verified promotion
 - [x] Prove the asynchronous state machine without uploading another skill
 - [x] Record the pilot's submitted state and the `redbook-cards-skill` license block in the release ledger
@@ -207,6 +207,8 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - sales and after-sales documents
 
 ## Review
+
+- 2026-07-23: Changed the release queue boundary after the owner chose throughput over waiting for ClawHub's public-index and Skill Card workers. Low, medium, and high risk releases now all advance after the live upload returns `published` and the repository records `submitted`; source, identity, metadata, credentials, dry-run, and one-live-upload-at-a-time checks remain mandatory. Entries that have not reached `public` or `verified` stay visible in the machine-readable plan and Markdown ledger, and the 15-minute reconciler continues processing them independently of later uploads.
 
 - 2026-07-23: Shortened the interactive ClawHub release path to stop after the platform accepts an upload. Release-plan schema v3 now records `submitted`, `public`, and `verified` separately and advances the serial queue at risk-specific gates: low at submitted, medium at public, and high at verified. The runner automatically records, commits, and pushes submitted state before returning; optional `--watch-public` and `--watch` modes remain available. A new idempotent reconciler and 15-minute GitHub Action inspect only existing releases, promote submitted to public and public to verified, and never upload a new skill. The watcher now writes separate public and verification receipts and fails real network errors instead of silently treating them as platform delay. Repository validation, shell syntax, workflow YAML, live read-only public/verified checks against `storm-research@1.0.0`, a pending-publication check against `wenchang-research`, and isolated submitted-to-public-to-verified ledger transitions all passed. The first remote Action dispatch exposed that the current Ubuntu runner does not provide `ripgrep`; replacing that hidden dependency with portable `grep` kept credential scans active, and the second dispatch passed in 22 seconds with an idempotent no-pending result. The next `wenchang-research@1.0.0` dry-run also returned `would-publish` for four files with the planned Categories and Topics. No new skill was uploaded.
 

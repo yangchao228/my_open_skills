@@ -12,7 +12,7 @@ This ledger is the reader-facing source of truth for one-at-a-time ClawHub relea
 - Choose three to five specific discovery topics before every live publish, order the most important four first for the current page UI, and pass them explicitly with `--topics`. Keep `--tags` for version aliases such as `latest`.
 - Publish only from a clean, committed source and pass the source repository, commit, ref, and path to the CLI.
 - Treat a successful ClawHub upload response as `submitted`, then let the platform finish public indexing, security scans, and Skill Card generation asynchronously.
-- Advance the serial release queue at the configured risk gate: low at `submitted`, medium at `public`, and high at `verified`. Every submitted version still progresses to full verification in the background.
+- Advance the serial release queue after every risk level reaches `submitted`. Public indexing and verification never block later uploads; unresolved versions remain in the reconciliation backlog until they become `verified` or receive a documented skill-specific block.
 - Run the background reconciler every 15 minutes. It may inspect, install, verify, update the plan and ledger, commit, and push; it never uploads a new skill.
 - Treat ClawHub's MIT-0 release license as a distribution rule. Do not publish bundled third-party material when its attribution or license cannot be preserved safely.
 - Keep the capability and trigger language first in `description`; append the canonical creator suffix exactly once.
@@ -97,13 +97,19 @@ The watcher can also resume independently:
 
 Transient preflight, submission, public, inspect, page, install, scan, and Skill Card receipts are written under the ignored `.clawhub-release-state/` directory. The watcher verifies all planned Topics through the public API and the first four Topics rendered by the current page UI, and prints only state changes.
 
-The runner accepts the next `planned` entry whose earlier releases have reached their configured risk gates, and it acquires an atomic live-publish lock. The scheduled GitHub Action runs at minutes 7, 22, 37, and 52, so platform work never holds the interactive terminal open. If a skill-specific gate cannot pass, record that plan entry as `blocked` with a `blocked_reason` and update its ledger row before advancing; publisher identity, creator-hook, or authentication failures stop the sequence.
+The runner accepts the next `planned` entry after every earlier release has reached `submitted` or a documented `blocked` state, and it acquires an atomic live-publish lock. The scheduled GitHub Action runs at minutes 7, 22, 37, and 52, so platform work never holds the interactive terminal open. Publisher identity, creator-hook, authentication, source, or live-upload failures still stop the sequence.
+
+Any plan entry in `submitted` or `public` is part of the deferred verification backlog. The reconciler keeps retrying those entries independently of later uploads:
+
+```bash
+jq -r '.releases[] | select(.status == "submitted" or .status == "public") | [.order, .slug, .risk, .status] | @tsv' config/clawhub-release-plan.json
+```
 
 ## 中文说明
 
 - 每个 skill 独立执行 dry-run 和发布；ClawHub 接受上传后立即记为 `submitted`，前台任务完成。
 - 公开页面、临时安装、安全扫描和 Skill Card 由后台每 15 分钟对账，依次晋级为 `public` 和 `verified`。
-- 发布队列按风险门槛推进：低风险到 `submitted`，中风险到 `public`，高风险到 `verified`；所有版本最终仍需达到 `verified`。
+- 所有风险等级在达到 `submitted` 后都可以继续下一项；未达到 `public/verified` 的版本进入后台积压清单，后续集中处理。
 - ClawHub 描述统一追加公众号、X 和 GitHub 作者入口；能力和触发条件始终放在前面。
 - ClawHub 发布采用 MIT-0。含第三方版权或无法确认再许可边界的 skill 保持 `blocked`，不强行发布。
 - ClawHub 条目逐个发布，自媒体内容继续按主题 Case Pack 组织，避免把公开系列拆成零散功能介绍。
