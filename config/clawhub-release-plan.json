@@ -311,8 +311,8 @@
       "path": "skills/content/zhihu-topic-hunter",
       "display_name": "Zhihu Topic Hunter",
       "risk": "low",
-      "status": "submitted",
-      "remote_latest_version": null,
+      "status": "public",
+      "remote_latest_version": "1.0.0",
       "target_version": "1.0.0",
       "categories": [
         "research",
@@ -331,7 +331,8 @@
       ],
       "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics.",
       "submitted_at": "2026-07-23T13:46:49Z",
-      "source_commit": "091f9a49c2981f13cbf39041c5c0a9b2dd329f6e"
+      "source_commit": "091f9a49c2981f13cbf39041c5c0a9b2dd329f6e",
+      "public_at": "2026-07-23T15:37:13Z"
     },
     {
       "order": 11,
