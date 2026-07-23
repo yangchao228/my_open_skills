@@ -503,7 +503,7 @@
       "path": "skills/content/wenchang-router",
       "display_name": "Wenchang Router",
       "risk": "medium",
-      "status": "planned",
+      "status": "submitted",
       "remote_latest_version": null,
       "target_version": "1.0.0",
       "categories": [
@@ -521,7 +521,9 @@
       "tags": [
         "latest"
       ],
-      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics."
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics.",
+      "submitted_at": "2026-07-23T13:59:29Z",
+      "source_commit": "cf0a28c60c13791f9ed84b8087a8e30b4308d474"
     },
     {
       "order": 19,
