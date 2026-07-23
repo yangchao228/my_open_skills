@@ -2,6 +2,7 @@
 .agents/
 .baoyu-skills/
 .chatgpt-handoff/
+.clawhub-release-state/
 __pycache__/
 *.py[cod]
 *.md.bak

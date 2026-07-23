@@ -150,7 +150,11 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - [x] Verify `create-plan@1.0.0` through inspect, exact-version temporary install, source-file hash comparison, security evidence, creator-link checks, and public-page HTTP 200
 - [x] Publish and verify `doc-coauthoring@1.0.0` through the same one-at-a-time release gate
 - [x] Verify `project-weekly-report@1.0.0` after publication through explicit category rendering, security evidence, temporary install, hashes, creator links, and the public page
-- [ ] Publish the remaining 16 ready skills one at a time after the fourth release gate completes
+- [ ] Publish every remaining `planned` entry in `config/clawhub-release-plan.json` one at a time; advance only after a verified receipt
+- [ ] Add a machine-readable release plan for the remaining 16 skills with explicit categories, remote baselines, target versions, tags, and changelogs
+- [ ] Add a fail-closed single-skill preflight and publish script that requires a clean pushed source commit and an explicit live confirmation
+- [ ] Add a state-change-only release watcher that verifies public metadata, exact installation, source hashes, security signals, and the generated Skill Card
+- [ ] Validate the optimized workflow locally and with a real ClawHub dry-run before continuing to the fifth live release
 - [x] Record the pilot's submitted state and the `redbook-cards-skill` license block in the release ledger
 - [ ] Update the release ledger with verified versions, timestamps, URLs, and any later skill-specific blocks
 

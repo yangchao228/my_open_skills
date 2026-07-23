@@ -16,6 +16,7 @@ error() {
 }
 
 profile_file="config/clawhub-profile.json"
+release_plan_file="config/clawhub-release-plan.json"
 publisher_handle=""
 wechat_official_account=""
 x_handle=""
@@ -44,6 +45,143 @@ else
       error "$profile_file contains an empty required creator field"
     fi
   done
+fi
+
+release_plan_paths=()
+
+if [ ! -f "$release_plan_file" ]; then
+  error "missing $release_plan_file"
+elif ! jq . "$release_plan_file" >/dev/null; then
+  error "$release_plan_file is not valid JSON"
+else
+  plan_publisher="$(jq -r '.publisher_handle // empty' "$release_plan_file")"
+  plan_source_repository="$(jq -r '.source_repository // empty' "$release_plan_file")"
+  plan_source_ref="$(jq -r '.source_ref // empty' "$release_plan_file")"
+  plan_state_dir="$(jq -r '.state_dir // empty' "$release_plan_file")"
+  plan_poll_seconds="$(jq -r '.poll_interval_seconds // empty' "$release_plan_file")"
+  plan_timeout_minutes="$(jq -r '.timeout_minutes // empty' "$release_plan_file")"
+
+  [ "$plan_publisher" = "yangchao228" ] || error "$release_plan_file publisher_handle must be yangchao228"
+  [ "$plan_source_repository" = "yangchao228/my_open_skills" ] || error "$release_plan_file source_repository must be yangchao228/my_open_skills"
+  [ "$plan_source_ref" = "main" ] || error "$release_plan_file source_ref must be main"
+  [ "$plan_state_dir" = ".clawhub-release-state" ] || error "$release_plan_file state_dir must be .clawhub-release-state"
+  [[ "$plan_poll_seconds" =~ ^[1-9][0-9]*$ ]] || error "$release_plan_file poll_interval_seconds must be a positive integer"
+  [[ "$plan_timeout_minutes" =~ ^[1-9][0-9]*$ ]] || error "$release_plan_file timeout_minutes must be a positive integer"
+
+  if [ "$(jq '[.valid_categories[]] | length' "$release_plan_file")" -ne "$(jq '[.valid_categories[]] | unique | length' "$release_plan_file")" ]; then
+    error "$release_plan_file valid_categories contains duplicates"
+  fi
+
+  if [ "$(jq '[.releases[].slug] | length' "$release_plan_file")" -ne "$(jq '[.releases[].slug] | unique | length' "$release_plan_file")" ]; then
+    error "$release_plan_file contains duplicate release slugs"
+  fi
+  if [ "$(jq '[.releases[].path] | length' "$release_plan_file")" -ne "$(jq '[.releases[].path] | unique | length' "$release_plan_file")" ]; then
+    error "$release_plan_file contains duplicate release paths"
+  fi
+  if [ "$(jq '[.releases[].order] | length' "$release_plan_file")" -ne "$(jq '[.releases[].order] | unique | length' "$release_plan_file")" ]; then
+    error "$release_plan_file contains duplicate release orders"
+  fi
+  if ! jq -e '[.releases[].order] == ([.releases[].order] | sort)' "$release_plan_file" >/dev/null; then
+    error "$release_plan_file releases must be stored in ascending order"
+  fi
+
+  while IFS= read -r release_json; do
+    plan_order="$(jq -r '.order // empty' <<<"$release_json")"
+    plan_slug="$(jq -r '.slug // empty' <<<"$release_json")"
+    plan_path="$(jq -r '.path // empty' <<<"$release_json")"
+    plan_display_name="$(jq -r '.display_name // empty' <<<"$release_json")"
+    plan_risk="$(jq -r '.risk // empty' <<<"$release_json")"
+    plan_status="$(jq -r '.status // empty' <<<"$release_json")"
+    plan_blocked_reason="$(jq -r '.blocked_reason // empty' <<<"$release_json")"
+    plan_remote_version="$(jq -r '.remote_latest_version // empty' <<<"$release_json")"
+    plan_target_version="$(jq -r '.target_version // empty' <<<"$release_json")"
+    category_count="$(jq '.categories | length' <<<"$release_json")"
+    unique_category_count="$(jq '.categories | unique | length' <<<"$release_json")"
+    tag_count="$(jq '.tags | length' <<<"$release_json")"
+    unique_tag_count="$(jq '.tags | unique | length' <<<"$release_json")"
+
+    [ -n "$plan_slug" ] || error "$release_plan_file contains an empty slug"
+    [[ "$plan_order" =~ ^[1-9][0-9]*$ ]] ||
+      error "$release_plan_file has invalid order '$plan_order' for $plan_slug"
+    [ -d "$plan_path" ] || error "$release_plan_file path does not exist: $plan_path"
+    [ -f "$plan_path/SKILL.md" ] || error "$release_plan_file path is missing SKILL.md: $plan_path"
+    [ -f "$plan_path/skill.json" ] || error "$release_plan_file path is missing skill.json: $plan_path"
+
+    if [ -f "$plan_path/skill.json" ]; then
+      [ "$(jq -r '.slug // empty' "$plan_path/skill.json")" = "$plan_slug" ] ||
+        error "$release_plan_file slug '$plan_slug' does not match $plan_path/skill.json"
+      [ "$(jq -r '.title // empty' "$plan_path/skill.json")" = "$plan_display_name" ] ||
+        error "$release_plan_file display_name for '$plan_slug' does not match skill.json title"
+      [ "$(jq -r '.status // empty' "$plan_path/skill.json")" = "ready" ] ||
+        error "$release_plan_file may contain only ready skills: $plan_slug"
+    fi
+
+    case "$plan_risk" in
+      low|medium|high) ;;
+      *) error "$release_plan_file has unsupported risk '$plan_risk' for $plan_slug" ;;
+    esac
+    case "$plan_status" in
+      planned|verified|blocked) ;;
+      *) error "$release_plan_file has unsupported status '$plan_status' for $plan_slug" ;;
+    esac
+    if [ "$plan_status" = "blocked" ] && [ -z "$plan_blocked_reason" ]; then
+      error "$release_plan_file blocked entry '$plan_slug' requires blocked_reason"
+    fi
+
+    if ! [[ "$plan_target_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+      error "$release_plan_file has invalid target_version '$plan_target_version' for $plan_slug"
+    fi
+    if [ -n "$plan_remote_version" ] && ! [[ "$plan_remote_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+      error "$release_plan_file has invalid remote_latest_version '$plan_remote_version' for $plan_slug"
+    fi
+
+    skill_version="$(sed -n 's/^version:[[:space:]]*//p' "$plan_path/SKILL.md" | head -n 1)"
+    [ "$skill_version" = "$plan_target_version" ] ||
+      error "$plan_path/SKILL.md version '$skill_version' does not match release target '$plan_target_version'"
+
+    if [ "$plan_status" = "planned" ] || [ "$plan_status" = "blocked" ]; then
+      if [ -z "$plan_remote_version" ]; then
+        expected_target="1.0.0"
+      else
+        IFS=. read -r version_major version_minor version_patch <<<"$plan_remote_version"
+        expected_target="$version_major.$version_minor.$((version_patch + 1))"
+      fi
+      [ "$plan_target_version" = "$expected_target" ] ||
+        error "$release_plan_file target '$plan_target_version' is not next version '$expected_target' for $plan_slug"
+    elif [ "$plan_remote_version" != "$plan_target_version" ]; then
+      error "$release_plan_file verified release '$plan_slug' must have remote_latest_version equal to target_version"
+    fi
+
+    if [ "$category_count" -lt 1 ] || [ "$category_count" -gt 3 ]; then
+      error "$release_plan_file must assign one to three categories to $plan_slug"
+    fi
+    [ "$category_count" -eq "$unique_category_count" ] ||
+      error "$release_plan_file categories contain duplicates for $plan_slug"
+    while IFS= read -r plan_category; do
+      jq -e --arg category "$plan_category" '.valid_categories | index($category) != null' "$release_plan_file" >/dev/null ||
+        error "$release_plan_file category '$plan_category' is invalid for $plan_slug"
+      [ "$plan_category" != "other" ] ||
+        error "$release_plan_file must not explicitly assign the Other fallback to $plan_slug"
+    done < <(jq -r '.categories[]' <<<"$release_json")
+
+    [ "$tag_count" -ge 1 ] || error "$release_plan_file must assign at least one tag to $plan_slug"
+    [ "$tag_count" -eq "$unique_tag_count" ] ||
+      error "$release_plan_file tags contain duplicates for $plan_slug"
+    [ -n "$(jq -r '.changelog // empty' <<<"$release_json")" ] ||
+      error "$release_plan_file changelog is empty for $plan_slug"
+
+    category_display="$(jq -r '.categories | map("`" + . + "`") | join(", ")' <<<"$release_json")"
+    if ! grep -Fq "| \`$plan_slug\` | $category_display |" docs/clawhub-releases.md; then
+      error "docs/clawhub-releases.md category row is missing or stale for $plan_slug"
+    fi
+
+    ledger_prefix="| $plan_order | \`$plan_slug\` | \`$plan_path\` | $plan_risk | \`$plan_target_version\` |"
+    if ! grep -Fq "$ledger_prefix" docs/clawhub-releases.md; then
+      error "docs/clawhub-releases.md ledger row is missing or stale for $plan_slug"
+    fi
+
+    release_plan_paths+=("$plan_path")
+  done < <(jq -c '.releases[]' "$release_plan_file")
 fi
 
 skill_json_files=()
@@ -162,6 +300,20 @@ while IFS= read -r skill_md; do
   validate_skill "$skill_md"
 done < <(find skills -name SKILL.md -not -path '*/deprecated/*' -not -path '*/tmp/*' | sort)
 
+if [ "${#release_plan_paths[@]}" -gt 0 ]; then
+  ready_paths="$(
+    while IFS= read -r ready_skill_json; do
+      if [ "$(jq -r '.status // empty' "$ready_skill_json")" = "ready" ]; then
+        dirname "$ready_skill_json"
+      fi
+    done < <(find skills -name skill.json | sort)
+  )"
+  planned_paths="$(printf '%s\n' "${release_plan_paths[@]}" | sort)"
+  if [ "$ready_paths" != "$planned_paths" ]; then
+    error "$release_plan_file paths do not exactly cover all ready skills"
+  fi
+fi
+
 if [ "${#source_dirs[@]}" -gt 0 ]; then
   duplicates="$(printf '%s\n' "${source_dirs[@]}" | sort | uniq -d)"
   if [ -n "$duplicates" ]; then
@@ -236,6 +388,15 @@ fi
 if find skills -path '*/.clawhub/*' -print -quit | grep -q .; then
   error "ClawHub local origin or lock state must not be committed inside public skill folders"
 fi
+
+if ! grep -Fqx '.clawhub-release-state/' .gitignore; then
+  error ".gitignore must exclude .clawhub-release-state/"
+fi
+for release_script in scripts/clawhub-release-one.sh scripts/clawhub-watch-release.sh; do
+  if [ ! -x "$release_script" ]; then
+    error "$release_script must be executable"
+  fi
+done
 
 for path in README.md CONTEXT.md docs/catalog.md docs/clawhub-releases.md docs/examples/wenchang-end-to-end-smoke.md skills/content/README.md skills/work/README.md skills/engineering/README.md skills/publishing/README.md; do
   if [ ! -f "$path" ]; then

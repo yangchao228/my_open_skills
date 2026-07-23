@@ -1,0 +1,416 @@
+{
+  "schema_version": 1,
+  "publisher_handle": "yangchao228",
+  "source_repository": "yangchao228/my_open_skills",
+  "source_ref": "main",
+  "state_dir": ".clawhub-release-state",
+  "poll_interval_seconds": 60,
+  "timeout_minutes": 90,
+  "valid_categories": [
+    "integrations",
+    "automation",
+    "research",
+    "development",
+    "productivity",
+    "communication",
+    "creative",
+    "knowledge",
+    "agents",
+    "operations",
+    "security",
+    "finance",
+    "lifestyle",
+    "other"
+  ],
+  "releases": [
+    {
+      "order": 1,
+      "slug": "create-plan",
+      "path": "skills/work/create-plan",
+      "display_name": "Create Plan",
+      "risk": "low",
+      "status": "verified",
+      "remote_latest_version": "1.0.0",
+      "target_version": "1.0.0",
+      "categories": [
+        "agents",
+        "development",
+        "productivity"
+      ],
+      "tags": [
+        "latest"
+      ],
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+    },
+    {
+      "order": 2,
+      "slug": "doc-coauthoring",
+      "path": "skills/work/doc-coauthoring",
+      "display_name": "Doc Co-Authoring",
+      "risk": "low",
+      "status": "verified",
+      "remote_latest_version": "1.0.0",
+      "target_version": "1.0.0",
+      "categories": [
+        "knowledge",
+        "creative",
+        "productivity"
+      ],
+      "tags": [
+        "latest"
+      ],
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+    },
+    {
+      "order": 3,
+      "slug": "project-weekly-report",
+      "path": "skills/work/project-weekly-report",
+      "display_name": "Project Weekly Report",
+      "risk": "medium",
+      "status": "verified",
+      "remote_latest_version": "1.0.0",
+      "target_version": "1.0.0",
+      "categories": [
+        "productivity",
+        "knowledge",
+        "development"
+      ],
+      "tags": [
+        "latest"
+      ],
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+    },
+    {
+      "order": 4,
+      "slug": "resume-interview-generator",
+      "path": "skills/work/resume-interview-generator",
+      "display_name": "简历面试题生成器",
+      "risk": "medium",
+      "status": "verified",
+      "remote_latest_version": "1.0.1",
+      "target_version": "1.0.1",
+      "categories": [
+        "productivity",
+        "knowledge",
+        "development"
+      ],
+      "tags": [
+        "latest",
+        "evaluation",
+        "hiring",
+        "interview",
+        "recruiting",
+        "resume",
+        "technical-interview"
+      ],
+      "changelog": "Add canonical creator channels, source homepage, privacy constraints, public examples, and explicit catalog categories."
+    },
+    {
+      "order": 5,
+      "slug": "storm-research",
+      "path": "skills/content/storm-research",
+      "display_name": "STORM Research",
+      "risk": "low",
+      "status": "planned",
+      "remote_latest_version": null,
+      "target_version": "1.0.0",
+      "categories": [
+        "research",
+        "knowledge",
+        "productivity"
+      ],
+      "tags": [
+        "latest"
+      ],
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+    },
+    {
+      "order": 6,
+      "slug": "wenchang-research",
+      "path": "skills/content/wenchang-research",
+      "display_name": "Wenchang Research",
+      "risk": "low",
+      "status": "planned",
+      "remote_latest_version": null,
+      "target_version": "1.0.0",
+      "categories": [
+        "research",
+        "knowledge",
+        "productivity"
+      ],
+      "tags": [
+        "latest"
+      ],
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+    },
+    {
+      "order": 7,
+      "slug": "wenchang-review",
+      "path": "skills/content/wenchang-review",
+      "display_name": "Wenchang Review",
+      "risk": "low",
+      "status": "planned",
+      "remote_latest_version": null,
+      "target_version": "1.0.0",
+      "categories": [
+        "creative",
+        "knowledge",
+        "productivity"
+      ],
+      "tags": [
+        "latest"
+      ],
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+    },
+    {
+      "order": 8,
+      "slug": "wenchang-wechat-writer",
+      "path": "skills/content/wenchang-wechat-writer",
+      "display_name": "Wenchang WeChat Writer",
+      "risk": "low",
+      "status": "planned",
+      "remote_latest_version": null,
+      "target_version": "1.0.0",
+      "categories": [
+        "creative",
+        "communication",
+        "productivity"
+      ],
+      "tags": [
+        "latest"
+      ],
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+    },
+    {
+      "order": 9,
+      "slug": "xiaohongshu-topic-generator",
+      "path": "skills/content/xiaohongshu-topic-generator",
+      "display_name": "Xiaohongshu Topic Generator",
+      "risk": "low",
+      "status": "planned",
+      "remote_latest_version": null,
+      "target_version": "1.0.0",
+      "categories": [
+        "creative",
+        "research",
+        "productivity"
+      ],
+      "tags": [
+        "latest"
+      ],
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+    },
+    {
+      "order": 10,
+      "slug": "zhihu-topic-hunter",
+      "path": "skills/content/zhihu-topic-hunter",
+      "display_name": "Zhihu Topic Hunter",
+      "risk": "low",
+      "status": "planned",
+      "remote_latest_version": null,
+      "target_version": "1.0.0",
+      "categories": [
+        "research",
+        "knowledge",
+        "creative"
+      ],
+      "tags": [
+        "latest"
+      ],
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+    },
+    {
+      "order": 11,
+      "slug": "long-to-cards",
+      "path": "skills/content/long-to-cards",
+      "display_name": "Long To Cards",
+      "risk": "medium",
+      "status": "planned",
+      "remote_latest_version": null,
+      "target_version": "1.0.0",
+      "categories": [
+        "creative",
+        "communication",
+        "productivity"
+      ],
+      "tags": [
+        "latest"
+      ],
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+    },
+    {
+      "order": 12,
+      "slug": "wechat-to-cards",
+      "path": "skills/content/wechat-to-cards",
+      "display_name": "WeChat To Cards",
+      "risk": "medium",
+      "status": "planned",
+      "remote_latest_version": null,
+      "target_version": "1.0.0",
+      "categories": [
+        "communication",
+        "creative",
+        "productivity"
+      ],
+      "tags": [
+        "latest"
+      ],
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+    },
+    {
+      "order": 14,
+      "slug": "article-to-illustrations",
+      "path": "skills/content/article-to-illustrations",
+      "display_name": "Article To Illustrations",
+      "risk": "medium",
+      "status": "planned",
+      "remote_latest_version": null,
+      "target_version": "1.0.0",
+      "categories": [
+        "creative",
+        "productivity",
+        "knowledge"
+      ],
+      "tags": [
+        "latest"
+      ],
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+    },
+    {
+      "order": 15,
+      "slug": "cards-to-images",
+      "path": "skills/content/cards-to-images",
+      "display_name": "Cards To Images",
+      "risk": "medium",
+      "status": "planned",
+      "remote_latest_version": null,
+      "target_version": "1.0.0",
+      "categories": [
+        "creative",
+        "automation",
+        "productivity"
+      ],
+      "tags": [
+        "latest"
+      ],
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+    },
+    {
+      "order": 16,
+      "slug": "resilient-imagegen",
+      "path": "skills/content/resilient-imagegen",
+      "display_name": "Resilient ImageGen",
+      "risk": "medium",
+      "status": "planned",
+      "remote_latest_version": null,
+      "target_version": "1.0.0",
+      "categories": [
+        "automation",
+        "creative",
+        "productivity"
+      ],
+      "tags": [
+        "latest"
+      ],
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+    },
+    {
+      "order": 17,
+      "slug": "chatgpt-image-handoff",
+      "path": "skills/content/chatgpt-image-handoff",
+      "display_name": "ChatGPT Image Handoff",
+      "risk": "high",
+      "status": "planned",
+      "remote_latest_version": null,
+      "target_version": "1.0.0",
+      "categories": [
+        "automation",
+        "creative",
+        "productivity"
+      ],
+      "tags": [
+        "latest"
+      ],
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+    },
+    {
+      "order": 18,
+      "slug": "wenchang-router",
+      "path": "skills/content/wenchang-router",
+      "display_name": "Wenchang Router",
+      "risk": "medium",
+      "status": "planned",
+      "remote_latest_version": null,
+      "target_version": "1.0.0",
+      "categories": [
+        "agents",
+        "creative",
+        "productivity"
+      ],
+      "tags": [
+        "latest"
+      ],
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+    },
+    {
+      "order": 19,
+      "slug": "wenchang-publish-check",
+      "path": "skills/content/wenchang-publish-check",
+      "display_name": "Wenchang Publish Check",
+      "risk": "medium",
+      "status": "planned",
+      "remote_latest_version": null,
+      "target_version": "1.0.0",
+      "categories": [
+        "productivity",
+        "communication",
+        "knowledge"
+      ],
+      "tags": [
+        "latest"
+      ],
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+    },
+    {
+      "order": 20,
+      "slug": "wenchang-orchestrator",
+      "path": "skills/content/wenchang-orchestrator",
+      "display_name": "Wenchang Orchestrator",
+      "risk": "medium",
+      "status": "planned",
+      "remote_latest_version": null,
+      "target_version": "1.0.0",
+      "categories": [
+        "agents",
+        "automation",
+        "productivity"
+      ],
+      "tags": [
+        "latest"
+      ],
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+    },
+    {
+      "order": 21,
+      "slug": "md-img-r2",
+      "path": "skills/publishing/md-img-r2",
+      "display_name": "Markdown Images to R2",
+      "risk": "high",
+      "status": "planned",
+      "remote_latest_version": "1.0.3",
+      "target_version": "1.0.4",
+      "categories": [
+        "integrations",
+        "automation",
+        "productivity"
+      ],
+      "tags": [
+        "latest",
+        "image-upload",
+        "markdown",
+        "r2"
+      ],
+      "changelog": "Refresh public safety boundaries, creator channels, source metadata, examples, and explicit catalog categories."
+    }
+  ]
+}
