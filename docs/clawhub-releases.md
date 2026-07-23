@@ -2,43 +2,44 @@
 
 [中文说明](#中文说明)
 
-This ledger is the reader-facing source of truth for one-at-a-time ClawHub releases from this repository. The canonical creator profile lives in [`config/clawhub-profile.json`](../config/clawhub-profile.json), while [`config/clawhub-release-plan.json`](../config/clawhub-release-plan.json) stores the machine-readable release order, categories, remote baselines, target versions, tags, and status.
+This ledger is the reader-facing source of truth for one-at-a-time ClawHub releases from this repository. The canonical creator profile lives in [`config/clawhub-profile.json`](../config/clawhub-profile.json), while [`config/clawhub-release-plan.json`](../config/clawhub-release-plan.json) stores the machine-readable release order, categories, topics, remote baselines, target versions, tags, and status.
 
 ## Release Policy
 
 - Publish exactly one skill per release command; do not use `clawhub sync --all`.
 - Run repository validation and `clawhub skill publish <path> --dry-run --json` before every live publish.
 - Choose and record one to three valid ClawHub category slugs before every live publish, and pass them explicitly with `--categories`; do not rely on automatic inference or the `Other` fallback.
+- Choose three to five specific discovery topics before every live publish, order the most important four first for the current page UI, and pass them explicitly with `--topics`. Keep `--tags` for version aliases such as `latest`.
 - Publish only from a clean, committed source and pass the source repository, commit, ref, and path to the CLI.
 - Verify every live version with `clawhub inspect`, a temporary install, and the registry security scan before advancing.
 - Treat ClawHub's MIT-0 release license as a distribution rule. Do not publish bundled third-party material when its attribution or license cannot be preserved safely.
 - Keep the capability and trigger language first in `description`; append the canonical creator suffix exactly once.
 - Promote skills through theme-level Case Packs even though registry releases are atomic.
 
-## Category Decisions
+## Catalog Metadata Decisions
 
-| Slug | Categories | Application |
-| --- | --- | --- |
-| `create-plan` | `agents`, `development`, `productivity` | planned manual update by owner |
-| `doc-coauthoring` | `knowledge`, `creative`, `productivity` | planned manual update by owner |
-| `project-weekly-report` | `productivity`, `knowledge`, `development` | explicit CLI publish metadata |
-| `resume-interview-generator` | `productivity`, `knowledge`, `development` | explicit CLI update metadata |
-| `storm-research` | `research`, `knowledge`, `productivity` | planned explicit CLI metadata |
-| `wenchang-research` | `research`, `knowledge`, `productivity` | planned explicit CLI metadata |
-| `wenchang-review` | `creative`, `knowledge`, `productivity` | planned explicit CLI metadata |
-| `wenchang-wechat-writer` | `creative`, `communication`, `productivity` | planned explicit CLI metadata |
-| `xiaohongshu-topic-generator` | `creative`, `research`, `productivity` | planned explicit CLI metadata |
-| `zhihu-topic-hunter` | `research`, `knowledge`, `creative` | planned explicit CLI metadata |
-| `long-to-cards` | `creative`, `communication`, `productivity` | planned explicit CLI metadata |
-| `wechat-to-cards` | `communication`, `creative`, `productivity` | planned explicit CLI metadata |
-| `article-to-illustrations` | `creative`, `productivity`, `knowledge` | planned explicit CLI metadata |
-| `cards-to-images` | `creative`, `automation`, `productivity` | planned explicit CLI metadata |
-| `resilient-imagegen` | `automation`, `creative`, `productivity` | planned explicit CLI metadata |
-| `chatgpt-image-handoff` | `automation`, `creative`, `productivity` | planned explicit CLI metadata |
-| `wenchang-router` | `agents`, `creative`, `productivity` | planned explicit CLI metadata |
-| `wenchang-publish-check` | `productivity`, `communication`, `knowledge` | planned explicit CLI metadata |
-| `wenchang-orchestrator` | `agents`, `automation`, `productivity` | planned explicit CLI metadata |
-| `md-img-r2` | `integrations`, `automation`, `productivity` | planned explicit CLI update metadata |
+| Slug | Categories | Topics | Application |
+| --- | --- | --- | --- |
+| `create-plan` | `agents`, `development`, `productivity` | `implementation-planning`, `rollout-planning`, `technical-design`, `task-breakdown`, `change-safety` | owner updates existing listing manually |
+| `doc-coauthoring` | `knowledge`, `creative`, `productivity` | `document-coauthoring`, `prd`, `technical-spec`, `rfc`, `reader-review` | owner updated existing listing manually |
+| `project-weekly-report` | `productivity`, `knowledge`, `development` | `git-history`, `weekly-report`, `project-status`, `evidence-based-reporting`, `engineering-updates` | owner adds topics to existing listing manually |
+| `resume-interview-generator` | `productivity`, `knowledge`, `development` | `technical-interview`, `resume-evaluation`, `interview-questions`, `hiring-assessment`, `scoring-rubric` | owner adds topics to existing listing manually |
+| `storm-research` | `research`, `knowledge`, `productivity` | `deep-research`, `source-synthesis`, `citation-workflow`, `contradiction-mapping`, `research-brief` | explicit CLI metadata |
+| `wenchang-research` | `research`, `knowledge`, `productivity` | `content-research`, `source-validation`, `fact-checking`, `contrarian-evidence`, `evidence-pack` | explicit CLI metadata |
+| `wenchang-review` | `creative`, `knowledge`, `productivity` | `content-review`, `editorial-diagnosis`, `draft-revision`, `publish-readiness`, `structural-editing` | explicit CLI metadata |
+| `wenchang-wechat-writer` | `creative`, `communication`, `productivity` | `wechat-writing`, `long-form-writing`, `article-outline`, `content-hooks`, `editorial-workflow` | explicit CLI metadata |
+| `xiaohongshu-topic-generator` | `creative`, `research`, `productivity` | `xiaohongshu`, `rednote`, `topic-ideation`, `content-hooks`, `audience-pain-points` | explicit CLI metadata |
+| `zhihu-topic-hunter` | `research`, `knowledge`, `creative` | `zhihu`, `topic-research`, `debate-angles`, `question-selection`, `content-strategy` | explicit CLI metadata |
+| `long-to-cards` | `creative`, `communication`, `productivity` | `content-repurposing`, `social-cards`, `carousel-content`, `card-scripts`, `platform-copy` | explicit CLI metadata |
+| `wechat-to-cards` | `communication`, `creative`, `productivity` | `wechat-cards`, `moments-copy`, `community-sharing`, `content-repurposing`, `visual-snippets` | explicit CLI metadata |
+| `article-to-illustrations` | `creative`, `productivity`, `knowledge` | `article-illustration`, `image-prompts`, `visual-storytelling`, `markdown-images`, `alt-text` | explicit CLI metadata |
+| `cards-to-images` | `creative`, `automation`, `productivity` | `card-rendering`, `social-images`, `carousel-design`, `image-quality`, `visual-qa` | explicit CLI metadata |
+| `resilient-imagegen` | `automation`, `creative`, `productivity` | `image-generation`, `retry-workflow`, `job-queue`, `fallback-routing`, `human-review` | explicit CLI metadata |
+| `chatgpt-image-handoff` | `automation`, `creative`, `productivity` | `chatgpt-images`, `browser-handoff`, `prompt-pack`, `visual-qa`, `resumable-workflow` | explicit CLI metadata |
+| `wenchang-router` | `agents`, `creative`, `productivity` | `content-routing`, `workflow-state`, `multi-platform-content`, `next-action`, `content-pipeline` | explicit CLI metadata |
+| `wenchang-publish-check` | `productivity`, `communication`, `knowledge` | `publish-preflight`, `release-readiness`, `platform-packaging`, `asset-verification`, `human-approval` | explicit CLI metadata |
+| `wenchang-orchestrator` | `agents`, `automation`, `productivity` | `content-orchestration`, `multi-platform-content`, `workflow-automation`, `asset-pipeline`, `knowledge-capture` | explicit CLI metadata |
+| `md-img-r2` | `integrations`, `automation`, `productivity` | `cloudflare-r2`, `markdown-images`, `s3-upload`, `image-hosting`, `url-replacement` | explicit CLI update metadata |
 
 ## Release Ledger
 
@@ -90,7 +91,7 @@ The watcher can also resume independently:
 ./scripts/clawhub-watch-release.sh storm-research --once
 ```
 
-Transient inspect, page, install, scan, and Skill Card receipts are written under the ignored `.clawhub-release-state/` directory. The watcher prints only state changes. Preparing the next skill is allowed while it waits, but another live publish still waits for the current skill's final `decision: pass`.
+Transient preflight, public catalog API, inspect, page, install, scan, and Skill Card receipts are written under the ignored `.clawhub-release-state/` directory. The watcher verifies all planned Topics through the public API and the first four Topics rendered by the current page UI, and prints only state changes. Preparing the next skill is allowed while it waits, but another live publish still waits for the current skill's final `decision: pass`.
 
 The runner accepts only the first `planned` entry by release order and acquires an atomic live-publish lock. If a skill-specific gate cannot pass, record that plan entry as `blocked` with a `blocked_reason` and update its ledger row before advancing; publisher identity, creator-hook, or authentication failures stop the sequence.
 
@@ -101,3 +102,4 @@ The runner accepts only the first `planned` entry by release order and acquires 
 - ClawHub 发布采用 MIT-0。含第三方版权或无法确认再许可边界的 skill 保持 `blocked`，不强行发布。
 - ClawHub 条目逐个发布，自媒体内容继续按主题 Case Pack 组织，避免把公开系列拆成零散功能介绍。
 - 默认脚本只执行 dry-run；正式发布必须显式传入 `--publish --yes`。自动改台账并推送还需要 `--finalize --push`，避免误触外部写入。
+- Categories 用于平台大类，Topics 用于细粒度发现，Tags 仅保留版本别名用途；发布前都从机器可读计划中显式传入。

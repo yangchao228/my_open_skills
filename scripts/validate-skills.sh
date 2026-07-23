@@ -54,22 +54,36 @@ if [ ! -f "$release_plan_file" ]; then
 elif ! jq . "$release_plan_file" >/dev/null; then
   error "$release_plan_file is not valid JSON"
 else
+  plan_schema_version="$(jq -r '.schema_version // empty' "$release_plan_file")"
   plan_publisher="$(jq -r '.publisher_handle // empty' "$release_plan_file")"
   plan_source_repository="$(jq -r '.source_repository // empty' "$release_plan_file")"
   plan_source_ref="$(jq -r '.source_ref // empty' "$release_plan_file")"
   plan_state_dir="$(jq -r '.state_dir // empty' "$release_plan_file")"
   plan_poll_seconds="$(jq -r '.poll_interval_seconds // empty' "$release_plan_file")"
   plan_timeout_minutes="$(jq -r '.timeout_minutes // empty' "$release_plan_file")"
+  topic_min_count="$(jq -r '.topic_policy.min_count // empty' "$release_plan_file")"
+  topic_max_count="$(jq -r '.topic_policy.max_count // empty' "$release_plan_file")"
+  topic_max_length="$(jq -r '.topic_policy.max_length // empty' "$release_plan_file")"
+  topic_format="$(jq -r '.topic_policy.format // empty' "$release_plan_file")"
 
+  [ "$plan_schema_version" = "2" ] || error "$release_plan_file schema_version must be 2"
   [ "$plan_publisher" = "yangchao228" ] || error "$release_plan_file publisher_handle must be yangchao228"
   [ "$plan_source_repository" = "yangchao228/my_open_skills" ] || error "$release_plan_file source_repository must be yangchao228/my_open_skills"
   [ "$plan_source_ref" = "main" ] || error "$release_plan_file source_ref must be main"
   [ "$plan_state_dir" = ".clawhub-release-state" ] || error "$release_plan_file state_dir must be .clawhub-release-state"
   [[ "$plan_poll_seconds" =~ ^[1-9][0-9]*$ ]] || error "$release_plan_file poll_interval_seconds must be a positive integer"
   [[ "$plan_timeout_minutes" =~ ^[1-9][0-9]*$ ]] || error "$release_plan_file timeout_minutes must be a positive integer"
+  [ "$topic_min_count" = "3" ] || error "$release_plan_file topic_policy.min_count must be 3"
+  [ "$topic_max_count" = "5" ] || error "$release_plan_file topic_policy.max_count must match ClawHub's limit of 5"
+  [ "$topic_max_length" = "48" ] || error "$release_plan_file topic_policy.max_length must match ClawHub's limit of 48"
+  [ "$topic_format" = "lowercase ASCII kebab-case" ] ||
+    error "$release_plan_file topic_policy.format must be lowercase ASCII kebab-case"
 
   if [ "$(jq '[.valid_categories[]] | length' "$release_plan_file")" -ne "$(jq '[.valid_categories[]] | unique | length' "$release_plan_file")" ]; then
     error "$release_plan_file valid_categories contains duplicates"
+  fi
+  if [ "$(jq '[.topic_policy.reserved_slugs[]] | length' "$release_plan_file")" -ne "$(jq '[.topic_policy.reserved_slugs[]] | unique | length' "$release_plan_file")" ]; then
+    error "$release_plan_file topic_policy.reserved_slugs contains duplicates"
   fi
 
   if [ "$(jq '[.releases[].slug] | length' "$release_plan_file")" -ne "$(jq '[.releases[].slug] | unique | length' "$release_plan_file")" ]; then
@@ -97,6 +111,8 @@ else
     plan_target_version="$(jq -r '.target_version // empty' <<<"$release_json")"
     category_count="$(jq '.categories | length' <<<"$release_json")"
     unique_category_count="$(jq '.categories | unique | length' <<<"$release_json")"
+    topic_count="$(jq '.topics | length' <<<"$release_json")"
+    unique_topic_count="$(jq '.topics | unique | length' <<<"$release_json")"
     tag_count="$(jq '.tags | length' <<<"$release_json")"
     unique_tag_count="$(jq '.tags | unique | length' <<<"$release_json")"
 
@@ -164,6 +180,26 @@ else
         error "$release_plan_file must not explicitly assign the Other fallback to $plan_slug"
     done < <(jq -r '.categories[]' <<<"$release_json")
 
+    if [ "$topic_count" -lt "$topic_min_count" ] || [ "$topic_count" -gt "$topic_max_count" ]; then
+      error "$release_plan_file must assign $topic_min_count to $topic_max_count topics to $plan_slug"
+    fi
+    [ "$topic_count" -eq "$unique_topic_count" ] ||
+      error "$release_plan_file topics contain duplicates for $plan_slug"
+    while IFS= read -r plan_topic; do
+      if ! [[ "$plan_topic" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]]; then
+        error "$release_plan_file topic '$plan_topic' must use lowercase ASCII kebab-case for $plan_slug"
+      fi
+      if [ "${#plan_topic}" -gt "$topic_max_length" ]; then
+        error "$release_plan_file topic '$plan_topic' exceeds $topic_max_length characters for $plan_slug"
+      fi
+      if ! jq -e --arg topic "$plan_topic" '.topic_policy.reserved_slugs | index($topic) == null' "$release_plan_file" >/dev/null; then
+        error "$release_plan_file topic '$plan_topic' is reserved by ClawHub for $plan_slug"
+      fi
+      if jq -e --arg topic "$plan_topic" '.valid_categories | index($topic) != null' "$release_plan_file" >/dev/null; then
+        error "$release_plan_file topic '$plan_topic' duplicates a broad category for $plan_slug"
+      fi
+    done < <(jq -r '.topics[]' <<<"$release_json")
+
     [ "$tag_count" -ge 1 ] || error "$release_plan_file must assign at least one tag to $plan_slug"
     [ "$tag_count" -eq "$unique_tag_count" ] ||
       error "$release_plan_file tags contain duplicates for $plan_slug"
@@ -171,8 +207,9 @@ else
       error "$release_plan_file changelog is empty for $plan_slug"
 
     category_display="$(jq -r '.categories | map("`" + . + "`") | join(", ")' <<<"$release_json")"
-    if ! grep -Fq "| \`$plan_slug\` | $category_display |" docs/clawhub-releases.md; then
-      error "docs/clawhub-releases.md category row is missing or stale for $plan_slug"
+    topic_display="$(jq -r '.topics | map("`" + . + "`") | join(", ")' <<<"$release_json")"
+    if ! grep -Fq "| \`$plan_slug\` | $category_display | $topic_display |" docs/clawhub-releases.md; then
+      error "docs/clawhub-releases.md category/topic row is missing or stale for $plan_slug"
     fi
 
     ledger_prefix="| $plan_order | \`$plan_slug\` | \`$plan_path\` | $plan_risk | \`$plan_target_version\` |"

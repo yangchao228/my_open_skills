@@ -82,7 +82,7 @@
 
 仓库级说明见 [安装与试用](docs/install-and-trial.md)。
 
-ClawHub skills 以 `@yangchao228` 为发布者逐项发布。安装具体 slug 前先查看 [ClawHub 发布台账](docs/clawhub-releases.md)：
+ClawHub skills 以 `@yangchao228` 为发布者逐项发布，并在发布计划中显式维护 Categories 和 Topics。安装具体 slug 前先查看 [ClawHub 发布台账](docs/clawhub-releases.md)：
 
 ```bash
 clawhub install @yangchao228/create-plan
@@ -111,7 +111,7 @@ npx @skills-hub-ai/cli install resume-interview-generator-2
 ./scripts/validate-skills.sh
 ```
 
-校验会检查 skill 元数据、ClawHub 作者钩子、semver、homepage、包体积、路径、示例、JSON、README 中文版本和常见私有内容泄漏。
+校验会检查 skill 元数据、ClawHub 作者钩子、Categories、Topics、semver、homepage、包体积、路径、示例、JSON、README 中文版本和常见私有内容泄漏。
 
 第一个文昌工作流端到端 smoke 记录在 [docs/examples/wenchang-end-to-end-smoke.md](docs/examples/wenchang-end-to-end-smoke.md)。
 

@@ -82,7 +82,7 @@ See [skills/publishing/README.md](skills/publishing/README.md).
 
 Use [Install and Trial](docs/install-and-trial.md) as the repository-level guide.
 
-ClawHub releases are published one at a time under `@yangchao228`. Check the [ClawHub release ledger](docs/clawhub-releases.md) before installing a specific slug:
+ClawHub releases are published one at a time under `@yangchao228`, with explicit Categories and Topics recorded in the release plan. Check the [ClawHub release ledger](docs/clawhub-releases.md) before installing a specific slug:
 
 ```bash
 clawhub install @yangchao228/create-plan
@@ -111,7 +111,7 @@ For skills without a documented package command, start by reading that skill's `
 ./scripts/validate-skills.sh
 ```
 
-Validation checks skill metadata, ClawHub creator hooks, semver, homepage URLs, bundle size, paths, examples, JSON, README Chinese counterparts, and common private-content leaks.
+Validation checks skill metadata, ClawHub creator hooks, Categories, Topics, semver, homepage URLs, bundle size, paths, examples, JSON, README Chinese counterparts, and common private-content leaks.
 
 The first Wenchang workflow smoke is documented in [docs/examples/wenchang-end-to-end-smoke.md](docs/examples/wenchang-end-to-end-smoke.md).
 

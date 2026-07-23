@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "publisher_handle": "yangchao228",
   "source_repository": "yangchao228/my_open_skills",
   "source_ref": "main",
@@ -22,6 +22,30 @@
     "lifestyle",
     "other"
   ],
+  "topic_policy": {
+    "min_count": 3,
+    "max_count": 5,
+    "max_length": 48,
+    "format": "lowercase ASCII kebab-case",
+    "reserved_slugs": [
+      "approved",
+      "audited",
+      "certified",
+      "clawhub",
+      "community",
+      "curated",
+      "endorsed",
+      "featured",
+      "official",
+      "officials",
+      "openclaw",
+      "recommended",
+      "staff-pick",
+      "trusted",
+      "trusted-publisher",
+      "verified"
+    ]
+  },
   "releases": [
     {
       "order": 1,
@@ -36,6 +60,13 @@
         "agents",
         "development",
         "productivity"
+      ],
+      "topics": [
+        "implementation-planning",
+        "rollout-planning",
+        "technical-design",
+        "task-breakdown",
+        "change-safety"
       ],
       "tags": [
         "latest"
@@ -56,6 +87,13 @@
         "creative",
         "productivity"
       ],
+      "topics": [
+        "document-coauthoring",
+        "prd",
+        "technical-spec",
+        "rfc",
+        "reader-review"
+      ],
       "tags": [
         "latest"
       ],
@@ -75,6 +113,13 @@
         "knowledge",
         "development"
       ],
+      "topics": [
+        "git-history",
+        "weekly-report",
+        "project-status",
+        "evidence-based-reporting",
+        "engineering-updates"
+      ],
       "tags": [
         "latest"
       ],
@@ -93,6 +138,13 @@
         "productivity",
         "knowledge",
         "development"
+      ],
+      "topics": [
+        "technical-interview",
+        "resume-evaluation",
+        "interview-questions",
+        "hiring-assessment",
+        "scoring-rubric"
       ],
       "tags": [
         "latest",
@@ -119,10 +171,17 @@
         "knowledge",
         "productivity"
       ],
+      "topics": [
+        "deep-research",
+        "source-synthesis",
+        "citation-workflow",
+        "contradiction-mapping",
+        "research-brief"
+      ],
       "tags": [
         "latest"
       ],
-      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics."
     },
     {
       "order": 6,
@@ -138,10 +197,17 @@
         "knowledge",
         "productivity"
       ],
+      "topics": [
+        "content-research",
+        "source-validation",
+        "fact-checking",
+        "contrarian-evidence",
+        "evidence-pack"
+      ],
       "tags": [
         "latest"
       ],
-      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics."
     },
     {
       "order": 7,
@@ -157,10 +223,17 @@
         "knowledge",
         "productivity"
       ],
+      "topics": [
+        "content-review",
+        "editorial-diagnosis",
+        "draft-revision",
+        "publish-readiness",
+        "structural-editing"
+      ],
       "tags": [
         "latest"
       ],
-      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics."
     },
     {
       "order": 8,
@@ -176,10 +249,17 @@
         "communication",
         "productivity"
       ],
+      "topics": [
+        "wechat-writing",
+        "long-form-writing",
+        "article-outline",
+        "content-hooks",
+        "editorial-workflow"
+      ],
       "tags": [
         "latest"
       ],
-      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics."
     },
     {
       "order": 9,
@@ -195,10 +275,17 @@
         "research",
         "productivity"
       ],
+      "topics": [
+        "xiaohongshu",
+        "rednote",
+        "topic-ideation",
+        "content-hooks",
+        "audience-pain-points"
+      ],
       "tags": [
         "latest"
       ],
-      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics."
     },
     {
       "order": 10,
@@ -214,10 +301,17 @@
         "knowledge",
         "creative"
       ],
+      "topics": [
+        "zhihu",
+        "topic-research",
+        "debate-angles",
+        "question-selection",
+        "content-strategy"
+      ],
       "tags": [
         "latest"
       ],
-      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics."
     },
     {
       "order": 11,
@@ -233,10 +327,17 @@
         "communication",
         "productivity"
       ],
+      "topics": [
+        "content-repurposing",
+        "social-cards",
+        "carousel-content",
+        "card-scripts",
+        "platform-copy"
+      ],
       "tags": [
         "latest"
       ],
-      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics."
     },
     {
       "order": 12,
@@ -252,10 +353,17 @@
         "creative",
         "productivity"
       ],
+      "topics": [
+        "wechat-cards",
+        "moments-copy",
+        "community-sharing",
+        "content-repurposing",
+        "visual-snippets"
+      ],
       "tags": [
         "latest"
       ],
-      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics."
     },
     {
       "order": 14,
@@ -271,10 +379,17 @@
         "productivity",
         "knowledge"
       ],
+      "topics": [
+        "article-illustration",
+        "image-prompts",
+        "visual-storytelling",
+        "markdown-images",
+        "alt-text"
+      ],
       "tags": [
         "latest"
       ],
-      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics."
     },
     {
       "order": 15,
@@ -290,10 +405,17 @@
         "automation",
         "productivity"
       ],
+      "topics": [
+        "card-rendering",
+        "social-images",
+        "carousel-design",
+        "image-quality",
+        "visual-qa"
+      ],
       "tags": [
         "latest"
       ],
-      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics."
     },
     {
       "order": 16,
@@ -309,10 +431,17 @@
         "creative",
         "productivity"
       ],
+      "topics": [
+        "image-generation",
+        "retry-workflow",
+        "job-queue",
+        "fallback-routing",
+        "human-review"
+      ],
       "tags": [
         "latest"
       ],
-      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics."
     },
     {
       "order": 17,
@@ -328,10 +457,17 @@
         "creative",
         "productivity"
       ],
+      "topics": [
+        "chatgpt-images",
+        "browser-handoff",
+        "prompt-pack",
+        "visual-qa",
+        "resumable-workflow"
+      ],
       "tags": [
         "latest"
       ],
-      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics."
     },
     {
       "order": 18,
@@ -347,10 +483,17 @@
         "creative",
         "productivity"
       ],
+      "topics": [
+        "content-routing",
+        "workflow-state",
+        "multi-platform-content",
+        "next-action",
+        "content-pipeline"
+      ],
       "tags": [
         "latest"
       ],
-      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics."
     },
     {
       "order": 19,
@@ -366,10 +509,17 @@
         "communication",
         "knowledge"
       ],
+      "topics": [
+        "publish-preflight",
+        "release-readiness",
+        "platform-packaging",
+        "asset-verification",
+        "human-approval"
+      ],
       "tags": [
         "latest"
       ],
-      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics."
     },
     {
       "order": 20,
@@ -385,10 +535,17 @@
         "automation",
         "productivity"
       ],
+      "topics": [
+        "content-orchestration",
+        "multi-platform-content",
+        "workflow-automation",
+        "asset-pipeline",
+        "knowledge-capture"
+      ],
       "tags": [
         "latest"
       ],
-      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories."
+      "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics."
     },
     {
       "order": 21,
@@ -404,13 +561,20 @@
         "automation",
         "productivity"
       ],
+      "topics": [
+        "cloudflare-r2",
+        "markdown-images",
+        "s3-upload",
+        "image-hosting",
+        "url-replacement"
+      ],
       "tags": [
         "latest",
         "image-upload",
         "markdown",
         "r2"
       ],
-      "changelog": "Refresh public safety boundaries, creator channels, source metadata, examples, and explicit catalog categories."
+      "changelog": "Refresh public safety boundaries, creator channels, source metadata, examples, and explicit catalog categories and topics."
     }
   ]
 }

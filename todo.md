@@ -155,6 +155,9 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - [x] Add a fail-closed single-skill preflight and publish script that requires a clean pushed source commit and an explicit live confirmation
 - [x] Add a state-change-only release watcher that verifies public metadata, exact installation, source hashes, security signals, and the generated Skill Card
 - [x] Validate the optimized workflow locally and with a real ClawHub dry-run before continuing to the fifth live release
+- [ ] Add three to five explicit ClawHub Topics to every ready skill while keeping version tags separate
+- [ ] Pass Topics through dry-run and live publication, then preserve the requested catalog metadata in receipts
+- [ ] Verify Topics through ClawHub's public skill API and page before finalizing a release
 - [x] Record the pilot's submitted state and the `redbook-cards-skill` license block in the release ledger
 - [ ] Update the release ledger with verified versions, timestamps, URLs, and any later skill-specific blocks
 

@@ -21,7 +21,8 @@ Usage:
 
 Default mode is a fail-closed dry-run. Live publication requires both
 --publish and --yes. --finalize updates the release plan and Markdown ledger
-after verification. --push also commits and pushes those finalization changes.
+after category, topic, install, hash, security, and Skill Card verification.
+--push also commits and pushes those finalization changes.
 EOF
 }
 
@@ -104,6 +105,7 @@ release_status="$(jq -r '.status' <<<"$release_json")"
 configured_remote="$(jq -r '.remote_latest_version // ""' <<<"$release_json")"
 target_version="$(jq -r '.target_version' <<<"$release_json")"
 categories_csv="$(jq -r '.categories | join(",")' <<<"$release_json")"
+topics_csv="$(jq -r '.topics | join(",")' <<<"$release_json")"
 tags_csv="$(jq -r '.tags | join(",")' <<<"$release_json")"
 changelog="$(jq -r '.changelog' <<<"$release_json")"
 
@@ -179,6 +181,7 @@ publish_args=(
   --changelog "$changelog"
   --tags "$tags_csv"
   --categories "$categories_csv"
+  --topics "$topics_csv"
   --source-repo "$source_repository"
   --source-commit "$head_commit"
   --source-ref "$source_ref"
@@ -187,13 +190,40 @@ publish_args=(
 
 dry_run_tmp="$receipt_dir/dry-run.tmp.json"
 dry_run_json="$receipt_dir/dry-run.json"
+preflight_json="$receipt_dir/preflight.json"
 clawhub "${publish_args[@]}" --dry-run --json >"$dry_run_tmp"
 jq -e '.ok == true and (.status == "would-publish" or .status == "already-published")' "$dry_run_tmp" >/dev/null ||
   die "ClawHub dry-run did not return an accepted plan"
 mv "$dry_run_tmp" "$dry_run_json"
 
-printf 'dry-run passed: %s@%s (%s, risk=%s)\n' "$slug" "$target_version" "$categories_csv" "$risk"
+jq -n \
+  --arg schema "my-open-skills.clawhub-preflight.v2" \
+  --arg checked_at "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" \
+  --arg source_commit "$head_commit" \
+  --argjson release "$release_json" \
+  --slurpfile dry_run "$dry_run_json" \
+  '{
+    schema: $schema,
+    checked_at: $checked_at,
+    source_commit: $source_commit,
+    requested: {
+      order: $release.order,
+      slug: $release.slug,
+      version: $release.target_version,
+      categories: $release.categories,
+      topics: $release.topics,
+      tags: $release.tags,
+      changelog: $release.changelog
+    },
+    dry_run: $dry_run[0]
+  }' >"$preflight_json"
+
+printf 'dry-run passed: %s@%s (risk=%s)\n' "$slug" "$target_version" "$risk"
+printf 'categories: %s\n' "$categories_csv"
+printf 'topics: %s\n' "$topics_csv"
+printf 'tags: %s\n' "$tags_csv"
 jq '{ok,status,slug,version,latestVersion,fileCount,fingerprint}' "$dry_run_json"
+printf 'preflight receipt: %s\n' "$preflight_json"
 
 if [ "$publish_live" -eq 0 ]; then
   printf 'live publication not requested; rerun with --publish --yes\n'
@@ -216,16 +246,16 @@ jq -e '.ok == true and .status == "published"' "$publish_tmp" >/dev/null ||
 mv "$publish_tmp" "$publish_json"
 
 jq -n \
-  --arg schema "my-open-skills.clawhub-submission.v1" \
+  --arg schema "my-open-skills.clawhub-submission.v2" \
   --arg submitted_at "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" \
   --arg source_commit "$head_commit" \
-  --slurpfile dry_run "$dry_run_json" \
+  --slurpfile preflight "$preflight_json" \
   --slurpfile publish "$publish_json" \
   '{
     schema: $schema,
     submitted_at: $submitted_at,
     source_commit: $source_commit,
-    dry_run: $dry_run[0],
+    preflight: $preflight[0],
     publish: $publish[0]
   }' >"$receipt_dir/submission.json"
 

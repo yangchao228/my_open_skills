@@ -22,9 +22,10 @@ Usage:
   scripts/clawhub-watch-release.sh <slug> --finalize [--push --yes]
 
 The watcher prints only state changes. It waits for public latest metadata,
-validates public categories and creator hooks, installs the exact version,
-compares source and registry hashes, waits for full security verification and
-the generated Skill Card, then writes a machine-readable receipt.
+validates categories, all API Topics, the first four page Topics, and creator
+hooks, installs the exact version, compares source and registry hashes, waits
+for full security verification and the generated Skill Card, then writes a
+machine-readable receipt.
 EOF
 }
 
@@ -105,6 +106,7 @@ target_version="$(jq -r '.target_version' <<<"$release_json")"
 order="$(jq -r '.order' <<<"$release_json")"
 risk="$(jq -r '.risk' <<<"$release_json")"
 categories_csv="$(jq -r '.categories | join(",")' <<<"$release_json")"
+topics_csv="$(jq -r '.topics | join(",")' <<<"$release_json")"
 description_suffix="$(jq -r '.description_suffix' "$profile_file")"
 wechat_account="$(jq -r '.wechat_official_account' "$profile_file")"
 x_url="$(jq -r '.x_url' "$profile_file")"
@@ -141,6 +143,17 @@ emit_stage() {
   fi
 }
 
+wait_for_next_poll() {
+  if [ "$run_once" -eq 1 ]; then
+    exit 2
+  fi
+  if [ "$(date +%s)" -ge "$deadline_epoch" ]; then
+    emit_stage "timeout" "verification did not complete within $timeout_minutes minutes"
+    exit 3
+  fi
+  sleep "$poll_seconds"
+}
+
 format_epoch_ms_cst() {
   local epoch_ms="$1"
   local epoch_seconds="${epoch_ms%???}"
@@ -166,11 +179,16 @@ verify_registry_hashes() {
 
 verify_public_page() {
   local public_html="$1"
-  local category
+  local category topic
 
   while IFS= read -r category; do
     grep -Fq "category=$category" "$public_html" || die "public page is missing category '$category'"
   done < <(jq -r --arg slug "$slug" '.releases[] | select(.slug == $slug) | .categories[]' "$plan_file")
+
+  # ClawHub currently renders only the first four of up to five stored Topics.
+  while IFS= read -r topic; do
+    grep -Fq "topic=$topic" "$public_html" || die "public page is missing topic '$topic'"
+  done < <(jq -r --arg slug "$slug" '.releases[] | select(.slug == $slug) | .topics[:4][]' "$plan_file")
 
   grep -Fq "$wechat_account" "$public_html" || die "public page is missing the WeChat creator hook"
   grep -Fq "$publisher_handle" "$public_html" || die "public page is missing the publisher handle"
@@ -276,6 +294,20 @@ while :; do
       if ! curl -fsSL "https://clawhub.ai/$publisher_handle/skills/$slug" -o "$public_html"; then
         emit_stage "pending-page" "public page is not available"
       else
+        catalog_tmp="$receipt_dir/catalog.tmp.json"
+        catalog_json="$receipt_dir/catalog.json"
+        if ! curl -fsSL "https://clawhub.ai/api/v1/skills/$slug?ownerHandle=$publisher_handle" -o "$catalog_tmp"; then
+          emit_stage "pending-catalog" "public skill metadata is not available"
+          wait_for_next_poll
+          continue
+        fi
+        jq . "$catalog_tmp" >/dev/null 2>&1 || die "public skill metadata is not valid JSON"
+        mv "$catalog_tmp" "$catalog_json"
+        expected_topics="$(jq -c '.topics' <<<"$release_json")"
+        actual_topics="$(jq -c '.skill.topics // []' "$catalog_json")"
+        [ "$actual_topics" = "$expected_topics" ] ||
+          die "public API topics $actual_topics do not match planned topics $expected_topics"
+
         verify_public_page "$public_html"
         if [ ! -f "$receipt_dir/source-verified" ]; then
           verify_installed_source
@@ -308,24 +340,28 @@ while :; do
             [ "$actual_card_hash" = "$expected_card_hash" ] || die "installed Skill Card hash does not match the registry"
 
             jq -n \
-              --arg schema "my-open-skills.clawhub-verification.v1" \
+              --arg schema "my-open-skills.clawhub-verification.v2" \
               --arg verified_at "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" \
               --arg categories "$categories_csv" \
+              --arg topics "$topics_csv" \
               --arg source_path "$skill_path" \
               --arg card_sha256 "$actual_card_hash" \
+              --slurpfile catalog "$catalog_json" \
               --slurpfile inspect "$inspect_json" \
               --slurpfile verify "$verify_json" \
               '{
                 schema: $schema,
                 verified_at: $verified_at,
                 categories: ($categories | split(",")),
+                topics: ($topics | split(",")),
                 source_path: $source_path,
                 card_sha256: $card_sha256,
+                catalog: $catalog[0],
                 inspect: $inspect[0],
                 verify: $verify[0]
               }' >"$receipt_dir/verification.json"
 
-            emit_stage "verified" "public metadata, install, hashes, security, and Skill Card passed"
+            emit_stage "verified" "categories, topics, install, hashes, security, and Skill Card passed"
 
             if [ "$finalize_release" -eq 1 ]; then
               finalize_ledger "$verify_json"
@@ -339,12 +375,5 @@ while :; do
     fi
   fi
 
-  if [ "$run_once" -eq 1 ]; then
-    exit 2
-  fi
-  if [ "$(date +%s)" -ge "$deadline_epoch" ]; then
-    emit_stage "timeout" "verification did not complete within $timeout_minutes minutes"
-    exit 3
-  fi
-  sleep "$poll_seconds"
+  wait_for_next_poll
 done
