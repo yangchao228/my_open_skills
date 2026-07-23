@@ -465,7 +465,7 @@
       "path": "skills/content/resilient-imagegen",
       "display_name": "Resilient ImageGen",
       "risk": "medium",
-      "status": "public",
+      "status": "verified",
       "remote_latest_version": "1.0.0",
       "target_version": "1.0.0",
       "categories": [
@@ -486,7 +486,8 @@
       "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics.",
       "submitted_at": "2026-07-23T13:57:48Z",
       "source_commit": "e3526523187dda48ce334de6b25052e5728298a4",
-      "public_at": "2026-07-23T17:07:57Z"
+      "public_at": "2026-07-23T17:07:57Z",
+      "verified_at": "2026-07-23T18:24:01Z"
     },
     {
       "order": 17,
