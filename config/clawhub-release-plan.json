@@ -195,8 +195,8 @@
       "path": "skills/content/wenchang-research",
       "display_name": "Wenchang Research",
       "risk": "low",
-      "status": "submitted",
-      "remote_latest_version": null,
+      "status": "public",
+      "remote_latest_version": "1.0.0",
       "target_version": "1.0.0",
       "categories": [
         "research",
@@ -215,7 +215,8 @@
       ],
       "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics.",
       "submitted_at": "2026-07-23T13:42:19Z",
-      "source_commit": "c8e7a9b526125d2fdab2d72eebe5ee2f55737f54"
+      "source_commit": "c8e7a9b526125d2fdab2d72eebe5ee2f55737f54",
+      "public_at": "2026-07-23T15:35:53Z"
     },
     {
       "order": 7,
