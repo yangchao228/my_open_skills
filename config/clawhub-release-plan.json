@@ -405,7 +405,7 @@
       "path": "skills/content/article-to-illustrations",
       "display_name": "Article To Illustrations",
       "risk": "medium",
-      "status": "public",
+      "status": "verified",
       "remote_latest_version": "1.0.0",
       "target_version": "1.0.0",
       "categories": [
@@ -426,7 +426,8 @@
       "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics.",
       "submitted_at": "2026-07-23T13:56:08Z",
       "source_commit": "62be65e364f958b9005281e754fa2534d19aea5e",
-      "public_at": "2026-07-23T17:07:23Z"
+      "public_at": "2026-07-23T17:07:23Z",
+      "verified_at": "2026-07-23T18:23:11Z"
     },
     {
       "order": 15,
