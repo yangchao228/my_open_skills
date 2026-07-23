@@ -86,7 +86,7 @@ done
 [ "$until_stage" = "public" ] || [ "$until_stage" = "verified" ] ||
   die "--until must be public or verified"
 
-for command_name in jq git clawhub curl shasum diff rg awk; do
+for command_name in jq git clawhub curl shasum diff awk; do
   need_command "$command_name"
 done
 
@@ -350,7 +350,7 @@ while :; do
   if clawhub inspect "@$publisher_handle/$slug" --version "$target_version" --files --json >"$inspect_tmp" 2>"$inspect_error"; then
     :
   else
-    if rg -qi 'not found|404|pending[ ._-]*publication' "$inspect_error"; then
+    if grep -Eqi 'not found|404|pending[ ._-]*publication' "$inspect_error"; then
       emit_stage "pending-publication" "exact version is not inspectable yet"
       wait_for_next_poll
       continue
@@ -444,7 +444,7 @@ while :; do
         clawhub skill verify "@$publisher_handle/$slug" --version "$target_version" --json >"$verify_tmp" 2>"$verify_error" || true
 
         if ! jq . "$verify_tmp" >/dev/null 2>&1; then
-          if rg -qi 'network request failed|fetch failed|econn|enotfound|etimedout|tls|certificate' "$verify_error"; then
+          if grep -Eqi 'network request failed|fetch failed|econn|enotfound|etimedout|tls|certificate' "$verify_error"; then
             cat "$verify_error" >&2
             die "security verification request failed"
           fi

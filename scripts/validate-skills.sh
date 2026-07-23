@@ -320,7 +320,7 @@ validate_skill() {
       error "$skill_md description must end with the canonical ClawHub creator suffix"
     fi
 
-    suffix_count="$(rg -o --fixed-strings "$description_suffix" "$skill_md" 2>/dev/null | wc -l | tr -d ' ' || true)"
+    suffix_count="$(grep -F -o -- "$description_suffix" "$skill_md" 2>/dev/null | wc -l | tr -d ' ' || true)"
     if [ "${suffix_count:-0}" != "1" ]; then
       error "$skill_md must contain the canonical creator suffix exactly once"
     fi
@@ -430,7 +430,52 @@ while IFS= read -r md; do
   validate_markdown_links "$md"
 done < <(find README.md README.zh-CN.md CONTEXT.md docs skills -name '*.md' -not -path '*/examples/*' | sort)
 
+build_scan_list() {
+  local output_file="$1"
+  local target
+  shift
+  : >"$output_file"
+  for target in "$@"; do
+    if [ -d "$target" ]; then
+      find "$target" -type f \
+        ! -name '*.png' \
+        ! -name '*.jpg' \
+        ! -name '*.jpeg' \
+        -print >>"$output_file"
+    elif [ -f "$target" ]; then
+      printf '%s\n' "$target" >>"$output_file"
+    fi
+  done
+}
+
+scan_list_for_pattern() {
+  local mode="$1"
+  local pattern="$2"
+  local file_list="$3"
+  local result_file="$4"
+  local file found
+  found=1
+  : >"$result_file"
+  while IFS= read -r file; do
+    [ -n "$file" ] || continue
+    if [ "$mode" = "fixed" ]; then
+      if grep -I -nH -F -- "$pattern" "$file" >>"$result_file" 2>/dev/null; then
+        found=0
+      fi
+    elif grep -I -nH -E -- "$pattern" "$file" >>"$result_file" 2>/dev/null; then
+      found=0
+    fi
+  done <"$file_list"
+  return "$found"
+}
+
 scan_targets=(README.md README.zh-CN.md CONTEXT.md docs/catalog.md skills)
+public_scan_files="/tmp/my-open-skills-public-scan-files.txt"
+credential_scan_files="/tmp/my-open-skills-credential-scan-files.txt"
+scan_results="/tmp/my-open-skills-validate-scan.txt"
+build_scan_list "$public_scan_files" "${scan_targets[@]}"
+build_scan_list "$credential_scan_files" README.md README.zh-CN.md CONTEXT.md docs/catalog.md config skills
+
 for pattern in \
   '/Users/yangchao/' \
   '.env' \
@@ -441,18 +486,19 @@ for pattern in \
   'r2-config' \
   'content/outputs/'
 do
-  if rg -n --fixed-strings "$pattern" "${scan_targets[@]}" >/tmp/my-open-skills-validate-rg.txt 2>/dev/null; then
+  if scan_list_for_pattern fixed "$pattern" "$public_scan_files" "$scan_results"; then
     note "Forbidden marker found for pattern: $pattern"
-    cat /tmp/my-open-skills-validate-rg.txt >&2
+    cat "$scan_results" >&2
     fail=1
   fi
 done
 
-if rg -n --hidden --glob '!*.png' --glob '!*.jpg' --glob '!*.jpeg' \
+if scan_list_for_pattern regex \
   '(clh_[A-Za-z0-9_-]{16,}|gh[pousr]_[A-Za-z0-9]{20,}|sk-[A-Za-z0-9_-]{20,}|BEGIN (RSA|OPENSSH|EC) PRIVATE KEY)' \
-  README.md README.zh-CN.md CONTEXT.md docs/catalog.md config skills >/tmp/my-open-skills-validate-rg.txt 2>/dev/null; then
+  "$credential_scan_files" \
+  "$scan_results"; then
   note "Forbidden credential-like marker found"
-  cat /tmp/my-open-skills-validate-rg.txt >&2
+  cat "$scan_results" >&2
   fail=1
 fi
 

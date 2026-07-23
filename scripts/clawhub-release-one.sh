@@ -142,7 +142,7 @@ done
 [ -f "$plan_file" ] || die "missing $plan_file"
 [ "$watch_option_count" -le 1 ] || die "use either --watch-public or --watch"
 
-for command_name in jq git clawhub curl shasum diff rg; do
+for command_name in jq git clawhub curl shasum diff; do
   need_command "$command_name"
 done
 
@@ -240,7 +240,7 @@ current_remote=""
 if clawhub inspect "@$publisher_handle/$slug" --json >"$remote_json" 2>"$remote_error"; then
   current_remote="$(jq -r '.latestVersion.version // empty' "$remote_json")"
 else
-  if rg -qi 'not found|404' "$remote_error"; then
+  if grep -Eqi 'not found|404' "$remote_error"; then
     : >"$remote_json"
     current_remote=""
   else
