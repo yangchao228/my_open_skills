@@ -55,7 +55,7 @@ This ledger is the reader-facing source of truth for one-at-a-time ClawHub relea
 | 6 | `wenchang-research` | `skills/content/wenchang-research` | low | `1.0.0` | submitted (2026-07-23 21:42 CST) | pending | — | [page](https://clawhub.ai/yangchao228/skills/wenchang-research) |
 | 7 | `wenchang-review` | `skills/content/wenchang-review` | low | `1.0.0` | submitted (2026-07-23 21:43 CST) | pending | — | [page](https://clawhub.ai/yangchao228/skills/wenchang-review) |
 | 8 | `wenchang-wechat-writer` | `skills/content/wenchang-wechat-writer` | low | `1.0.0` | submitted (2026-07-23 21:44 CST) | pending | — | [page](https://clawhub.ai/yangchao228/skills/wenchang-wechat-writer) |
-| 9 | `xiaohongshu-topic-generator` | `skills/content/xiaohongshu-topic-generator` | low | `1.0.0` | prepared | pending | — | [page](https://clawhub.ai/yangchao228/skills/xiaohongshu-topic-generator) |
+| 9 | `xiaohongshu-topic-generator` | `skills/content/xiaohongshu-topic-generator` | low | `1.0.0` | submitted (2026-07-23 21:46 CST) | pending | — | [page](https://clawhub.ai/yangchao228/skills/xiaohongshu-topic-generator) |
 | 10 | `zhihu-topic-hunter` | `skills/content/zhihu-topic-hunter` | low | `1.0.0` | prepared | pending | — | [page](https://clawhub.ai/yangchao228/skills/zhihu-topic-hunter) |
 | 11 | `long-to-cards` | `skills/content/long-to-cards` | medium | `1.0.0` | prepared | pending | — | [page](https://clawhub.ai/yangchao228/skills/long-to-cards) |
 | 12 | `wechat-to-cards` | `skills/content/wechat-to-cards` | medium | `1.0.0` | prepared | pending | — | [page](https://clawhub.ai/yangchao228/skills/wechat-to-cards) |
