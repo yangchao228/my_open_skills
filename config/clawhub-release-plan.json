@@ -163,8 +163,8 @@
       "path": "skills/content/storm-research",
       "display_name": "STORM Research",
       "risk": "low",
-      "status": "planned",
-      "remote_latest_version": null,
+      "status": "verified",
+      "remote_latest_version": "1.0.0",
       "target_version": "1.0.0",
       "categories": [
         "research",
