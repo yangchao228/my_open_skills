@@ -224,8 +224,8 @@
       "path": "skills/content/wenchang-review",
       "display_name": "Wenchang Review",
       "risk": "low",
-      "status": "submitted",
-      "remote_latest_version": null,
+      "status": "public",
+      "remote_latest_version": "1.0.0",
       "target_version": "1.0.0",
       "categories": [
         "creative",
@@ -244,7 +244,8 @@
       ],
       "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics.",
       "submitted_at": "2026-07-23T13:43:42Z",
-      "source_commit": "b0aef6d8c214cdd78ca94dabd87216fbcb0bedeb"
+      "source_commit": "b0aef6d8c214cdd78ca94dabd87216fbcb0bedeb",
+      "public_at": "2026-07-23T15:36:12Z"
     },
     {
       "order": 8,
