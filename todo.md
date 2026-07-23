@@ -149,7 +149,8 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - [x] Pass explicit `1.0.0` ClawHub dry-runs for all 20 release-ready skills from committed source `cbe3c92`
 - [x] Verify `create-plan@1.0.0` through inspect, exact-version temporary install, source-file hash comparison, security evidence, creator-link checks, and public-page HTTP 200
 - [x] Publish and verify `doc-coauthoring@1.0.0` through the same one-at-a-time release gate
-- [ ] Publish the remaining 18 ready skills one at a time after the completed pilot gates
+- [ ] Wait for `project-weekly-report@1.0.0` to leave `pending.publication`, then verify its explicit categories, security evidence, temporary install, hashes, creator links, and public page
+- [ ] Publish the remaining 17 ready skills one at a time after the third release gate completes
 - [x] Record the pilot's submitted state and the `redbook-cards-skill` license block in the release ledger
 - [ ] Update the release ledger with verified versions, timestamps, URLs, and any later skill-specific blocks
 
@@ -194,6 +195,8 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - sales and after-sales documents
 
 ## Review
+
+- 2026-07-23: Added an explicit ClawHub category gate after the first two releases appeared under `Other`. Recorded owner-planned manual categories for `create-plan` and `doc-coauthoring`; future releases must declare one to three category slugs with `--categories` instead of relying on inference. Published `project-weekly-report@1.0.0` from clean commit `3a0b24d` with `productivity`, `knowledge`, and `development`; its four-file dry-run passed with fingerprint `a67dad09...`. ClawHub accepted the release and the static moderation result is clean, but it entered `pending.publication` just after the active pre-publication worker stopped claiming jobs. The release therefore remains hidden until the next platform worker cycle, category/page/install verification is pending, and no fourth skill was published.
 
 - 2026-07-23: Published and verified `doc-coauthoring@1.0.0` as the second one-at-a-time ClawHub release. The committed four-file source passed repository validation and dry-run with fingerprint `4c586b14...`; ClawHub then completed pre-publication review and exposed the public page. Exact-version temporary installation succeeded, all four source files matched repository and registry SHA-256 values, the public page returned HTTP 200, and the creator description hook, WeChat, X, GitHub, and homepage were present. Initial `clawhub skill verify` failed only with `card.missing` while ClawHub's asynchronous Skill Card worker caught up; after the card was generated, verification returned `decision: pass`. Static scan, VirusTotal, and SkillSpector were clean with recommendation `SAFE`, severity `LOW`, and three non-blocking scope/display notes. No third skill was published during this release gate.
 
