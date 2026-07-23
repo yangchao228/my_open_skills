@@ -19,7 +19,7 @@ This ledger is the source of truth for one-at-a-time ClawHub releases from this 
 | Order | Slug | Source path | Risk | Target | Status | Scan | Published at | ClawHub |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | `create-plan` | `skills/work/create-plan` | low | `1.0.0` | verified (2026-07-23 12:29 CST) | pass; static, VirusTotal, and SkillSpector clean; SAFE | 2026-07-23 10:22:29 CST | [page](https://clawhub.ai/yangchao228/skills/create-plan) |
-| 2 | `doc-coauthoring` | `skills/work/doc-coauthoring` | low | `1.0.0` | prepared | pending | — | [page](https://clawhub.ai/yangchao228/skills/doc-coauthoring) |
+| 2 | `doc-coauthoring` | `skills/work/doc-coauthoring` | low | `1.0.0` | verified (2026-07-23 13:40 CST) | pass; static, VirusTotal, and SkillSpector clean; SAFE/LOW (3 notes) | 2026-07-23 12:58:41 CST | [page](https://clawhub.ai/yangchao228/skills/doc-coauthoring) |
 | 3 | `project-weekly-report` | `skills/work/project-weekly-report` | medium | `1.0.0` | prepared | pending | — | [page](https://clawhub.ai/yangchao228/skills/project-weekly-report) |
 | 4 | `resume-interview-generator` | `skills/work/resume-interview-generator` | medium | `1.0.0` | prepared | pending | — | [page](https://clawhub.ai/yangchao228/skills/resume-interview-generator) |
 | 5 | `storm-research` | `skills/content/storm-research` | low | `1.0.0` | prepared | pending | — | [page](https://clawhub.ai/yangchao228/skills/storm-research) |
