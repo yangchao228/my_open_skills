@@ -18,7 +18,7 @@ This ledger is the source of truth for one-at-a-time ClawHub releases from this 
 
 | Order | Slug | Source path | Risk | Target | Status | Scan | Published at | ClawHub |
 | ---: | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | `create-plan` | `skills/work/create-plan` | low | `1.0.0` | prepared | pending | — | [page](https://clawhub.ai/yangchao228/skills/create-plan) |
+| 1 | `create-plan` | `skills/work/create-plan` | low | `1.0.0` | pending-publication (submitted 2026-07-23 10:22 CST) | clean (v2.4.26); platform pre-publication checks pending | — | [page](https://clawhub.ai/yangchao228/skills/create-plan) |
 | 2 | `doc-coauthoring` | `skills/work/doc-coauthoring` | low | `1.0.0` | prepared | pending | — | [page](https://clawhub.ai/yangchao228/skills/doc-coauthoring) |
 | 3 | `project-weekly-report` | `skills/work/project-weekly-report` | medium | `1.0.0` | prepared | pending | — | [page](https://clawhub.ai/yangchao228/skills/project-weekly-report) |
 | 4 | `resume-interview-generator` | `skills/work/resume-interview-generator` | medium | `1.0.0` | prepared | pending | — | [page](https://clawhub.ai/yangchao228/skills/resume-interview-generator) |
@@ -40,7 +40,7 @@ This ledger is the source of truth for one-at-a-time ClawHub releases from this 
 | 20 | `wenchang-orchestrator` | `skills/content/wenchang-orchestrator` | medium | `1.0.0` | prepared | pending | — | [page](https://clawhub.ai/yangchao228/skills/wenchang-orchestrator) |
 | 21 | `md-img-r2` | `skills/publishing/md-img-r2` | high | `1.0.0` | prepared | pending | — | [page](https://clawhub.ai/yangchao228/skills/md-img-r2) |
 
-Status values: `prepared`, `published`, `verified`, `blocked`. A skill-specific block does not authorize weakening validation or changing the skill's safety boundary.
+Status values: `prepared`, `pending-publication`, `published`, `verified`, `blocked`. `pending-publication` means ClawHub accepted the upload but still hides it from inspect/install while platform security workers finish. A skill-specific block does not authorize weakening validation or changing the skill's safety boundary.
 
 ## 中文说明
 

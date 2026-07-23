@@ -146,8 +146,11 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - [x] Add the creator description suffix, `1.0.0`, source homepage, and creator footer to every release-ready skill
 - [x] Extend repository validation for creator metadata, semver, homepage, package size, credentials, and ClawHub local state
 - [x] Move `redbook-cards-skill` back to incubation because its third-party MIT attribution conflicts with ClawHub MIT-0 packaging
-- [ ] Publish each remaining ready skill through dry-run, live publish, inspect, temporary install, and security scan
-- [ ] Update the release ledger with verified versions, timestamps, URLs, and any skill-specific blocks
+- [x] Pass explicit `1.0.0` ClawHub dry-runs for all 20 release-ready skills from committed source `cbe3c92`
+- [ ] Wait for `create-plan@1.0.0` to leave ClawHub `pending.publication`, then complete inspect, temporary install, and public-page verification
+- [ ] Publish the remaining 19 ready skills one at a time after the pilot gate passes
+- [x] Record the pilot's submitted state and the `redbook-cards-skill` license block in the release ledger
+- [ ] Update the release ledger with verified versions, timestamps, URLs, and any later skill-specific blocks
 
 ## Ready Skills
 
@@ -190,6 +193,8 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - sales and after-sales documents
 
 ## Review
+
+- 2026-07-23: Implemented the ClawHub one-by-one release foundation. Committed the reviewed 35-file/8-asset baseline as `ee3e8c1`, added and pushed canonical creator metadata, the release ledger, owner-qualified install docs, and stricter release validation as `cbe3c92`, installed ClawHub CLI 0.23.1, and verified publisher `yangchao228`. All 20 releasable skills passed repository validation and explicit `1.0.0` ClawHub dry-runs. Submitted only the `create-plan` pilot; ClawHub accepted the four-file artifact with fingerprint `41976a1c...`, and its registry scan reports clean with engine `v2.4.26`, but the version remains hidden as `pending.publication`. Twenty bounded inspect polls found no state change, and the official pre-publication GitHub Actions worker started no new run during that window, so the required inspect/install gate could not complete and the remaining 19 skills were not uploaded. `redbook-cards-skill` remains blocked from ClawHub because its preserved third-party MIT attribution cannot be represented safely by ClawHub's MIT-0 package license.
 
 - 2026-07-22: Copied `redbook-cards-skill` from the local Claude skills directory into `skills/content/redbook-cards-skill`, preserved the original skill guide, prompt, example, demo HTML, and MIT license, then added repository `skill.json` metadata plus minimal and expected-output examples. Adjusted output-length wording so the public validation keyword scan can pass. Updated the root and content READMEs, catalog, ready-skill list, and this TODO entry. No external upload, platform publication, commit, or push was performed.
 
