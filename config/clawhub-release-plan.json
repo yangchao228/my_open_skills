@@ -255,7 +255,7 @@
       "path": "skills/content/wenchang-wechat-writer",
       "display_name": "Wenchang WeChat Writer",
       "risk": "low",
-      "status": "public",
+      "status": "verified",
       "remote_latest_version": "1.0.0",
       "target_version": "1.0.0",
       "categories": [
@@ -276,7 +276,8 @@
       "changelog": "Initial public release with verified workflow metadata, creator channels, and explicit catalog categories and topics.",
       "submitted_at": "2026-07-23T13:44:41Z",
       "source_commit": "7ec3b3eca7f3f7ed84ccee6f157e42b8a45eeb2c",
-      "public_at": "2026-07-23T15:36:34Z"
+      "public_at": "2026-07-23T15:36:34Z",
+      "verified_at": "2026-07-23T17:05:33Z"
     },
     {
       "order": 9,
