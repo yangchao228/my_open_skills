@@ -151,10 +151,10 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - [x] Publish and verify `doc-coauthoring@1.0.0` through the same one-at-a-time release gate
 - [x] Verify `project-weekly-report@1.0.0` after publication through explicit category rendering, security evidence, temporary install, hashes, creator links, and the public page
 - [ ] Publish every remaining `planned` entry in `config/clawhub-release-plan.json` one at a time; advance only after a verified receipt
-- [ ] Add a machine-readable release plan for the remaining 16 skills with explicit categories, remote baselines, target versions, tags, and changelogs
-- [ ] Add a fail-closed single-skill preflight and publish script that requires a clean pushed source commit and an explicit live confirmation
-- [ ] Add a state-change-only release watcher that verifies public metadata, exact installation, source hashes, security signals, and the generated Skill Card
-- [ ] Validate the optimized workflow locally and with a real ClawHub dry-run before continuing to the fifth live release
+- [x] Add a machine-readable release plan for the remaining 16 skills with explicit categories, remote baselines, target versions, tags, and changelogs
+- [x] Add a fail-closed single-skill preflight and publish script that requires a clean pushed source commit and an explicit live confirmation
+- [x] Add a state-change-only release watcher that verifies public metadata, exact installation, source hashes, security signals, and the generated Skill Card
+- [x] Validate the optimized workflow locally and with a real ClawHub dry-run before continuing to the fifth live release
 - [x] Record the pilot's submitted state and the `redbook-cards-skill` license block in the release ledger
 - [ ] Update the release ledger with verified versions, timestamps, URLs, and any later skill-specific blocks
 
@@ -199,6 +199,8 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - sales and after-sales documents
 
 ## Review
+
+- 2026-07-23: Replaced the repetitive manual ClawHub release loop with a fail-closed, single-skill pipeline. Added a machine-readable plan covering all 20 ready skills (4 verified, 16 planned), explicit categories and discovery tags, remote version baselines, and `md-img-r2` target `1.0.4`. The release runner now requires the first planned slug, a clean pushed `main`, matching publisher identity and remote baseline, a successful dry-run, explicit `--publish --yes`, and an atomic live-publish lock. The state-change-only watcher was proven end to end against the existing `resume-interview-generator@1.0.1`, including public metadata, exact install, source and registry hashes, security, and Skill Card; its finalizer also passed in an isolated repository. From pushed source `176c558`, the real `storm-research@1.0.0` dry-run returned `would-publish` for four files with fingerprint `ae3fe382...` and explicit `research`, `knowledge`, and `productivity` categories. A preoccupied-lock live-flag test stopped before upload as designed. No fifth skill was published.
 
 - 2026-07-23: Published and verified `resume-interview-generator@1.0.1` as the fourth one-at-a-time ClawHub release. The existing public slug belongs to `yangchao228` and already had `1.0.0`, so the repository version and ledger target advanced explicitly to patch version `1.0.1` instead of overwriting history. Selected `productivity`, `knowledge`, and `development` from ClawHub's current public category set; all three rendered on the HTTP 200 public page instead of `Other`, and the seven existing discovery tags now point to `1.0.1`. Repository validation and the 10-file dry-run passed from clean commit `7cecaef` with fingerprint `4db750e5...`. Final `clawhub skill verify` returned `decision: pass`; static scan, VirusTotal, and SkillSpector were clean with recommendation `SAFE`, severity `LOW`, and one non-blocking note. Exact-version installation succeeded, all 10 source files matched the repository and registry SHA-256 values, the downloaded Skill Card matched registry hash `eb65927e...`, and the creator channels, homepage, anonymized fixture, scoring structure, and sensitive-contact-data boundary remained intact. No fifth skill was published.
 
