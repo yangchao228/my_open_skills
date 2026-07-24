@@ -86,7 +86,7 @@ done
 [ "$until_stage" = "public" ] || [ "$until_stage" = "verified" ] ||
   die "--until must be public or verified"
 
-for command_name in jq git clawhub curl shasum diff awk; do
+for command_name in jq git clawhub curl shasum diff awk find sed sort uniq; do
   need_command "$command_name"
 done
 
@@ -208,17 +208,75 @@ verify_public_page() {
 }
 
 verify_installed_source() {
+  local inspect_json="$1"
+  local source_files="$receipt_dir/source-files.tsv"
+  local expected_paths="$receipt_dir/source-paths.expected.txt"
+  local installed_paths="$receipt_dir/source-paths.installed.txt"
+  local relative_path expected_hash repository_hash installed_hash duplicate_paths
+
+  jq -e '.version.files | type == "array"' "$inspect_json" >/dev/null ||
+    die "inspect response is missing the version file manifest"
+  jq -r '
+    .version.files[]
+    | select(
+        .path != "skill-card.md"
+        and .path != "_meta.json"
+        and .path != ".clawhub"
+        and (.path | startswith(".clawhub/") | not)
+      )
+    | [.path, .sha256]
+    | @tsv
+  ' "$inspect_json" >"$source_files"
+  [ -s "$source_files" ] || die "version file manifest contains no installable source files"
+
   clawhub --workdir "$install_workdir" --dir skills --no-input install \
     "@$publisher_handle/$slug" --version "$target_version" --force >/dev/null
 
-  diff -qr \
-    --exclude=skill-card.md \
-    --exclude=_meta.json \
-    --exclude=.clawhub \
-    "$skill_path" "$installed_path" >"$receipt_dir/source-diff.txt" ||
+  : >"$expected_paths"
+  while IFS=$'\t' read -r relative_path expected_hash; do
+    case "$relative_path" in
+      ""|/*|..|../*|*/..|*/../*) die "unsafe path in version file manifest: $relative_path" ;;
+    esac
+    [[ "$expected_hash" =~ ^[0-9a-f]{64}$ ]] ||
+      die "invalid SHA-256 in version file manifest for $relative_path"
+
+    [ -f "$skill_path/$relative_path" ] ||
+      die "registry source file is missing from the repository: $relative_path"
+    [ -f "$installed_path/$relative_path" ] ||
+      die "registry source file is missing from the exact-version install: $relative_path"
+
+    repository_hash="$(shasum -a 256 "$skill_path/$relative_path" | awk '{print $1}')"
+    installed_hash="$(shasum -a 256 "$installed_path/$relative_path" | awk '{print $1}')"
+    [ "$repository_hash" = "$expected_hash" ] ||
+      die "repository hash differs from the registry for $relative_path"
+    [ "$installed_hash" = "$expected_hash" ] ||
+      die "installed hash differs from the registry for $relative_path"
+
+    printf '%s\n' "$relative_path" >>"$expected_paths"
+  done <"$source_files"
+
+  duplicate_paths="$(LC_ALL=C sort "$expected_paths" | uniq -d)"
+  [ -z "$duplicate_paths" ] || {
+    printf '%s\n' "$duplicate_paths" >&2
+    die "version file manifest contains duplicate source paths"
+  }
+  LC_ALL=C sort -u "$expected_paths" -o "$expected_paths"
+
+  (
+    cd "$installed_path"
+    find . -type f \
+      ! -path './skill-card.md' \
+      ! -path './_meta.json' \
+      ! -path './.clawhub/*' \
+      -print |
+      sed 's#^\./##' |
+      LC_ALL=C sort
+  ) >"$installed_paths"
+
+  diff -u "$expected_paths" "$installed_paths" >"$receipt_dir/source-diff.txt" ||
     {
       cat "$receipt_dir/source-diff.txt" >&2
-      die "installed source differs from the repository"
+      die "installed source paths differ from the registry manifest"
     }
 
   grep -Fq "$description_suffix" "$installed_path/SKILL.md" || die "installed SKILL.md is missing the canonical description hook"
@@ -405,7 +463,7 @@ while :; do
 
         verify_public_page "$public_html"
         if [ ! -f "$receipt_dir/source-verified" ]; then
-          verify_installed_source
+          verify_installed_source "$inspect_json"
           : >"$receipt_dir/source-verified"
         fi
 
@@ -457,7 +515,7 @@ while :; do
             emit_stage "pending-verification" "$reasons"
           else
             verify_registry_hashes "$verify_json"
-            verify_installed_source
+            verify_installed_source "$inspect_json"
 
             expected_card_hash="$(jq -r '.card.sha256 // empty' "$verify_json")"
             [ -n "$expected_card_hash" ] || die "verification passed without a Skill Card hash"
