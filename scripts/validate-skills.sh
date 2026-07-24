@@ -509,11 +509,21 @@ fi
 if ! grep -Fqx '.clawhub-release-state/' .gitignore; then
   error ".gitignore must exclude .clawhub-release-state/"
 fi
-for release_script in scripts/clawhub-release-one.sh scripts/clawhub-watch-release.sh scripts/clawhub-reconcile-releases.sh; do
+for release_script in \
+  scripts/clawhub-release-one.sh \
+  scripts/clawhub-watch-release.sh \
+  scripts/clawhub-reconcile-releases.sh \
+  scripts/verify-clawhub-installed-source.sh \
+  scripts/test-clawhub-installed-source.sh
+do
   if [ ! -x "$release_script" ]; then
     error "$release_script must be executable"
   fi
 done
+
+if ! ./scripts/test-clawhub-installed-source.sh; then
+  error "ClawHub installed-source fixture tests failed"
+fi
 
 if [ ! -f ".github/workflows/clawhub-release-reconcile.yml" ]; then
   error "missing scheduled ClawHub release reconciliation workflow"

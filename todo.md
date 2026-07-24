@@ -164,7 +164,7 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - [x] Add an idempotent background reconciler and scheduled GitHub Action for public/verified promotion
 - [x] Prove the asynchronous state machine without uploading another skill
 - [x] Record the pilot's submitted state and the `redbook-cards-skill` license block in the release ledger
-- [ ] Update the release ledger with verified versions, timestamps, URLs, and any later skill-specific blocks
+- [x] Update the release ledger with verified versions, timestamps, URLs, and any later skill-specific blocks
 
 ## Ready Skills
 
@@ -207,6 +207,8 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - sales and after-sales documents
 
 ## Review
+
+- 2026-07-24: Closed the ClawHub reconciliation backlog at 20 verified releases. `md-img-r2@1.0.4` exposed a false source-drift failure because ClawHub intentionally omitted the unsupported `.example` extension while the watcher compared whole directories. Commit `3a86437` changed the gate to trust the registry file manifest while requiring repository and installed SHA-256 matches and rejecting undeclared installed paths. Workflow runs `30065754675` and `30065807087` then promoted the release from submitted to public to verified on GitHub's Ubuntu runner. Extracted the manifest verification into a reusable helper and added fixtures for repository-only omitted files, installed hash mismatches, and undeclared installed source paths.
 
 - 2026-07-23: Completed the planned ClawHub upload queue after switching the foreground completion boundary to `submitted`. ClawHub accepted all 15 remaining plan entries one at a time, including the existing-slug patch update `md-img-r2@1.0.4`; every command passed repository validation, remote-baseline checks, explicit Categories and Topics, a real dry-run, and the authenticated live upload before its submitted ledger commit was pushed. The machine-readable plan now contains 5 verified and 15 submitted releases with no planned entries. `redbook-cards-skill` remains outside the release plan because of its third-party MIT attribution conflict. Public indexing, installation, scans, hashes, and Skill Cards for the 15 submitted releases remain a separate reconciliation backlog and are not claimed as complete.
 

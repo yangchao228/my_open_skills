@@ -6,6 +6,7 @@ cd "$repo"
 
 plan_file="config/clawhub-release-plan.json"
 profile_file="config/clawhub-profile.json"
+source_verifier="$repo/scripts/verify-clawhub-installed-source.sh"
 slug=""
 run_once=0
 finalize_release=0
@@ -83,10 +84,11 @@ done
 }
 [ -f "$plan_file" ] || die "missing $plan_file"
 [ -f "$profile_file" ] || die "missing $profile_file"
+[ -x "$source_verifier" ] || die "missing executable source verifier: $source_verifier"
 [ "$until_stage" = "public" ] || [ "$until_stage" = "verified" ] ||
   die "--until must be public or verified"
 
-for command_name in jq git clawhub curl shasum diff awk find sed sort uniq; do
+for command_name in jq git clawhub curl shasum diff awk; do
   need_command "$command_name"
 done
 
@@ -209,75 +211,11 @@ verify_public_page() {
 
 verify_installed_source() {
   local inspect_json="$1"
-  local source_files="$receipt_dir/source-files.tsv"
-  local expected_paths="$receipt_dir/source-paths.expected.txt"
-  local installed_paths="$receipt_dir/source-paths.installed.txt"
-  local relative_path expected_hash repository_hash installed_hash duplicate_paths
-
-  jq -e '.version.files | type == "array"' "$inspect_json" >/dev/null ||
-    die "inspect response is missing the version file manifest"
-  jq -r '
-    .version.files[]
-    | select(
-        .path != "skill-card.md"
-        and .path != "_meta.json"
-        and .path != ".clawhub"
-        and (.path | startswith(".clawhub/") | not)
-      )
-    | [.path, .sha256]
-    | @tsv
-  ' "$inspect_json" >"$source_files"
-  [ -s "$source_files" ] || die "version file manifest contains no installable source files"
 
   clawhub --workdir "$install_workdir" --dir skills --no-input install \
     "@$publisher_handle/$slug" --version "$target_version" --force >/dev/null
 
-  : >"$expected_paths"
-  while IFS=$'\t' read -r relative_path expected_hash; do
-    case "$relative_path" in
-      ""|/*|..|../*|*/..|*/../*) die "unsafe path in version file manifest: $relative_path" ;;
-    esac
-    [[ "$expected_hash" =~ ^[0-9a-f]{64}$ ]] ||
-      die "invalid SHA-256 in version file manifest for $relative_path"
-
-    [ -f "$skill_path/$relative_path" ] ||
-      die "registry source file is missing from the repository: $relative_path"
-    [ -f "$installed_path/$relative_path" ] ||
-      die "registry source file is missing from the exact-version install: $relative_path"
-
-    repository_hash="$(shasum -a 256 "$skill_path/$relative_path" | awk '{print $1}')"
-    installed_hash="$(shasum -a 256 "$installed_path/$relative_path" | awk '{print $1}')"
-    [ "$repository_hash" = "$expected_hash" ] ||
-      die "repository hash differs from the registry for $relative_path"
-    [ "$installed_hash" = "$expected_hash" ] ||
-      die "installed hash differs from the registry for $relative_path"
-
-    printf '%s\n' "$relative_path" >>"$expected_paths"
-  done <"$source_files"
-
-  duplicate_paths="$(LC_ALL=C sort "$expected_paths" | uniq -d)"
-  [ -z "$duplicate_paths" ] || {
-    printf '%s\n' "$duplicate_paths" >&2
-    die "version file manifest contains duplicate source paths"
-  }
-  LC_ALL=C sort -u "$expected_paths" -o "$expected_paths"
-
-  (
-    cd "$installed_path"
-    find . -type f \
-      ! -path './skill-card.md' \
-      ! -path './_meta.json' \
-      ! -path './.clawhub/*' \
-      -print |
-      sed 's#^\./##' |
-      LC_ALL=C sort
-  ) >"$installed_paths"
-
-  diff -u "$expected_paths" "$installed_paths" >"$receipt_dir/source-diff.txt" ||
-    {
-      cat "$receipt_dir/source-diff.txt" >&2
-      die "installed source paths differ from the registry manifest"
-    }
+  "$source_verifier" "$skill_path" "$installed_path" "$inspect_json" "$receipt_dir"
 
   grep -Fq "$description_suffix" "$installed_path/SKILL.md" || die "installed SKILL.md is missing the canonical description hook"
   grep -Fq "$wechat_account" "$installed_path/SKILL.md" || die "installed SKILL.md is missing the WeChat footer"
