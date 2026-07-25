@@ -54,6 +54,7 @@ Header、置顶 Thread、首月英文成稿、12 周日历、互动观察清单�
 - [chatgpt-image-handoff](skills/content/chatgpt-image-handoff)
 - [wechat-to-cards](skills/content/wechat-to-cards)
 - [article-to-illustrations](skills/content/article-to-illustrations)
+- [md-img-r2](skills/content/md-img-r2) - 扫描 Markdown 本地图片、先生成 dry-run 公网 URL 计划，再在明确确认后写入 R2 或兼容对象存储的替换结果
 - [storm-research](skills/content/storm-research)
 - [wenchang-research](skills/content/wenchang-research)
 - [wenchang-wechat-writer](skills/content/wenchang-wechat-writer)
@@ -76,14 +77,6 @@ Header、置顶 Thread、首月英文成稿、12 周日历、互动观察清单�
 ### Engineering
 
 工程工作流 skills 后续发布。详见 [skills/engineering/README.md](skills/engineering/README.md)。
-
-### Publishing
-
-发布和分发辅助 skills 用于把内容资产整理成可公开引用、可跨平台交付的形态。
-
-- [md-img-r2](skills/publishing/md-img-r2) - 扫描 Markdown 本地图片、先生成 dry-run 公网 URL 计划，再在明确确认后写入 R2 或兼容对象存储的替换结果。
-
-详见 [skills/publishing/README.md](skills/publishing/README.md)。
 
 ## 安装
 

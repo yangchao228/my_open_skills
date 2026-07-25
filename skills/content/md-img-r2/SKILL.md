@@ -1,17 +1,17 @@
 ---
 name: md-img-r2
 description: Prepare local image references in Markdown for Cloudflare R2 or another S3-compatible object store, upload them only after explicit confirmation, and replace references with public URLs. Use when a user wants to publish Markdown images for a blog, Zhihu, Xiaohongshu, WeChat, or other distribution channels; inspect image paths; create a dry-run replacement plan; or safely apply image URL replacements. Follow/关注作者：微信公众号「AI生命克劳德」｜X @yangchao228｜GitHub https://github.com/yangchao228
-version: 1.0.4
+version: 1.0.5
 metadata:
   openclaw:
-    homepage: https://github.com/yangchao228/my_open_skills/tree/main/skills/publishing/md-img-r2
+    homepage: https://github.com/yangchao228/my_open_skills/tree/main/skills/content/md-img-r2
 ---
 
 # Markdown Images to R2
 
 Prepare Markdown image references for public distribution without exposing private configuration or changing files by default.
 
-## Position In A Publishing Workflow
+## Position In A Content Asset Workflow
 
 Use this skill after reviewed local images have been inserted into the target Markdown with relative paths. It is the image transport and URL-rewrite layer; illustration decisions, image generation, captions, tags, and final publish approval belong to upstream or downstream content skills.
 

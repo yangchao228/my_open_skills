@@ -55,6 +55,7 @@ Core content skills:
 - [chatgpt-image-handoff](skills/content/chatgpt-image-handoff)
 - [wechat-to-cards](skills/content/wechat-to-cards)
 - [article-to-illustrations](skills/content/article-to-illustrations)
+- [md-img-r2](skills/content/md-img-r2) - inspect local Markdown images, create a dry-run public-URL plan, and apply reviewed R2 or S3-compatible replacements behind an explicit confirmation gate
 - [storm-research](skills/content/storm-research)
 - [wenchang-research](skills/content/wenchang-research)
 - [wenchang-wechat-writer](skills/content/wenchang-wechat-writer)
@@ -77,14 +78,6 @@ See [skills/work/README.md](skills/work/README.md).
 ### Engineering
 
 Engineering workflow skills will be added later. See [skills/engineering/README.md](skills/engineering/README.md).
-
-### Publishing
-
-Publishing and distribution helpers make content assets ready for public URLs and platform delivery.
-
-- [md-img-r2](skills/publishing/md-img-r2) - inspect local Markdown images, create a dry-run public-URL plan, and apply reviewed R2 or S3-compatible replacements behind an explicit confirmation gate.
-
-See [skills/publishing/README.md](skills/publishing/README.md).
 
 ## Install
 

@@ -18,6 +18,7 @@ ClawHub publication status and verified install links are maintained in [ClawHub
 | [wenchang-review](../skills/content/wenchang-review) | ready | model-invoked | Diagnose or edit existing drafts |
 | [wenchang-publish-check](../skills/content/wenchang-publish-check) | ready | model-invoked | Preflight publish package and final release check |
 | [article-to-illustrations](../skills/content/article-to-illustrations) | ready | model-invoked | Decide, plan, insert, and hand off long-form illustrations |
+| [md-img-r2](../skills/content/md-img-r2) | ready | user-invoked | Dry-run-first local-image inspection, confirmed R2 upload, or reviewed URL-map rewrite |
 | [zhihu-topic-hunter](../skills/content/zhihu-topic-hunter) | ready | user-invoked | Generate ranked Zhihu topic candidates from a theme |
 | [xiaohongshu-topic-generator](../skills/content/xiaohongshu-topic-generator) | ready | user-invoked | Generate Xiaohongshu-ready topic candidates and card outlines |
 | [long-to-cards](../skills/content/long-to-cards) | ready | user-invoked | Transform long-form content into cards, captions, and freshness-aware tags |
@@ -52,6 +53,5 @@ Current migration decision: see [Publishing Risk Review](publishing-risk-review.
 
 | Skill | Status | Invocation | Public-safe direction |
 | --- | --- | --- | --- |
-| [md-img-r2](../skills/publishing/md-img-r2) | ready | user-invoked | Dry-run-first local-image inspection, confirmed R2 upload, or reviewed URL-map rewrite |
 | `bilibili-video-publisher` | private-source | user-invoked | Metadata package and pre-publish checklist only |
 | `superman-blog-publisher` | private-source | user-invoked | Generic Markdown blog importer after site-specific cleanup |

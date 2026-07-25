@@ -540,7 +540,7 @@ else
     error "ClawHub reconciliation workflow must invoke the repository reconciler"
 fi
 
-for path in README.md CONTEXT.md docs/catalog.md docs/clawhub-releases.md docs/examples/wenchang-end-to-end-smoke.md skills/content/README.md skills/work/README.md skills/engineering/README.md skills/publishing/README.md; do
+for path in README.md CONTEXT.md docs/catalog.md docs/clawhub-releases.md docs/examples/wenchang-end-to-end-smoke.md skills/content/README.md skills/work/README.md skills/engineering/README.md; do
   if [ ! -f "$path" ]; then
     error "missing documented file $path"
   fi

@@ -34,7 +34,7 @@ A publishing-adjacent skill can move into this repository only when it:
 
 ## `md-img-r2`
 
-Current assessment: public derivative released in `skills/publishing/md-img-r2`.
+Current assessment: public derivative maintained in `skills/content/md-img-r2` as the optional public-URL stage of the content asset workflow.
 
 Reusable parts:
 

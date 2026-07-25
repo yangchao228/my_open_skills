@@ -236,7 +236,7 @@ content_state:
     accepted_inputs:
       - case-pack.md
       - wechat-draft.md
-      - skills/publishing/md-img-r2/SKILL.md
+      - skills/content/md-img-r2/SKILL.md
     ignored_context:
       - private configuration
       - account sessions

@@ -44,6 +44,7 @@ wenchang-orchestrator
 - [chatgpt-image-handoff](chatgpt-image-handoff)：自适应选择 Computer Use、内置生图、手动 ChatGPT 交接或本地渲染，并把结果导回 QA
 - [wechat-to-cards](wechat-to-cards)：为共享卡片链路补充公众号专用贴图约束和分发素材
 - [article-to-illustrations](article-to-illustrations)：长文插图判断、生成计划、正文插入和图片 manifest
+- [md-img-r2](md-img-r2)：通过 dry-run 计划和明确确认的上传或写回，把审核后的 Markdown 本地图片接入稳定公网 URL
 - [storm-research](storm-research)：多视角研究地图
 - [wenchang-research](wenchang-research)：基于来源的事实采证
 - [wenchang-wechat-writer](wenchang-wechat-writer)：公众号风格长文起稿
@@ -52,7 +53,7 @@ wenchang-orchestrator
 
 ## 边界
 
-这些 skills 不会执行外部发布，也不会在缺少用户确认时做最终不可逆决策。可选的 Computer Use 提交和参考图上传需要操作前确认，账号与运行状态始终留在本地。
+这些 skills 不会执行最终平台发布，也不会在缺少用户确认时做不可逆决策。可选的 Computer Use 提交、参考图上传和 `md-img-r2` apply 路径都需要操作前确认，账号与运行状态始终留在本地。
 
 ## ClawHub
 

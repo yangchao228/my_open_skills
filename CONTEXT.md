@@ -18,7 +18,7 @@ A local or private skill used as reference material. It can inform a public skil
 
 **Category**
 
-A top-level workflow group under `skills/`, such as `content`, `work`, `engineering`, or `publishing`.
+A top-level workflow group under `skills/`, such as `content`, `work`, or `engineering`.
 
 **Router**
 

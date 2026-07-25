@@ -28,7 +28,7 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - [x] Add sibling `README.zh-CN.md` files for every project `README.md`
 - [x] Enforce README Chinese counterpart validation
 - [x] Review publishing candidates for credential and account-session risk before migration
-- [x] Publicize `skills/publishing/md-img-r2` as a dry-run-first Markdown image publishing helper with explicit upload and write confirmation
+- [x] Publicize `skills/content/md-img-r2` as a dry-run-first Markdown image publishing helper with explicit upload and write confirmation
 
 ## Phase 3: Handcrafted Skills Public Series
 
@@ -176,6 +176,13 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - [x] Link the launch package from both repository READMEs
 - [x] Validate post lengths, dates, links, CSV shape, image dimensions, repository rules, and diff quality
 
+## Phase 13: Move md-img-r2 Into Content
+
+- [x] Move `md-img-r2` from `skills/publishing/` to `skills/content/`
+- [x] Update the bilingual indexes, catalog, workflow references, and repository validation
+- [x] Prepare the next ClawHub patch metadata without publishing it
+- [x] Run single-skill, repository, JSON, and diff validation
+
 ## Ready Skills
 
 - `skills/work/resume-interview-generator`
@@ -197,7 +204,7 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - `skills/content/wenchang-wechat-writer`
 - `skills/content/wenchang-review`
 - `skills/content/wenchang-publish-check`
-- `skills/publishing/md-img-r2`
+- `skills/content/md-img-r2`
 
 ## Candidate Pool
 
@@ -217,6 +224,8 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - sales and after-sales documents
 
 ## Review
+
+- 2026-07-25: Moved `md-img-r2` from the one-skill `skills/publishing/` group into `skills/content/`, where it already serves as the optional public-URL stage of the Wenchang content asset workflow. Removed the empty publishing index, updated bilingual repository and content indexes, catalog, context, install guide, workflow evidence, risk review, source metadata, validation requirements, and every tracked old-path reference. Preserved the ClawHub slug and remote `1.0.4` baseline while preparing local patch `1.0.5` at the new source path; no ClawHub upload, commit, or push was performed. Python compilation, shell syntax, JSON, the moved wrapper help path, skill enumeration, repository validation, installed-source fixtures, and `git diff --check` passed. The generic `skill-creator` quick validator rejected this repository's required `version` extension, so the repository validator remained authoritative.
 
 - 2026-07-24：根据用户确认的语言边界，调整 X 启动包的交付语言。直接发布到 X 的 Profile、Bio、Header 可见文字、帖子和 Thread 继续使用英文；品牌规范、12 周选题解释、互动观察清单、首月发布说明、证据要求、数据字段解释、Header 生成与修复操作统一改为中文。命令、Handle、文件名和必须精确复制的英文原文保持不变。ChatGPT Header 提示词现采用“中文设计指令 + 三行精确英文成图文字”，便于用户审核，同时不改变海外公开界面。
 

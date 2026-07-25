@@ -31,7 +31,7 @@ For any ready skill, use this repository-first path:
 5. Compare the result with `examples/expected-output-notes.md`.
 6. Record what runtime you used, what input you gave, and where the output differed from the expected contract.
 
-This is the default trial path for content, work, engineering, and publishing skills unless a skill README says otherwise.
+This is the default trial path for content, work, and engineering skills unless a skill README says otherwise.
 
 ## 3. Runtime Copy Or Link
 
@@ -95,7 +95,7 @@ clawhub install @yangchao228/create-plan
 5. 对照 `examples/expected-output-notes.md` 检查结果。
 6. 记录运行环境、输入内容，以及输出与预期合同的差异。
 
-除非某个 skill README 单独说明，content、work、engineering 和 publishing skills 默认都按这一路径试用。
+除非某个 skill README 单独说明，content、work 和 engineering skills 默认都按这一路径试用。
 
 ## 3. 复制或链接到运行环境
 
