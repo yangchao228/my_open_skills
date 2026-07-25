@@ -25,6 +25,13 @@
 - [主题 01：一篇长文怎样成为跨平台内容资产](docs/series/handcrafted-skills/themes/01-content-asset-pipeline/case-pack.md)
 - [第 01 期：小红书选题生成器](docs/series/handcrafted-skills/season-01/01-xiaohongshu-topic-generator/case-pack.md)
 
+## X 英文 Build in Public
+
+[X 90 天启动包](docs/social/x/README.zh-CN.md)把仓库证据整理成面向
+`@yangchao228` 的纯英文个人品牌实验，包含 Profile 规范、1500×500
+Header、置顶 Thread、首月英文成稿、12 周日历、互动观察清单和帖子级数据台账。
+账号资料修改、发布和互动仍由用户人工完成。
+
 ## Skill 分类
 
 ### Content

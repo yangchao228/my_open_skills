@@ -166,6 +166,16 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - [x] Record the pilot's submitted state and the `redbook-cards-skill` license block in the release ledger
 - [x] Update the release ledger with verified versions, timestamps, URLs, and any later skill-specific blocks
 
+## Phase 12: X English Personal Brand Launch
+
+- [x] Freeze the English-only public profile, brand hierarchy, writing rules, and manual publishing boundary
+- [x] Produce a mobile-safe 1500×500 X header and its visual philosophy
+- [x] Prepare the five-post pinned thread and the first four weeks of publish-ready English posts
+- [x] Add a 12-week editorial calendar, engagement watchlist, and Community participation gate
+- [x] Add post-level metrics tracking with a truthful 2026-07-24 public baseline
+- [x] Link the launch package from both repository READMEs
+- [x] Validate post lengths, dates, links, CSV shape, image dimensions, repository rules, and diff quality
+
 ## Ready Skills
 
 - `skills/work/resume-interview-generator`
@@ -207,6 +217,12 @@ Build `my_open_skills` into a public, categorized AI Agent Skills library, and v
 - sales and after-sales documents
 
 ## Review
+
+- 2026-07-24：根据用户确认的语言边界，调整 X 启动包的交付语言。直接发布到 X 的 Profile、Bio、Header 可见文字、帖子和 Thread 继续使用英文；品牌规范、12 周选题解释、互动观察清单、首月发布说明、证据要求、数据字段解释、Header 生成与修复操作统一改为中文。命令、Handle、文件名和必须精确复制的英文原文保持不变。ChatGPT Header 提示词现采用“中文设计指令 + 三行精确英文成图文字”，便于用户审核，同时不改变海外公开界面。
+
+- 2026-07-24: Reopened the X Header after human review found the deterministic `Sovereign Circuit` version too plain for the intended personal brand. Kept the exact copy, deep-navy/cyan/amber identity, 1500×500 contract, mobile safe zone, and single human-decision signal, but replaced the flat-dashboard direction with a complete ChatGPT generation brief for a layered editorial open-system architecture. Added exact typography instructions, negative constraints, a localized text-repair prompt, a text-free fallback prompt, and a manual visual checklist. The existing PNG remains the deterministic fallback until a generated candidate passes human review; no external image generation or X profile change was performed.
+
+- 2026-07-24: Implemented the 90-day English-only X launch package for `@yangchao228`. Froze the `AI Builder for Human3.0` profile contract, a 144-character Bio, writing and evidence rules, manual publishing boundary, four-hour weekly cadence, Community gate, and trial-first measurement funnel. Added a polished 1500×500 PNG header with a mobile crop and avatar-overlay review, a five-post pinned thread, twelve first-month posts, a 36-post calendar from 2026-07-28 through 2026-10-17, a 40-account candidate watchlist, and a 37-row CSV ledger containing one dated baseline plus 36 post rows. The 2026-07-24 baseline was refreshed read-only from all 20 ClawHub skill APIs and the public GitHub repository: 2,206 downloads, 39 installs, 1 ClawHub star, 0 comments, 0 GitHub stars, 0 forks, and 0 Issues. All 17 prepared post blocks are within 280 characters; the calendar and ledger IDs match; every scheduled slot is Tuesday, Thursday, or Saturday at 14:00 UTC; Markdown targets, CSV shape, 1500×500 image dimensions, repository validation, installed-source fixtures, and `git diff --check` passed. No X profile field, List, Community membership, post, reply, or paid setting was changed.
 
 - 2026-07-24: Closed the ClawHub reconciliation backlog at 20 verified releases. `md-img-r2@1.0.4` exposed a false source-drift failure because ClawHub intentionally omitted the unsupported `.example` extension while the watcher compared whole directories. Commit `3a86437` changed the gate to trust the registry file manifest while requiring repository and installed SHA-256 matches and rejecting undeclared installed paths. Workflow runs `30065754675` and `30065807087` then promoted the release from submitted to public to verified on GitHub's Ubuntu runner. Extracted the manifest verification into a reusable helper and added fixtures for repository-only omitted files, installed hash mismatches, and undeclared installed source paths.
 

@@ -25,6 +25,14 @@ Each public skill should be understandable by a new user, safe to share, and tes
 - [Theme 01: Turn one long-form article into cross-platform content assets](docs/series/handcrafted-skills/themes/01-content-asset-pipeline/case-pack.md)
 - [Episode 01: Xiaohongshu Topic Generator](docs/series/handcrafted-skills/season-01/01-xiaohongshu-topic-generator/case-pack.md)
 
+## X English Build-in-Public
+
+The [90-day X launch package](docs/social/x/README.md) turns repository evidence
+into an English-only personal-brand experiment for `@yangchao228`. It includes
+the profile system, exact 1500×500 header, pinned thread, first-month copy,
+12-week calendar, engagement watchlist, and a post-level measurement ledger.
+Publishing and account changes remain manual.
+
 ## Skill Groups
 
 ### Content
