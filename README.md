@@ -16,6 +16,12 @@ Good agent work needs reusable process, not one-off prompts. This repo collects 
 
 Each public skill should be understandable by a new user, safe to share, and testable with a small example.
 
+Public Skill packages and ClawHub listings default to English. Chinese belongs
+in documentation mirrors such as this repository's `README.zh-CN.md`; a Skill
+may still produce output in the user's requested language. Existing
+mixed-language releases are tracked as migration exceptions and move to English
+when materially updated.
+
 ## Handcrafted Skills Public Series
 
 `我亲手打造的 Skills` is a Chinese Zhihu and Xiaohongshu series that demonstrates this library through reproducible cases. Each episode starts from one public input and records the actual output, design decisions, boundaries, and a reproduction path.
@@ -120,7 +126,9 @@ For skills without a documented package command, start by reading that skill's `
 ./scripts/validate-skills.sh
 ```
 
-Validation checks skill metadata, ClawHub creator hooks, Categories, Topics, semver, homepage URLs, bundle size, paths, examples, JSON, README Chinese counterparts, and common private-content leaks.
+Validation checks public-package language, skill metadata, ClawHub creator
+hooks, Categories, Topics, semver, homepage URLs, bundle size, paths, examples,
+JSON, README Chinese counterparts, and common private-content leaks.
 
 The first Wenchang workflow smoke is documented in [docs/examples/wenchang-end-to-end-smoke.md](docs/examples/wenchang-end-to-end-smoke.md).
 

@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "default_language": "en",
+  "migration_policy": "Existing mixed-language packages are temporary exceptions and must move to English when they receive a material update.",
+  "migration_exceptions": [
+    "article-to-illustrations",
+    "cards-to-images",
+    "chatgpt-image-handoff",
+    "create-plan",
+    "doc-coauthoring",
+    "long-to-cards",
+    "md-img-r2",
+    "project-weekly-report",
+    "resilient-imagegen",
+    "resume-interview-generator",
+    "storm-research",
+    "wechat-to-cards",
+    "wenchang-orchestrator",
+    "wenchang-publish-check",
+    "wenchang-research",
+    "wenchang-review",
+    "wenchang-router",
+    "wenchang-wechat-writer",
+    "xiaohongshu-topic-generator",
+    "zhihu-topic-hunter"
+  ]
+}

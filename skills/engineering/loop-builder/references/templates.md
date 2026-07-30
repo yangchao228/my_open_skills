@@ -1,326 +1,264 @@
-# Loop 模板包
+# Loop Templates
 
-本文件用于生成可复制的 Loop 脚手架。生成时应替换占位符，并保留无法确认的路径、命令和权限为待确认项。
+Copy only the sections needed for the selected artifact.
 
-## TODO.md State File 模板
-
-```md
-# <任务名称> Loop State
-
-## 目标
-
-- 本轮目标：
-- 成功标准：
-- 非目标：
-
-## 输入
-
-- 代码 / 文档 / 数据位置：
-- 相关命令：
-- 参考资料：
-- 用户约束：
-
-## 状态
-
-- 当前轮次：0
-- 当前阶段：planned
-- 主模式：
-- 辅助模式：
-- 预算：
-  - 最大轮次：
-  - 最大时间：
-  - 最大上下文 / API 成本：
-
-## 任务拆解
-
-| ID | 任务 | 状态 | 验收方式 | 风险 |
-| --- | --- | --- | --- | --- |
-| T1 |  | todo |  |  |
-
-## 运行日志
-
-| 轮次 | 执行者 | 动作 | 结果 | 下一步 |
-| --- | --- | --- | --- | --- |
-| 0 | Planner | 创建计划 | pending | 等待执行 |
-
-## 反馈信号
-
-- 测试：
-- lint / build：
-- 人工验收：
-- 外部数据：
-
-## 停止规则
-
-- 验收通过：
-- 连续失败：
-- 范围越界：
-- 成本超限：
-- 需要人工确认：
-
-## 人工确认节点
-
-- merge：
-- 生产配置：
-- 权限变更：
-- 支付 / 账单：
-- 数据删除：
-- 公开发布：
-- 商业上架：
-
-## 禁止动作
-
-- 未经确认修改生产配置。
-- 未经确认删除数据。
-- 未经确认扩大目录或模块范围。
-- 未经确认改测试来迎合结果。
-- 未经确认执行公开发布或商业上架。
-
-## 复盘
-
-- 本轮有效动作：
-- 本轮无效动作：
-- 需要沉淀的规则：
-- 下轮是否继续：
-```
-
-## 最小 Loop 设计卡
+## Loop State
 
 ```md
-| 字段 | 内容 |
-|---|---|
-| 目标 | <一句话目标> |
-| 输入 | <文件、日志、数据、用户材料> |
-| 状态 | <TODO.md 或其他状态文件路径> |
-| 执行者 | <Planner / Maker / Checker / Evaluator> |
-| 验收者 | <工具验收 / 人工验收 / 混合验收> |
-| 反馈信号 | <测试、日志、diff、评分表、用户确认> |
-| 停止规则 | <成功、失败、越界、成本、人工确认> |
-| 人工确认节点 | <高风险动作清单> |
-| 禁止动作 | <本 Loop 绝不触碰的动作> |
+# <Task> Loop State
+
+## Goal
+- target:
+- non-goals:
+- success signal:
+
+## Inputs
+- required:
+- runtime:
+- assumptions:
+
+## State
+- status:
+- current_iteration:
+- maximum_iterations:
+- last_safe_state:
+- remaining_budget:
+
+## Work packages
+- [ ] <bounded step> - verification: <check>
+
+## Run log
+| Iteration | Change | Feedback | Delta | Decision |
+| --- | --- | --- | --- | --- |
+
+## Stop rules
+- success:
+- no progress:
+- repeated failure:
+- cost:
+- risk:
+
+## Human gates
+- decision:
+- action:
+- evidence packet:
+
+## Forbidden actions
+- ...
+
+## Retrospective
+- useful evidence:
+- wasted iteration:
+- reusable rule:
+- unresolved:
 ```
 
 ## Planner Prompt
 
 ```md
-你是 Planner，只负责只读侦察和计划，不修改文件。
+Act as the Planner for <task>.
 
-任务：
-<任务描述>
+Read:
+- goal and non-goals;
+- current state;
+- latest evidence;
+- allowed and forbidden actions;
+- remaining budget.
 
-上下文：
-- 工作目录：<path>
-- 状态文件：<TODO.md path>
-- 允许读取：<paths>
-- 禁止读取或修改：<paths/actions>
+Produce exactly one bounded work package:
+- objective;
+- files or systems in scope;
+- expected evidence;
+- verification method;
+- rollback or recovery;
+- human gate, if any.
 
-请完成：
-1. 判断这个任务是否适合进入 Loop。
-2. 选择主 Loop 模式和可组合模式。
-3. 列出 3 到 7 个可验收步骤。
-4. 写清每一步的验收方式。
-5. 标出人工确认节点和禁止动作。
-6. 更新或生成 TODO.md state file 草案。
-
-输出格式：
-- 适配判断
-- 推荐模式
-- 计划表
-- 验收标准
-- 风险和断路器
-- 下一步交给 Maker 的最小任务
+Stop instead of planning when required evidence is missing, scope would expand,
+or a circuit breaker is active. Do not execute the work.
 ```
 
-## Read-only Scout Prompt
+## Read-Only Scout Prompt
 
 ```md
-你是 Read-only Scout，只做侦察，不修改文件，不运行会改变状态的命令。
+Inspect <scope> without changing external or local state.
 
-目标：
-<侦察目标>
+Return:
+- relevant structure;
+- current behavior;
+- exact evidence paths;
+- constraints;
+- unknowns that change the plan;
+- smallest useful next work package.
 
-允许动作：
-- 阅读相关文件。
-- 搜索关键字。
-- 汇总现状、约束、风险和候选方案。
-
-禁止动作：
-- 修改文件。
-- 安装依赖。
-- 启动长期进程。
-- 执行写入、删除、发布、merge、权限变更。
-
-请输出：
-1. 当前事实。
-2. 关键证据位置。
-3. 可能的执行路径。
-4. 仍需用户确认的问题。
-5. 是否建议进入 Maker 阶段。
+Do not implement, publish, commit, or infer missing facts.
 ```
 
 ## Maker Prompt
 
 ```md
-你是 Maker，只按 Planner 已确认的最小任务执行。
+Execute only the confirmed work package for <task>.
 
-任务：
-<本轮任务>
+Rules:
+- preserve unrelated work;
+- keep changes small and reversible;
+- do not weaken checks;
+- record files or systems changed;
+- stop on missing permission, expanded scope, or unsafe recovery.
 
-允许修改：
-- <paths>
-
-禁止动作：
-- 不改计划外文件。
-- 不改测试来迎合结果，除非 Planner 明确说明测试本身错误且用户确认。
-- 不执行 merge、公开发布、生产配置、权限、支付、数据删除、商业上架。
-
-执行要求：
-1. 先读取 TODO.md state file。
-2. 只做本轮最小修改。
-3. 修改前说明将改哪些文件。
-4. 修改后记录变更摘要。
-5. 把验收交给 Checker。
-
-输出：
-- 修改文件
-- 修改原因
-- 未处理事项
-- 建议 Checker 执行的验收
+Return:
+- outcome;
+- changes;
+- evidence produced;
+- verification still required;
+- any human decision.
 ```
 
 ## Checker Prompt
 
 ```md
-你是 Checker，只负责验收和风险检查。
+Independently verify the latest work package.
 
-验收目标：
-<验收目标>
+Compare the result with:
+- success signal;
+- confirmed scope;
+- acceptance checks;
+- forbidden actions.
 
-请检查：
-1. 是否达成本轮成功标准。
-2. 是否有计划外文件变更。
-3. 是否触碰人工确认节点。
-4. 是否修改测试、配置、权限或发布相关文件。
-5. 是否需要继续下一轮。
+Return:
+- pass / partial / fail / blocked;
+- evidence;
+- remaining gap;
+- regression risk;
+- recommended next check.
 
-建议验收方式：
-- 测试：<test command or 待确认>
-- lint / build：<command or 待确认>
-- diff 检查：<paths>
-- 人工验收点：<items>
-
-输出：
-- 通过 / 不通过 / 需要人工确认
-- 证据
-- 风险
-- 下一步建议
+Do not repair the result.
 ```
 
 ## Evaluator Prompt
 
 ```md
-你是 Evaluator，负责根据 Planner、Maker、Checker 的输出决定本 Loop 是否继续。
+Evaluate whether another iteration is justified.
 
-输入：
-- TODO.md state file
-- Maker 输出
-- Checker 输出
-- 用户约束
+Inputs:
+- prior and current feedback;
+- iteration count and limit;
+- remaining budget;
+- active circuit breakers;
+- unresolved human gates.
 
-请判断：
-1. 是否达到停止条件。
-2. 是否继续下一轮。
-3. 是否需要回滚或缩小范围。
-4. 是否需要用户确认。
-5. 哪些规则应沉淀到 AGENTS.md、Skill、模板库或失败报告。
-
-输出：
-- 决策：继续 / 停止 / 回滚 / 等待人工确认
-- 原因
-- 下一轮任务
-- 需要沉淀的资产
+Return:
+- continue / stop-success / stop-no-progress / stop-risk / wait-for-human;
+- evidence delta;
+- next permitted correction, if continuing;
+- rationale.
 ```
 
-## PR 摘要模板
+## Human Decision Packet
 
 ```md
-## 背景
-
-<为什么需要这次改动>
-
-## 改动
-
-- <改动 1>
-- <改动 2>
-- <改动 3>
-
-## 验证
-
-- <命令或人工验收>
-
-## 风险
-
-- <残余风险>
-
-## 人工确认
-
-- [ ] 是否确认 merge
-- [ ] 是否确认发布
-- [ ] 是否确认生产配置或权限相关变更
+## Decision required
+- Exact decision:
+- Proposed action:
+- Target:
+- Why now:
+- Evidence:
+- Risk:
+- Recovery:
+- Alternatives:
+- What happens if deferred:
 ```
 
-## 失败报告模板
+## Failure Report
 
 ```md
-# <任务名称> Loop 失败报告
+# <Task> Loop Failure Report
 
-## 失败结论
+## Outcome
+- final state:
+- circuit breaker:
+- last safe state:
 
-- 状态：停止 / 回滚 / 等待人工确认
-- 失败轮次：
-- 主要原因：
+## Evidence
+- observed:
+- expected:
+- gap:
 
-## 现象
+## Attempts
+| Iteration | Action | Result | New evidence |
+| --- | --- | --- | --- |
 
-- <观察到的问题>
+## Root-cause assessment
+- confirmed:
+- suspected:
+- unknown:
 
-## 根因判断
+## Recovery options
+1. <option> - impact / cost / approval
 
-- <根因或待确认根因>
-
-## 已尝试动作
-
-| 轮次 | 动作 | 结果 |
-| --- | --- | --- |
-| 1 |  |  |
-
-## 断路器触发
-
-- <触发的规则>
-
-## 后续建议
-
-- <建议>
-
-## 可沉淀资产
-
-- <规则、模板、案例、内容素材>
+## Reuse note
+- project rule:
+- template improvement:
+- Skill candidate:
 ```
 
-## 人工确认清单模板
+## PR or Change Summary
 
 ```md
-## 人工确认清单
+## Context
+<problem and evidence>
 
-以下动作必须由用户确认后才能继续：
+## Change
+<bounded implementation>
 
-- [ ] merge
-- [ ] 生产配置变更
-- [ ] 权限变更
-- [ ] 支付、账单或额度变更
-- [ ] 数据删除或批量改写
-- [ ] 公开发布
-- [ ] 商业上架
-- [ ] 对外发送邮件、消息或通知
-- [ ] 扩大到计划外目录、仓库或账号
+## Verification
+<checks and results>
+
+## Risk
+<known limits and recovery>
+
+## Human decision
+<merge, release, or rollout gate>
+```
+
+## Pre-Confirmation Response
+
+```md
+## Status
+- Current stage: WAITING_FOR_LOGIC_CONFIRMATION
+- Stop reason: waiting for workflow approval
+- Resume condition: approve or revise the card below
+
+## Intake summary
+- Original request:
+- Recognized scenario:
+- Confirmed evidence:
+- Remaining assumptions:
+
+## Task card
+| Field | Content |
+| --- | --- |
+| Goal | |
+| Inputs | |
+| Success signal | |
+| Allowed actions | |
+| Forbidden actions | |
+| Human gates | |
+
+## Loop fit
+- Conclusion:
+- Reason:
+- Non-automatable part:
+
+## Artifact selection
+- Artifact:
+- Why:
+- Why not a heavier artifact:
+
+## Workflow confirmation
+- Pattern:
+- Phases:
+- Feedback:
+- Iteration limit:
+- Stop rules:
+- Final deliverables:
 ```

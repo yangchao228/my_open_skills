@@ -26,6 +26,9 @@ The validation script checks:
 - every topic uses lowercase ASCII kebab-case, stays within ClawHub's 48-character limit, avoids reserved platform slugs, and does not duplicate a broad category
 - release-plan categories, topics, order, source path, risk, and target version match `docs/clawhub-releases.md`
 - every ready skill has the canonical creator suffix and footer exactly once, a source homepage, and a package under ClawHub's size limit
+- the public language policy defaults to English, English packages declare
+  `public_language: "en"` and contain no CJK runtime text, and every temporary
+  mixed-language package is recorded as a migration exception
 - local ClawHub state is ignored, all release scripts remain executable, and the 15-minute reconciliation workflow stays pinned
 
 For a safe ClawHub release preflight, run:

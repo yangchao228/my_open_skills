@@ -16,6 +16,7 @@ error() {
 }
 
 profile_file="config/clawhub-profile.json"
+language_policy_file="config/public-skill-language.json"
 release_plan_file="config/clawhub-release-plan.json"
 publisher_handle=""
 wechat_official_account=""
@@ -23,6 +24,7 @@ x_handle=""
 x_url=""
 github_url=""
 description_suffix=""
+description_suffix_en=""
 
 if [ ! -f "$profile_file" ]; then
   error "missing $profile_file"
@@ -35,16 +37,35 @@ else
   x_url="$(jq -r '.x_url // empty' "$profile_file")"
   github_url="$(jq -r '.github_url // empty' "$profile_file")"
   description_suffix="$(jq -r '.description_suffix // empty' "$profile_file")"
+  description_suffix_en="$(jq -r '.description_suffix_en // empty' "$profile_file")"
 
   if [ "$publisher_handle" != "yangchao228" ]; then
     error "$profile_file publisher_handle must be yangchao228"
   fi
 
-  for value in "$wechat_official_account" "$x_handle" "$x_url" "$github_url" "$description_suffix"; do
+  for value in "$wechat_official_account" "$x_handle" "$x_url" "$github_url" "$description_suffix" "$description_suffix_en"; do
     if [ -z "$value" ]; then
       error "$profile_file contains an empty required creator field"
     fi
   done
+fi
+
+if [ ! -f "$language_policy_file" ]; then
+  error "missing $language_policy_file"
+elif ! jq . "$language_policy_file" >/dev/null; then
+  error "$language_policy_file is not valid JSON"
+else
+  [ "$(jq -r '.schema_version // empty' "$language_policy_file")" = "1" ] ||
+    error "$language_policy_file schema_version must be 1"
+  [ "$(jq -r '.default_language // empty' "$language_policy_file")" = "en" ] ||
+    error "$language_policy_file default_language must be en"
+  if [ "$(jq '[.migration_exceptions[]] | length' "$language_policy_file")" -ne \
+    "$(jq '[.migration_exceptions[]] | unique | length' "$language_policy_file")" ]; then
+    error "$language_policy_file migration_exceptions contains duplicates"
+  fi
+  if ! jq -e '.migration_exceptions == (.migration_exceptions | sort)' "$language_policy_file" >/dev/null; then
+    error "$language_policy_file migration_exceptions must be sorted"
+  fi
 fi
 
 release_plan_paths=()
@@ -260,8 +281,8 @@ source_dirs=()
 
 validate_skill() {
   local skill_md="$1"
-  local dir slug source_dir status description description_length version homepage
-  local expected_homepage suffix_count bundle_bytes file_bytes
+  local dir slug source_dir status public_language description description_length version homepage
+  local expected_homepage required_suffix suffix_count bundle_bytes file_bytes cjk_files
   dir="$(dirname "$skill_md")"
   slug="$(basename "$dir")"
 
@@ -296,12 +317,25 @@ validate_skill() {
   fi
 
   status="$(jq -r '.status // empty' "$dir/skill.json")"
+  public_language="$(jq -r '.public_language // empty' "$dir/skill.json")"
   case "$status" in
     ready|draft|incubating|private-source|deprecated) ;;
     *) error "$dir/skill.json has unsupported status '$status'" ;;
   esac
 
   if [ "$status" = "ready" ]; then
+    if [ "$public_language" = "en" ]; then
+      if jq -e --arg slug "$slug" '.migration_exceptions | index($slug) != null' "$language_policy_file" >/dev/null; then
+        error "$language_policy_file must remove '$slug' after it declares public_language=en"
+      fi
+      required_suffix="$description_suffix_en"
+    elif jq -e --arg slug "$slug" '.migration_exceptions | index($slug) != null' "$language_policy_file" >/dev/null; then
+      required_suffix="$description_suffix"
+    else
+      error "$dir/skill.json must declare public_language=en; only recorded migration exceptions may omit it"
+      required_suffix="$description_suffix_en"
+    fi
+
     if [ ! -f "$dir/examples/minimal-input.md" ]; then
       error "$dir missing examples/minimal-input.md"
     fi
@@ -316,11 +350,11 @@ validate_skill() {
       error "$skill_md description is $description_length characters; maximum is 1024"
     fi
 
-    if [[ "$description" != *"$description_suffix" ]]; then
+    if [[ "$description" != *"$required_suffix"* ]]; then
       error "$skill_md description must end with the canonical ClawHub creator suffix"
     fi
 
-    suffix_count="$(grep -F -o -- "$description_suffix" "$skill_md" 2>/dev/null | wc -l | tr -d ' ' || true)"
+    suffix_count="$(grep -F -o -- "$required_suffix" "$skill_md" 2>/dev/null | wc -l | tr -d ' ' || true)"
     if [ "${suffix_count:-0}" != "1" ]; then
       error "$skill_md must contain the canonical creator suffix exactly once"
     fi
@@ -336,14 +370,45 @@ validate_skill() {
       error "$skill_md homepage '$homepage' does not match '$expected_homepage'"
     fi
 
-    if ! grep -Fqx -- "- 微信公众号：\`$wechat_official_account\`" "$skill_md"; then
-      error "$skill_md missing canonical WeChat creator footer"
-    fi
-    if ! grep -Fqx -- "- X：[$x_handle]($x_url)" "$skill_md"; then
-      error "$skill_md missing canonical X creator footer"
-    fi
-    if ! grep -Fqx -- "- GitHub：[yangchao228]($github_url)" "$skill_md"; then
-      error "$skill_md missing canonical GitHub creator footer"
+    if [ "$public_language" = "en" ]; then
+      if ! grep -Fqx -- "- X: [$x_handle]($x_url)" "$skill_md"; then
+        error "$skill_md missing canonical English X creator footer"
+      fi
+      if ! grep -Fqx -- "- GitHub: [yangchao228]($github_url)" "$skill_md"; then
+        error "$skill_md missing canonical English GitHub creator footer"
+      fi
+
+      cjk_files="$(
+        SKILL_DIR="$dir" python3 -c '
+import os
+import pathlib
+import re
+
+root = pathlib.Path(os.environ["SKILL_DIR"])
+extensions = {".md", ".json", ".txt", ".yaml", ".yml", ".toml", ".py", ".sh", ".js", ".ts"}
+pattern = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]")
+hits = []
+for path in sorted(root.rglob("*")):
+    if not path.is_file() or ".clawhub" in path.parts or path.suffix.lower() not in extensions:
+        continue
+    if pattern.search(path.read_text(encoding="utf-8")):
+        hits.append(str(path))
+print("\n".join(hits))
+'
+      )"
+      if [ -n "$cjk_files" ]; then
+        error "$dir declares public_language=en but contains CJK text: $(printf '%s' "$cjk_files" | tr '\n' ' ')"
+      fi
+    else
+      if ! grep -Fqx -- "- 微信公众号：\`$wechat_official_account\`" "$skill_md"; then
+        error "$skill_md missing canonical WeChat creator footer"
+      fi
+      if ! grep -Fqx -- "- X：[$x_handle]($x_url)" "$skill_md"; then
+        error "$skill_md missing canonical X creator footer"
+      fi
+      if ! grep -Fqx -- "- GitHub：[yangchao228]($github_url)" "$skill_md"; then
+        error "$skill_md missing canonical GitHub creator footer"
+      fi
     fi
 
     if sed -n '2,/^---$/p' "$skill_md" | grep -q '^license:'; then
@@ -384,6 +449,20 @@ if [ "${#release_plan_paths[@]}" -gt 0 ]; then
     error "$release_plan_file paths do not exactly cover all ready skills"
   fi
 fi
+
+while IFS= read -r exception_slug; do
+  exception_skill_json="$(find skills -path "*/$exception_slug/skill.json" -print -quit)"
+  if [ -z "$exception_skill_json" ]; then
+    error "$language_policy_file migration exception '$exception_slug' has no skill.json"
+    continue
+  fi
+  if [ "$(jq -r '.status // empty' "$exception_skill_json")" != "ready" ]; then
+    error "$language_policy_file migration exception '$exception_slug' is not a ready skill"
+  fi
+  if [ "$(jq -r '.public_language // empty' "$exception_skill_json")" = "en" ]; then
+    error "$language_policy_file migration exception '$exception_slug' is stale"
+  fi
+done < <(jq -r '.migration_exceptions[]' "$language_policy_file")
 
 if [ "${#source_dirs[@]}" -gt 0 ]; then
   duplicates="$(printf '%s\n' "${source_dirs[@]}" | sort | uniq -d)"

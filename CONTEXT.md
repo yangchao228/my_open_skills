@@ -47,3 +47,20 @@ A skill that a new user can understand, run with an example, and safely adapt wi
 ## Documentation Conventions
 
 Every `README.md` in this repository should have a sibling `README.zh-CN.md` Chinese version in the same directory. When a README changes materially, update its Chinese counterpart in the same change.
+
+## Public Skill Language
+
+English is the default language for public runtime packages and ClawHub
+listings. This includes `SKILL.md`, reader-facing `skill.json` values,
+references, templates, examples, script messages, and generated catalog
+metadata.
+
+Localized documentation belongs outside the runtime package. Repository and
+category documentation may provide a Chinese mirror such as
+`README.zh-CN.md`. A Skill may still generate output in the user's requested
+language; the package that defines the workflow remains English.
+
+Pre-existing mixed-language releases are recorded in
+`config/public-skill-language.json` and should migrate when they receive a
+material update. New public Skills must not enter that exception list by
+default.

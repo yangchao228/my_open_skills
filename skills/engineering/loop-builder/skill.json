@@ -20,6 +20,7 @@
   ],
   "source_dir": "skills/engineering/loop-builder",
   "entry": "SKILL.md",
+  "public_language": "en",
   "package_strategy": "on-demand",
   "package_format": "skill",
   "status": "ready"

@@ -16,6 +16,26 @@ A skill can be published here when it:
 - states what it does not do
 - states when to stop for human judgment
 
+## Language Policy
+
+Public Skill runtime packages and ClawHub listings default to English. Apply the
+rule to:
+
+- `SKILL.md` frontmatter and instructions
+- reader-facing `skill.json` values
+- references, templates, examples, and runtime script messages
+- ClawHub descriptions and creator hooks
+
+The generated artifact may follow the user's requested language. Repository
+documentation may have localized mirrors, including `README.zh-CN.md`; do not
+bundle a second-language mirror into a public Skill merely for catalog
+localization.
+
+`config/public-skill-language.json` records temporary migration exceptions for
+existing releases. Remove a Skill from that list and declare
+`public_language: "en"` when it receives a material update. New public Skills
+must use English unless the publishing policy records a deliberate exception.
+
 ## Do Not Publish
 
 Do not publish:

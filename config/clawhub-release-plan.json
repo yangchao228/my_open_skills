@@ -615,9 +615,9 @@
       "path": "skills/engineering/loop-builder",
       "display_name": "Loop Builder",
       "risk": "medium",
-      "status": "public",
+      "status": "planned",
       "remote_latest_version": "1.0.0",
-      "target_version": "1.0.0",
+      "target_version": "1.0.1",
       "categories": [
         "agents",
         "development",
@@ -636,10 +636,7 @@
         "workflow",
         "human-in-the-loop"
       ],
-      "changelog": "Initial public release with evidence gates, feedback signals, stopping rules, human approval points, reusable Loop patterns, and public examples.",
-      "submitted_at": "2026-07-30T10:05:10Z",
-      "source_commit": "da01a28984d13de5fe18e0e0c1b6273b04f7960a",
-      "public_at": "2026-07-30T12:02:17Z"
+      "changelog": "Translate the public runtime package and ClawHub metadata to English, simplify progressive disclosure, and preserve the existing evidence gates, stopping rules, and human-control boundaries."
     },
     {
       "order": 22,

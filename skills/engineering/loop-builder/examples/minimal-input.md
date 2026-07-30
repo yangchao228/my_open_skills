@@ -1,10 +1,21 @@
-帮我把 CI 自动修复做成一个可控 Agent Loop。
+# Minimal Input
 
-当前最小样本：
+```text
+I want Codex to reproduce a page from a screenshot. We usually spend many
+rounds changing it without getting closer. Turn this into a controlled workflow
+that I can reuse, but do not edit the project yet.
+```
 
-- 失败命令：`npm test`
-- 失败现象：单元测试失败，但根因还不确定
-- 成功信号：原失败测试通过，并且完整测试集没有新增失败
-- 允许动作：读取日志，修改 `src/` 和相关测试，运行测试
-- 禁止动作：删除或放宽测试、提交、推送、修改生产配置
-- 人工确认：先确认工作逻辑，再生成正式 Loop Prompt
+Expected first response:
+
+- recognize a UI visual-match scenario;
+- ask only for decision-critical evidence such as the target screenshot,
+  current page or code, viewport, allowed scope, and acceptance method;
+- stop at `WAITING_FOR_CONTEXT` if that evidence is missing;
+- after evidence is available, recommend a `Plan-Execute-Verify` workflow with
+  human visual acceptance;
+- synthesize a task card and workflow confirmation card;
+- wait before generating an executable Prompt or Skill package.
+
+The request does not authorize code changes, Skill installation, commit, push,
+or publication.

@@ -122,11 +122,16 @@ risk="$(jq -r '.risk' <<<"$release_json")"
 categories_csv="$(jq -r '.categories | join(",")' <<<"$release_json")"
 topics_csv="$(jq -r '.topics | join(",")' <<<"$release_json")"
 description_suffix="$(jq -r '.description_suffix' "$profile_file")"
+description_suffix_en="$(jq -r '.description_suffix_en' "$profile_file")"
 wechat_account="$(jq -r '.wechat_official_account' "$profile_file")"
 x_url="$(jq -r '.x_url' "$profile_file")"
 github_url="$(jq -r '.github_url' "$profile_file")"
 
 [ -d "$skill_path" ] || die "missing skill path: $skill_path"
+public_language="$(jq -r '.public_language // empty' "$skill_path/skill.json")"
+if [ "$public_language" = "en" ]; then
+  description_suffix="$description_suffix_en"
+fi
 
 receipt_dir="$repo/$state_root/$slug/$target_version"
 install_workdir="$receipt_dir/install"
@@ -204,7 +209,11 @@ verify_public_page() {
     grep -Fq "topic=$topic" "$public_html" || die "public page is missing topic '$topic'"
   done < <(jq -r --arg slug "$slug" '.releases[] | select(.slug == $slug) | .topics[:4][]' "$plan_file")
 
-  grep -Fq "$wechat_account" "$public_html" || die "public page is missing the WeChat creator hook"
+  if [ "$public_language" = "en" ]; then
+    grep -Fq "$x_url" "$public_html" || die "public page is missing the X creator hook"
+  else
+    grep -Fq "$wechat_account" "$public_html" || die "public page is missing the WeChat creator hook"
+  fi
   grep -Fq "$publisher_handle" "$public_html" || die "public page is missing the publisher handle"
   grep -Fq "github.com/$publisher_handle" "$public_html" || die "public page is missing the GitHub creator hook"
 }
@@ -218,7 +227,9 @@ verify_installed_source() {
   "$source_verifier" "$skill_path" "$installed_path" "$inspect_json" "$receipt_dir"
 
   grep -Fq "$description_suffix" "$installed_path/SKILL.md" || die "installed SKILL.md is missing the canonical description hook"
-  grep -Fq "$wechat_account" "$installed_path/SKILL.md" || die "installed SKILL.md is missing the WeChat footer"
+  if [ "$public_language" != "en" ]; then
+    grep -Fq "$wechat_account" "$installed_path/SKILL.md" || die "installed SKILL.md is missing the WeChat footer"
+  fi
   grep -Fq "$x_url" "$installed_path/SKILL.md" || die "installed SKILL.md is missing the X footer"
   grep -Fq "$github_url" "$installed_path/SKILL.md" || die "installed SKILL.md is missing the GitHub footer"
   grep -Fq "github.com/$publisher_handle/my_open_skills/tree/main/$skill_path" "$installed_path/SKILL.md" ||

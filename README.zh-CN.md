@@ -16,6 +16,10 @@
 
 每个公开 skill 都应该让新用户能看懂、能安全分享，并能用一个小示例测试。
 
+公开 Skill 运行包和 ClawHub 条目默认使用英文。中文放在
+`README.zh-CN.md` 这类项目说明镜像中；Skill 生成的实际产物仍可遵循用户要求的
+语言。现有混合语言版本会作为迁移例外登记，并在发生实质更新时改为英文。
+
 ## 我亲手打造的 Skills 公开系列
 
 这是一个面向知乎和小红书的中文公开构建系列。每一期都从一个公开输入出发，保留实际输出、设计判断、能力边界和复现路径，用真实案例介绍仓库里的 skills。
@@ -118,7 +122,9 @@ npx @skills-hub-ai/cli install resume-interview-generator-2
 ./scripts/validate-skills.sh
 ```
 
-校验会检查 skill 元数据、ClawHub 作者钩子、Categories、Topics、semver、homepage、包体积、路径、示例、JSON、README 中文版本和常见私有内容泄漏。
+校验会检查公开运行包语言、skill 元数据、ClawHub 作者钩子、Categories、
+Topics、semver、homepage、包体积、路径、示例、JSON、README 中文版本和常见
+私有内容泄漏。
 
 第一个文昌工作流端到端 smoke 记录在 [docs/examples/wenchang-end-to-end-smoke.md](docs/examples/wenchang-end-to-end-smoke.md)。
 

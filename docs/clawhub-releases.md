@@ -15,7 +15,11 @@ This ledger is the reader-facing source of truth for one-at-a-time ClawHub relea
 - Advance the serial release queue after every risk level reaches `submitted`. Public indexing and verification never block later uploads; unresolved versions remain in the reconciliation backlog until they become `verified` or receive a documented skill-specific block.
 - Run the background reconciler every 15 minutes. It may inspect, install, verify, update the plan and ledger, commit, and push; it never uploads a new skill.
 - Treat ClawHub's MIT-0 release license as a distribution rule. Do not publish bundled third-party material when its attribution or license cannot be preserved safely.
-- Keep the capability and trigger language first in `description`; append the canonical creator suffix exactly once.
+- Publish runtime packages and ClawHub listings in English by default. Keep
+  localized project documentation in separate files such as
+  `README.zh-CN.md`; do not use it as the registry description.
+- Keep the capability and trigger language first in `description`; append the
+  language-appropriate canonical creator suffix exactly once.
 - Promote skills through theme-level Case Packs even though registry releases are atomic.
 
 ## Catalog Metadata Decisions
@@ -68,7 +72,7 @@ This ledger is the reader-facing source of truth for one-at-a-time ClawHub relea
 | 18 | `wenchang-router` | `skills/content/wenchang-router` | medium | `1.0.0` | verified (2026-07-24 02:24 CST) | pass; static, VirusTotal, and SkillSpector clean; SAFE/LOW (2 notes) | 2026-07-23 21:59:27 CST | [page](https://clawhub.ai/yangchao228/skills/wenchang-router) |
 | 19 | `wenchang-publish-check` | `skills/content/wenchang-publish-check` | medium | `1.0.0` | verified (2026-07-24 02:25 CST) | pass; static, VirusTotal, and SkillSpector clean; SAFE/LOW (0 notes) | 2026-07-23 22:00:08 CST | [page](https://clawhub.ai/yangchao228/skills/wenchang-publish-check) |
 | 20 | `wenchang-orchestrator` | `skills/content/wenchang-orchestrator` | medium | `1.0.0` | verified (2026-07-24 02:25 CST) | pass; static, VirusTotal, and SkillSpector clean; SAFE/LOW (2 notes) | 2026-07-23 22:01:05 CST | [page](https://clawhub.ai/yangchao228/skills/wenchang-orchestrator) |
-| 21 | `loop-builder` | `skills/engineering/loop-builder` | medium | `1.0.0` | public (2026-07-30 20:02 CST) | pending | 2026-07-30 18:05:09 CST | [page](https://clawhub.ai/yangchao228/skills/loop-builder) |
+| 21 | `loop-builder` | `skills/engineering/loop-builder` | medium | `1.0.1` | prepared | not run | — | [page](https://clawhub.ai/yangchao228/skills/loop-builder) |
 | 22 | `md-img-r2` | `skills/content/md-img-r2` | high | `1.0.5` | prepared | not run | — | [page](https://clawhub.ai/yangchao228/skills/md-img-r2) |
 
 Status values: `prepared`, `submitted`, `public`, `verified`, `blocked`. `submitted` means ClawHub accepted the upload. `public` means the page, metadata, Topics, creator hooks, and exact-version install passed. `verified` additionally means registry hashes, security workers, and Skill Card passed. A skill-specific block does not authorize weakening validation or changing the skill's safety boundary.
@@ -112,7 +116,9 @@ jq -r '.releases[] | select(.status == "submitted" or .status == "public") | [.o
 - 每个 skill 独立执行 dry-run 和发布；ClawHub 接受上传后立即记为 `submitted`，前台任务完成。
 - 公开页面、临时安装、安全扫描和 Skill Card 由后台每 15 分钟对账，依次晋级为 `public` 和 `verified`。
 - 所有风险等级在达到 `submitted` 后都可以继续下一项；未达到 `public/verified` 的版本进入后台积压清单，后续集中处理。
-- ClawHub 描述统一追加公众号、X 和 GitHub 作者入口；能力和触发条件始终放在前面。
+- 公开 Skill 运行包和 ClawHub 条目默认使用英文；中文放在
+  `README.zh-CN.md` 等项目说明镜像中。描述先写能力和触发条件，再追加对应语言的
+  canonical 作者入口。
 - ClawHub 发布采用 MIT-0。含第三方版权或无法确认再许可边界的 skill 保持 `blocked`，不强行发布。
 - ClawHub 条目逐个发布，自媒体内容继续按主题 Case Pack 组织，避免把公开系列拆成零散功能介绍。
 - 默认脚本只执行 dry-run；正式发布必须显式传入 `--publish --yes`。上传成功后脚本自动更新并推送 `submitted` 台账；定时任务只对账已有发布，不会上传新 skill。

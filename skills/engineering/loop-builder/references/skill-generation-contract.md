@@ -1,196 +1,160 @@
-# 专用 Skill 生成契约
+# Specialized Skill Generation Contract
 
-本文件用于约束 `loop-builder` 生成专用 Skill。目标是避免只把通用 Loop 模板换个名字，而是真正分析具体使用场景，沉淀可复用的专业工作流。
+Use this contract when the selected artifact is a reusable Skill. A repeated
+task is not sufficient by itself; the workflow must be stable enough to
+generalize across projects.
 
-## 使用时机
+## Skillization Decision
 
-当用户出现以下意图时读取本文件：
+Choose one conclusion:
 
-- 生成一个专用 Skill。
-- 在完成 Prompt、Checklist、Loop 或 Agent 后，判断是否值得沉淀成 Skill。
-- 把某类高频任务做成跨项目复用能力。
-- 把一次成功的专用 Agent 升级为通用 Skill。
-- 用户指出生成的 Skill 太泛、太像 Prompt、缺少工作流。
+- `Recommend Skillization`
+- `Observe One More Run`
+- `Do Not Skillize Yet`
 
-## 收尾 Skill 化建议
+Recommend Skillization only when:
 
-`loop-builder` 每次完成主要产物后，都要输出 Skill 化建议。这个建议不是授权，只是帮助用户发现可复用机会。
+- the same professional workflow appears across multiple tasks or projects;
+- required inputs and missing-input behavior are stable;
+- phase boundaries and acceptance checks are clear;
+- the feedback signal is observable;
+- risks, forbidden actions, and human gates are known;
+- business-specific data can remain outside the Skill.
 
-输出格式：
+Observe another run when the workflow seems reusable but the evidence,
+exceptions, or evaluator is not stable.
 
-```md
-## Skill 化建议
+Do not Skillize when the task is one-off, depends on undocumented personal
+judgment, or would mainly store private context.
 
-- 结论：建议 Skill 化 / 观察一次后再 Skill 化 / 暂不建议 Skill 化
-- 判断依据：
-- 适合沉淀的复用场景：
-- 建议 Skill 名称：
-- 用户确认后下一步：
-- 当前不自动生成的原因：
-```
+## Mandatory Sequence
 
-判断规则：
+1. Model the real professional workflow.
+2. Produce a Skill protocol draft.
+3. Produce a temporary Prompt that can run the current task.
+4. Wait for protocol approval.
+5. Generate or modify Skill files only after explicit file-level approval.
+6. Validate the package with the target repository's validator.
+7. Request separate approval for installation, commit, push, or publication.
 
-| 结论 | 条件 | 收尾提示 |
-| --- | --- | --- |
-| 建议 Skill 化 | 稳定工作流、重复使用、输入输出清楚、验收清楚、能减少重复 Prompt | 询问是否继续生成 Skill 协议草案 |
-| 观察一次后再 Skill 化 | 看起来可复用，但还没有真实跑通过或反馈不足 | 建议先用当前 Prompt / Loop 跑一轮 |
-| 暂不建议 Skill 化 | 一次性任务、强项目私有、验收模糊、风险高或维护成本高 | 建议保留 Prompt / Checklist / state |
-
-建议 Skill 化时，使用这句收口：
-
-```md
-这个操作适合沉淀成 Skill，后续可以用一句话触发，少复制长 Prompt。
-是否需要我继续生成 Skill 协议草案？
-```
-
-不要自动创建、安装、覆盖或提交 Skill。必须等用户确认。
-
-## 硬性流程
-
-用户确认继续后，生成专用 Skill 前，必须先输出三段内容：
-
-1. 场景工作流分析。
-2. Skill 协议草案。
-3. 给 Codex 使用的过渡 Prompt。
-
-除非用户明确说“按这个协议直接生成”，否则不要直接输出完整 `SKILL.md`。
-
-默认先帮助用户完成当前任务，再考虑沉淀 Skill。用户只说“帮我复刻这个 UI 视觉稿”时，应先生成可复制给 Codex 的执行 Prompt。只有用户明确表达跨项目复用、长期复跑、全局安装或生成 Skill，才进入专用 Skill 生成。
-
-如果用户说“把刚才 / 这次 / 上一轮过程沉淀成 Skill”，默认这已经是明确的 Skill 化意图。先从当前对话、项目证据、截图路径、diff、TODO、state、run log 和测试结果中自动抽取真实样本；只有关键证据缺失时才补问，不要让用户重新填写完整材料清单。
-
-生成 Skill 协议前也要通过决策依赖 Gate。构建 Loop / Agent / Skill 默认需要基于当前具体任务校准工作流、复杂度、最大轮次和风险，必须先取得对应样本；只有用户明确要求通用协议草案或明确接受先不校准，才可以继续，并必须标注“未基于真实样本校准”，把未来运行期输入单独写入输入契约。
-
-## 场景工作流分析
-
-必须覆盖：
-
-| 项目 | 要回答的问题 |
-| --- | --- |
-| 真实场景 | 用户真实要解决什么反复出现的问题 |
-| 专业角色 | 人类专家会以什么角色处理这个任务 |
-| 非角色 | 这个 Skill 不应该扮演什么角色 |
-| 输入材料 | 必需输入、可选输入、后置确认、缺失必需输入时如何补问 |
-| 第一动作 | 专业执行者第一步应分析什么，而不是直接动手做什么 |
-| 工作流阶段 | 分几阶段推进，每阶段的目标和输出是什么 |
-| 反馈信号 | 每轮从哪里获得外部反馈 |
-| 验收标准 | 工具验收、人工验收、剩余问题如何表达 |
-| 风险边界 | 哪些动作必须人工确认 |
-| 不确定项 | 无法判断时如何标注，而不是猜测 |
-
-## Skill 协议草案
-
-协议草案必须写清：
+## Workflow Analysis
 
 ```md
-## Skill 协议草案
-
-### 角色定义
-- 本 Skill 让 Codex 扮演：
-- 本 Skill 不让 Codex 扮演：
-
-### 输入契约
-- 必需输入：
-- 可选输入：
-- 后置确认：
-- 缺失必需输入补问：
-- 安全默认值：
-
-### 工作流阶段
-1. <阶段名>：<目标、动作、输出>
-2. <阶段名>：<目标、动作、输出>
-3. <阶段名>：<目标、动作、输出>
-
-### 分阶段执行要求
-- 哪些阶段只能只读分析：
-- 哪些阶段允许修改：
-- 每轮最多改什么：
-- 每轮必须产出什么证据：
-
-### 反馈与验收
-- 工具反馈：
-- 人工反馈：
-- 通过条件：
-- 未通过时如何进入下一轮：
-
-### 断路器
-- 最大轮次：
-- 连续无改善：
-- 越界动作：
-- 输入不可用：
-- 成本或权限风险：
-
-### 文件结构
-- SKILL.md：
-- skill.json：
-- references：
-- templates：
-- validation：
+## Scenario workflow analysis
+- Professional role:
+- Problem boundary:
+- Expert's first analysis:
+- Required inputs:
+- Optional inputs:
+- Runtime inputs:
+- Phases:
+  1. <phase>: entry / work / output / acceptance
+- Generator responsibility:
+- Evaluator responsibility:
+- Human responsibility:
+- Feedback signal:
+- Uncertainty handling:
+- Forbidden actions:
+- Continue / stop / rollback / escalate rules:
 ```
 
-输入契约必须区分“必需输入、可选输入、后置确认”。缺失的必需输入必须全部列出；可选输入最多展示 5 个默认处理方式。不要把可选输入做成强制问题。
+If this analysis cannot describe a stable workflow, fall back to a Prompt,
+checklist, Human-in-the-Loop flow, or specialized Agent.
 
-## 过渡 Prompt
+## Skill Protocol Draft
 
-过渡 Prompt 是用户可以马上拿去给 Codex 使用的执行提示词。即使暂不生成 Skill，也要给用户一个可落地结果。
+```md
+## Skill protocol draft
 
-过渡 Prompt 必须包含：
+### Role
+- Acts as:
+- Does not act as:
 
-- 角色定义。
-- 输入材料占位。
-- 只读分析步骤。
-- 执行计划。
-- 每轮允许动作。
-- 验收方式。
-- 停止规则。
-- 禁止动作。
-- 最终输出格式。
+### Trigger contract
+- Trigger when:
+- Do not trigger when:
 
-不要让用户自己把协议改写成 Prompt。
+### Input contract
+- Required:
+- Optional:
+- Runtime-only:
+- Missing required input behavior:
 
-## 生成专用 Skill 的通过条件
+### Workflow phases
+1. Inspect:
+2. Analyze:
+3. Plan:
+4. Execute or generate:
+5. Verify:
+6. Hand off:
 
-只有同时满足以下条件，才生成专用 Skill：
+### Phase controls
+- Allowed mutations:
+- Forbidden mutations:
+- Progress reporting:
 
-- 场景会跨项目或长期复用。
-- 当前任务已经有可用 Prompt 或流程能跑通。
-- 工作流能被写成稳定步骤。
-- 有明确输入契约。
-- 有反馈或验收方式。
-- 有禁止动作和人工确认节点。
-- Skill 能减少用户重复表达，而不是增加维护负担。
+### Acceptance
+- Tool-based checks:
+- Human checks:
+- Feedback signal:
+- Remaining-gap reporting:
 
-如果不满足，退回更轻产物：
+### Circuit breakers
+- Iteration limit and rationale:
+- No-improvement rule:
+- Scope rule:
+- Permission and cost rule:
 
-- 一次性 Prompt。
-- Checklist。
-- Human-in-the-Loop 流程。
-- 专用 Loop Agent 包。
+### Package
+- SKILL.md:
+- skill.json:
+- references:
+- templates:
+- examples:
+- scripts:
 
-## 反例
+### Approval required
+- Protocol:
+- File generation:
+- Installation:
+- Publication:
+```
 
-不要生成专用 Skill 的情况：
+## Temporary Prompt
 
-- 用户只是要改一段文案。
-- 任务没有稳定复用场景。
-- 用户还没明确目标和输入。
-- 只能靠主观喜好判断，没有可描述验收标准。
-- 自动执行会触碰发布、支付、权限、生产配置、数据删除。
+Give the user a Prompt that can run the current task without pretending the
+Skill already exists:
 
-## 示例：UI 视觉复刻类任务
+```md
+You are acting as <professional role>.
 
-如果任务是“按 UI 视觉稿复刻页面”，不能只生成“目标图 -> 实现 -> 截图 -> 修正”的通用 Loop。
+Goal:
+<goal>
 
-应先建模为前端还原工作流：
+Inputs:
+<inputs>
 
-- 角色：高级前端还原工程师。
-- 第一动作：只读分析设计稿，不写代码。
-- 分析内容：页面结构、组件树、颜色变量、字号、字重、行高、间距系统、圆角、阴影、图片和图标资产。
-- 实现阶段：layout、header、hero、card/list/form、responsive。
-- 反馈：运行页面并截图，对比目标图和当前截图。
-- 修正：每轮只修影响最大的 3 个差异。
-- 不确定项：用最接近值并标注。
-- 禁止动作：不自由发挥设计风格，不改业务逻辑，不一次性大改。
+Workflow:
+1. Inspect the available evidence.
+2. Stop if a required input is missing.
+3. Plan one bounded work package.
+4. Execute only allowed actions.
+5. Verify with <signal>.
+6. Stop on <rules>.
+7. Present <human decision> before any risky action.
 
-这个示例是工作流建模方式，不是把 UI 规则硬编码为所有 Skill 的默认规则。
+Output:
+<artifacts and evidence>
+```
+
+## Package Acceptance
+
+- The `description` contains real triggers and boundaries.
+- The main instructions are concise and imperative.
+- References are loaded only when needed.
+- Examples include a minimal input and expected output notes.
+- The package contains no credentials, local absolute paths, or private data.
+- Public runtime content uses the repository's default public language.
+- Repository validation passes.
+- The generated package is not installed or published without separate
+  authorization.
