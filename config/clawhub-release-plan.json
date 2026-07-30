@@ -615,7 +615,7 @@
       "path": "skills/engineering/loop-builder",
       "display_name": "Loop Builder",
       "risk": "medium",
-      "status": "planned",
+      "status": "submitted",
       "remote_latest_version": "",
       "target_version": "1.0.0",
       "categories": [
@@ -636,7 +636,9 @@
         "workflow",
         "human-in-the-loop"
       ],
-      "changelog": "Initial public release with evidence gates, feedback signals, stopping rules, human approval points, reusable Loop patterns, and public examples."
+      "changelog": "Initial public release with evidence gates, feedback signals, stopping rules, human approval points, reusable Loop patterns, and public examples.",
+      "submitted_at": "2026-07-30T10:05:10Z",
+      "source_commit": "da01a28984d13de5fe18e0e0c1b6273b04f7960a"
     },
     {
       "order": 22,
