@@ -615,7 +615,7 @@
       "path": "skills/engineering/loop-builder",
       "display_name": "Loop Builder",
       "risk": "medium",
-      "status": "planned",
+      "status": "submitted",
       "remote_latest_version": "1.0.0",
       "target_version": "1.0.1",
       "categories": [
@@ -636,7 +636,9 @@
         "workflow",
         "human-in-the-loop"
       ],
-      "changelog": "Translate the public runtime package and ClawHub metadata to English, simplify progressive disclosure, and preserve the existing evidence gates, stopping rules, and human-control boundaries."
+      "changelog": "Translate the public runtime package and ClawHub metadata to English, simplify progressive disclosure, and preserve the existing evidence gates, stopping rules, and human-control boundaries.",
+      "submitted_at": "2026-07-30T12:19:36Z",
+      "source_commit": "8c73147f0d1c4b2222fd2a7da0a76cf579c3ca70"
     },
     {
       "order": 22,
