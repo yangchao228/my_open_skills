@@ -2,9 +2,15 @@
 
 [English](README.md)
 
-工程类 skills 会在 content 和 work 分类稳定后再公开。
+可复用的工程与 Agent 工作流设计。
 
-候选 skills：
+## 已就绪
+
+- [loop-builder](loop-builder) - 判断任务是否适合 Agent Loop，并设计带反馈、
+  停止规则和人工确认点的最小 Prompt、Checklist、Loop 包、专用 Agent 或
+  Skill。
+
+## 后续候选
 
 - `wechat-miniprogram-ui-acceptance`
 - `playwright`

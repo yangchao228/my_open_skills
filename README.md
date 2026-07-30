@@ -33,6 +33,10 @@ the profile system, exact 1500×500 header, pinned thread, first-month copy,
 12-week calendar, engagement watchlist, and a post-level measurement ledger.
 Publishing and account changes remain manual.
 
+The [Loop Builder X/Twitter launch plan](docs/social/x/loop-builder-launch-plan.md)
+adds a focused release sequence without silently replacing the existing
+editorial calendar.
+
 ## Skill Groups
 
 ### Content
@@ -77,7 +81,11 @@ See [skills/work/README.md](skills/work/README.md).
 
 ### Engineering
 
-Engineering workflow skills will be added later. See [skills/engineering/README.md](skills/engineering/README.md).
+Reusable engineering and Agent workflow design.
+
+- [loop-builder](skills/engineering/loop-builder) - turn a rough task into a controllable Agent Loop with evidence gates, feedback signals, stopping rules, and explicit human decisions.
+
+See [skills/engineering/README.md](skills/engineering/README.md).
 
 ## Install
 

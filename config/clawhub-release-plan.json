@@ -611,6 +611,35 @@
     },
     {
       "order": 21,
+      "slug": "loop-builder",
+      "path": "skills/engineering/loop-builder",
+      "display_name": "Loop Builder",
+      "risk": "medium",
+      "status": "planned",
+      "remote_latest_version": "",
+      "target_version": "1.0.0",
+      "categories": [
+        "agents",
+        "development",
+        "productivity"
+      ],
+      "topics": [
+        "agent-loops",
+        "human-in-the-loop",
+        "workflow-design",
+        "stopping-rules",
+        "feedback-signals"
+      ],
+      "tags": [
+        "latest",
+        "agent-loop",
+        "workflow",
+        "human-in-the-loop"
+      ],
+      "changelog": "Initial public release with evidence gates, feedback signals, stopping rules, human approval points, reusable Loop patterns, and public examples."
+    },
+    {
+      "order": 22,
       "slug": "md-img-r2",
       "path": "skills/content/md-img-r2",
       "display_name": "Markdown Images to R2",

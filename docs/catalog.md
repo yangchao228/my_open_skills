@@ -43,7 +43,9 @@ Future candidates: none selected.
 
 ## Engineering
 
-No public ready skills in the first phase.
+| Skill | Status | Invocation | Purpose |
+| --- | --- | --- | --- |
+| [loop-builder](../skills/engineering/loop-builder) | ready | user-invoked | Design controllable Agent Loops with evidence gates, feedback signals, stopping rules, and human decisions |
 
 Future candidates: `wechat-miniprogram-ui-acceptance`, `playwright`, `figma`, `figma-implement-design`, `mcp-builder`, `frontend-design`, `webapp-testing`.
 

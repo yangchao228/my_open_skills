@@ -41,6 +41,7 @@ This ledger is the reader-facing source of truth for one-at-a-time ClawHub relea
 | `wenchang-router` | `agents`, `creative`, `productivity` | `content-routing`, `workflow-state`, `multi-platform-content`, `next-action`, `content-pipeline` | explicit CLI metadata |
 | `wenchang-publish-check` | `productivity`, `communication`, `knowledge` | `publish-preflight`, `release-readiness`, `platform-packaging`, `asset-verification`, `human-approval` | explicit CLI metadata |
 | `wenchang-orchestrator` | `agents`, `automation`, `productivity` | `content-orchestration`, `multi-platform-content`, `workflow-automation`, `asset-pipeline`, `knowledge-capture` | explicit CLI metadata |
+| `loop-builder` | `agents`, `development`, `productivity` | `agent-loops`, `human-in-the-loop`, `workflow-design`, `stopping-rules`, `feedback-signals` | explicit CLI metadata |
 | `md-img-r2` | `integrations`, `automation`, `productivity` | `cloudflare-r2`, `markdown-images`, `s3-upload`, `image-hosting`, `url-replacement` | explicit CLI update metadata |
 
 ## Release Ledger
@@ -67,7 +68,8 @@ This ledger is the reader-facing source of truth for one-at-a-time ClawHub relea
 | 18 | `wenchang-router` | `skills/content/wenchang-router` | medium | `1.0.0` | verified (2026-07-24 02:24 CST) | pass; static, VirusTotal, and SkillSpector clean; SAFE/LOW (2 notes) | 2026-07-23 21:59:27 CST | [page](https://clawhub.ai/yangchao228/skills/wenchang-router) |
 | 19 | `wenchang-publish-check` | `skills/content/wenchang-publish-check` | medium | `1.0.0` | verified (2026-07-24 02:25 CST) | pass; static, VirusTotal, and SkillSpector clean; SAFE/LOW (0 notes) | 2026-07-23 22:00:08 CST | [page](https://clawhub.ai/yangchao228/skills/wenchang-publish-check) |
 | 20 | `wenchang-orchestrator` | `skills/content/wenchang-orchestrator` | medium | `1.0.0` | verified (2026-07-24 02:25 CST) | pass; static, VirusTotal, and SkillSpector clean; SAFE/LOW (2 notes) | 2026-07-23 22:01:05 CST | [page](https://clawhub.ai/yangchao228/skills/wenchang-orchestrator) |
-| 21 | `md-img-r2` | `skills/content/md-img-r2` | high | `1.0.5` | prepared | not run | — | [page](https://clawhub.ai/yangchao228/skills/md-img-r2) |
+| 21 | `loop-builder` | `skills/engineering/loop-builder` | medium | `1.0.0` | prepared | not run | — | [page](https://clawhub.ai/yangchao228/skills/loop-builder) |
+| 22 | `md-img-r2` | `skills/content/md-img-r2` | high | `1.0.5` | prepared | not run | — | [page](https://clawhub.ai/yangchao228/skills/md-img-r2) |
 
 Status values: `prepared`, `submitted`, `public`, `verified`, `blocked`. `submitted` means ClawHub accepted the upload. `public` means the page, metadata, Topics, creator hooks, and exact-version install passed. `verified` additionally means registry hashes, security workers, and Skill Card passed. A skill-specific block does not authorize weakening validation or changing the skill's safety boundary.
 

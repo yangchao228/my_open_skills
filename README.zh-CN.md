@@ -32,6 +32,9 @@
 Header、置顶 Thread、首月英文成稿、12 周日历、互动观察清单和帖子级数据台账。
 账号资料修改、发布和互动仍由用户人工完成。
 
+[Loop Builder X/Twitter 发布计划](docs/social/x/loop-builder-launch-plan.md)
+提供一组聚焦 `loop-builder` 的发布序列，不会静默覆盖已有内容日历。
+
 ## Skill 分类
 
 ### Content
@@ -76,7 +79,11 @@ Header、置顶 Thread、首月英文成稿、12 周日历、互动观察清单�
 
 ### Engineering
 
-工程工作流 skills 后续发布。详见 [skills/engineering/README.md](skills/engineering/README.md)。
+可复用的工程与 Agent 工作流设计。
+
+- [loop-builder](skills/engineering/loop-builder) - 把模糊任务转成带证据门禁、反馈信号、停止规则和人工判断点的可控 Agent Loop。
+
+详见 [skills/engineering/README.md](skills/engineering/README.md)。
 
 ## 安装
 

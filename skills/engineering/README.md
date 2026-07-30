@@ -2,9 +2,15 @@
 
 [中文版本](README.zh-CN.md)
 
-Engineering skills will be published after the content and work categories are stable.
+Reusable engineering and Agent workflow design.
 
-Candidate skills:
+## Ready
+
+- [loop-builder](loop-builder) - decide whether a task should become an Agent
+  Loop, then design the smallest controllable Prompt, Checklist, Loop package,
+  specialized Agent, or Skill with feedback and stopping rules.
+
+## Future Candidates
 
 - `wechat-miniprogram-ui-acceptance`
 - `playwright`
