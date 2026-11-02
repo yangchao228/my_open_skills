@@ -94,11 +94,13 @@ metadata:
 
 ### 第 3 步：体检
 
-把口播正文（不含改稿说明）存成纯文本文件，运行：
+把口播正文（不含改稿说明）存成纯文本文件，放在用户的工作目录或临时目录，不要写进这个 skill 的目录。然后运行：
 
 ```bash
-python3 scripts/koubo_lint.py <稿件.txt> --target-seconds <秒数> [--terms "术语1,术语2"] [--allow "口头禅"] [--delivery tts]
+python3 <本 skill 目录>/scripts/koubo_lint.py <稿件.txt> --target-seconds <秒数> [--terms "术语1,术语2"] [--allow "口头禅"] [--delivery tts]
 ```
+
+`<本 skill 目录>` 指这份 SKILL.md 所在的文件夹，要写成绝对路径。运行时的当前目录通常是用户的项目目录，直接写 `scripts/koubo_lint.py` 会找不到文件。
 
 - **必须改**：全部改掉。退出码为 1 时表示还有必须改的项。
 - **建议改**：逐条判断。已经通顺自然的可以保留，在说明里写一句为什么保留。
@@ -166,6 +168,14 @@ python3 scripts/koubo_lint.py <稿件.txt> --target-seconds <秒数> [--terms "�
 - 不负责拍摄、配音生成、剪辑和发布。用户要这些时，说明这个 skill 只交付稿子。
 - 原文的事实本身有问题时，指出来，交给用户决定，不要自己悄悄改掉。
 
+## 安装与调用
+
+把整个 `article-to-koubo` 文件夹复制或链接到运行时读取 skills 的目录，比如 Codex 或 Claude Code 的 skills 目录。要整个文件夹一起放，`references/` 和 `scripts/` 都不能少。
+
+- Codex：用 `$article-to-koubo` 调用，或者直接说"把这篇文章改成口播稿"。`agents/openai.yaml` 提供了显示名和默认提示词。
+- Claude Code：用 `/article-to-koubo` 调用，或者直接描述需求。
+- 体检脚本只需要 Python 3，不用装任何依赖。
+
 ## 参考文件
 
 - [references/spoken-style.md](references/spoken-style.md)：写给耳朵听的规则，包括结构、钩子、句子、节奏、数字和平台差异。
@@ -174,6 +184,7 @@ python3 scripts/koubo_lint.py <稿件.txt> --target-seconds <秒数> [--terms "�
 - [references/ai-flavor-blacklist.md](references/ai-flavor-blacklist.md)：口播版 AI 味清单，分成脚本能抓的和要自己判断的两部分。
 - [references/before-after.md](references/before-after.md)：三组改前改后对照，附具体改法。
 - [scripts/koubo_lint.py](scripts/koubo_lint.py)：体检脚本，只用 Python 标准库，加 `--json` 输出机器可读结果。
+- [scripts/test_koubo_lint.py](scripts/test_koubo_lint.py)：体检脚本的回归测试，改阈值或词表之后先跑一遍。
 
 ## 致谢
 

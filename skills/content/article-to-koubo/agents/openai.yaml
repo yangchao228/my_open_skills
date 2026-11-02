@@ -1,0 +1,4 @@
+interface:
+  display_name: "Article to Koubo"
+  short_description: "把文章改成有活人感、偶尔幽默、不堆术语的中文口播稿"
+  default_prompt: "Use $article-to-koubo to rewrite this article into a natural, human-sounding Chinese talking-head script."
