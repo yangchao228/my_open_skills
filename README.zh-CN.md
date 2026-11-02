@@ -61,6 +61,7 @@ Header、置顶 Thread、首月英文成稿、12 周日历、互动观察清单�
 - [chatgpt-image-handoff](skills/content/chatgpt-image-handoff)
 - [wechat-to-cards](skills/content/wechat-to-cards)
 - [article-to-illustrations](skills/content/article-to-illustrations)
+- [article-to-koubo](skills/content/article-to-koubo) - 孵化中的中文候选：把文章改成有活人感的口播稿，偶尔幽默、不堆术语，附带确定性体检脚本；暂不进入 ClawHub 发布计划
 - [md-img-r2](skills/content/md-img-r2) - 扫描 Markdown 本地图片、先生成 dry-run 公网 URL 计划，再在明确确认后写入 R2 或兼容对象存储的替换结果
 - [storm-research](skills/content/storm-research)
 - [wenchang-research](skills/content/wenchang-research)

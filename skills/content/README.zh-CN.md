@@ -44,6 +44,7 @@ wenchang-orchestrator
 - [chatgpt-image-handoff](chatgpt-image-handoff)：自适应选择 Computer Use、内置生图、手动 ChatGPT 交接或本地渲染，并把结果导回 QA
 - [wechat-to-cards](wechat-to-cards)：为共享卡片链路补充公众号专用贴图约束和分发素材
 - [article-to-illustrations](article-to-illustrations)：长文插图判断、生成计划、正文插入和图片 manifest
+- [article-to-koubo](article-to-koubo)：孵化中的中文候选，把文章改成有活人感的口播稿，并用体检脚本检查 AI 套话、气口、节奏、术语和时长；暂不进入 ClawHub 发布计划
 - [md-img-r2](md-img-r2)：通过 dry-run 计划和明确确认的上传或写回，把审核后的 Markdown 本地图片接入稳定公网 URL
 - [storm-research](storm-research)：多视角研究地图
 - [wenchang-research](wenchang-research)：基于来源的事实采证

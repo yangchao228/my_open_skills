@@ -1,0 +1,25 @@
+{
+  "slug": "article-to-koubo",
+  "title": "Article to Koubo Script",
+  "category": "content",
+  "summary": "Rewrite Chinese articles into natural, human-sounding talking-head scripts with light humor, real emotion, plain language, and a deterministic lint pass for AI-flavored phrasing, breath length, rhythm, jargon, and duration.",
+  "keywords": [
+    "koubo",
+    "talking-head script",
+    "voiceover script",
+    "de-AI writing",
+    "spoken Chinese",
+    "short video"
+  ],
+  "user_needs": [
+    "turn an article into a Chinese talking-head script that does not sound AI-written",
+    "add occasional humor and grounded emotion without forced memes",
+    "translate jargon into plain spoken language",
+    "lint an existing script for AI clichés, long breaths, monotone rhythm, and duration"
+  ],
+  "source_dir": "skills/content/article-to-koubo",
+  "entry": "SKILL.md",
+  "package_strategy": "on-demand",
+  "package_format": "skill",
+  "status": "incubating"
+}

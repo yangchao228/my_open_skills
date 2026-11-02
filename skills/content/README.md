@@ -44,6 +44,7 @@ The card branch covers Xiaohongshu, WeChat inline cards, Zhihu Idea, and generic
 - [chatgpt-image-handoff](chatgpt-image-handoff): adaptively use Computer Use, built-in generation, manual ChatGPT handoff, or local rendering and import outputs into QA
 - [wechat-to-cards](wechat-to-cards): WeChat-specific adapter for inline-card requirements and distribution assets
 - [article-to-illustrations](article-to-illustrations): long-form illustration decisions, generation plans, insertion, and image manifests
+- [article-to-koubo](article-to-koubo): incubating Chinese-only candidate that turns articles into human-sounding talking-head scripts and lints them for AI clichés, breath length, rhythm, jargon, and duration; not yet in the ClawHub release plan
 - [md-img-r2](md-img-r2): prepare reviewed local Markdown images for stable public URLs through dry-run planning and explicitly confirmed upload or rewrite
 - [storm-research](storm-research): multi-perspective research map
 - [wenchang-research](wenchang-research): source-backed evidence gathering

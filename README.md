@@ -65,6 +65,7 @@ Core content skills:
 - [chatgpt-image-handoff](skills/content/chatgpt-image-handoff)
 - [wechat-to-cards](skills/content/wechat-to-cards)
 - [article-to-illustrations](skills/content/article-to-illustrations)
+- [article-to-koubo](skills/content/article-to-koubo) - incubating Chinese-only candidate that rewrites articles into natural talking-head scripts with light humor, plain language, and a deterministic lint pass; not yet in the ClawHub release plan
 - [md-img-r2](skills/content/md-img-r2) - inspect local Markdown images, create a dry-run public-URL plan, and apply reviewed R2 or S3-compatible replacements behind an explicit confirmation gate
 - [storm-research](skills/content/storm-research)
 - [wenchang-research](skills/content/wenchang-research)

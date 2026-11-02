@@ -27,6 +27,7 @@ ClawHub publication status and verified install links are maintained in [ClawHub
 | [resilient-imagegen](../skills/content/resilient-imagegen) | ready | model-invoked | Route and recover serial image-generation jobs across available backends |
 | [chatgpt-image-handoff](../skills/content/chatgpt-image-handoff) | ready | model-invoked | Prepare, execute, or manually bridge external image generation into stable local import and QA |
 | [wechat-to-cards](../skills/content/wechat-to-cards) | ready | user-invoked | Add WeChat-specific card constraints and distribution assets around the shared pipeline |
+| [article-to-koubo](../skills/content/article-to-koubo) | incubating | user-invoked | Chinese-only article-to-talking-head script rewrite with humor and emotion dosage plus a deterministic lint pass; English runtime split required before ClawHub |
 
 Future candidates: none selected.
 
