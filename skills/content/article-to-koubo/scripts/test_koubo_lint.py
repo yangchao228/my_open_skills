@@ -124,6 +124,86 @@ class Rules(unittest.TestCase):
         self.assertTrue(found(result, SHOULD, "时长"))
 
 
+    def test_empty_threat_is_flagged(self):
+        result = lint("你再不学这个，三年后就被淘汰了。你自己想想吧。")
+        self.assertTrue(found(result, SHOULD, "空洞恐吓", "被淘汰"))
+        self.assertTrue(found(result, SHOULD, "结构套路", "再不…就…"))
+
+
+# 测试用的样例风格卡，数值只为测试，不代表任何真实博主
+FIXTURE_CARD = """# 测试风格卡
+
+说明文字。
+
+```json
+{
+  "koubo_style": "fixture",
+  "name": "测试风格",
+  "rate": 5.0,
+  "allow": ["家人们"],
+  "targets": {
+    "平均句长": [5, 12],
+    "语气词每百字": [3, 8],
+    "你占称呼比": [50, 100]
+  }
+}
+```
+"""
+
+
+class StyleCard(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.card = os.path.join(self.tmp.name, "card.md")
+        with open(self.card, "w", encoding="utf-8") as f:
+            f.write(FIXTURE_CARD)
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def test_load_and_allow(self):
+        style = koubo_lint.load_style_card(self.card)
+        self.assertEqual(style["name"], "测试风格")
+        result = lint("家人们，你听我说吧，这事儿挺简单的。", style=style)
+        self.assertFalse(found(result, category="网络烂梗"))
+
+    def test_rate_comes_from_card_unless_given(self):
+        style = koubo_lint.load_style_card(self.card)
+        text = "你听我说吧，这事儿挺简单的。"
+        self.assertEqual(lint(text, style=style)["stats"]["语速"], 5.0)
+        self.assertEqual(lint(text, rate=3.5, style=style)["stats"]["语速"], 3.5)
+
+    def test_deviation_is_reported(self):
+        style = koubo_lint.load_style_card(self.card)
+        text = "这个系统每天自动整理报销单据并发给财务审核，我们觉得效率提升很明显。我们会继续优化这个流程。"
+        result = lint(text, style=style)
+        self.assertTrue(found(result, SHOULD, "风格偏离", "语气词每百字"))
+        self.assertTrue(found(result, SHOULD, "风格偏离", "你占称呼比"))
+        rows = {r["指标"]: r for r in result["style"]["rows"]}
+        self.assertFalse(rows["语气词每百字"]["在区间内"])
+
+    def test_in_range_has_no_deviation(self):
+        style = koubo_lint.load_style_card(self.card)
+        result = lint("你听我说。这事儿其实很简单，你一试就懂了。你信我一次吧。", style=style)
+        self.assertFalse(found(result, category="风格偏离"))
+        self.assertTrue(all(r["在区间内"] for r in result["style"]["rows"]))
+
+    def test_cli_report_and_bad_card(self):
+        script = os.path.join(self.tmp.name, "s.txt")
+        with open(script, "w", encoding="utf-8") as f:
+            f.write("你听我说。这事儿其实很简单，你一试就懂了。你信我一次吧。")
+        code, out, _ = run_main([script, "--style-card", self.card])
+        self.assertEqual(code, 0)
+        self.assertIn("像不像：测试风格", out)
+
+        bad = os.path.join(self.tmp.name, "bad.md")
+        with open(bad, "w", encoding="utf-8") as f:
+            f.write('```json\n{"koubo_style": "x", "targets": {"不存在的指标": [1, 2]}}\n```\n')
+        code, _, err = run_main([script, "--style-card", bad])
+        self.assertEqual(code, 2)
+        self.assertIn("不支持的指标", err)
+
+
 class Cli(unittest.TestCase):
     def test_empty_file_returns_2(self):
         with tempfile.TemporaryDirectory() as tmp:

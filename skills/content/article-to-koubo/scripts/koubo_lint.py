@@ -152,6 +152,14 @@ PHRASE_GROUPS = [
          "核心", "一系列"],
         True,
     ),
+    (
+        "空洞恐吓", SHOULD,
+        "紧迫感要有事实撑着：说清楚具体会失去什么、依据是原文哪一句；没有依据的恐吓删掉",
+        ["被淘汰", "淘汰你", "再不学", "就晚了", "来不及了", "最后的机会", "最后一次机会",
+         "最后一波红利", "唯一出路", "唯一的出路", "被时代抛弃", "被AI取代", "被 AI 取代",
+         "取代你", "错过这一波", "错过这个时代"],
+        True,
+    ),
 ]
 
 BOOKISH_SUGGESTIONS = {
@@ -188,7 +196,74 @@ STRUCTURE_PATTERNS = [
      "如果只是铺背景就删掉；真在讲某个年代可以保留"),
     ("答案是：", SHOULD, re.compile(r"(答案|原因|结论|秘诀|关键)(就是|是|很简单)?[：:]"),
      "揭晓式冒号像 PPT，直接说出来"),
+    ("再不…就…", SHOULD, re.compile(r"再不[^。！？!?\n]{1,16}?就(晚了|来不及|被|没机会|完了)"),
+     "空洞恐吓句式；紧迫感要有原文事实撑着，说清楚具体会失去什么"),
 ]
+
+# ---------------------------------------------------------------------------
+# 风格卡：references/style-cards/*.md 里的第一个 ```json 代码块，必须含 "koubo_style" 键。
+# targets 里只能用下面这些可计算的指标，值是 [下限, 上限]。
+# ---------------------------------------------------------------------------
+STYLE_METRICS = {
+    "平均句长": "字",
+    "短句占比": "%",
+    "语气词每百字": "个",
+    "问句每百字": "个",
+    "感叹号每百字": "个",
+    "你占称呼比": "%",
+}
+STYLE_JSON_RE = re.compile(r"```json\s*\n(.*?)```", re.S)
+
+
+def load_style_card(path):
+    """读取风格卡，返回 dict。格式不对时抛 ValueError，信息是中文。"""
+    with open(path, encoding="utf-8") as f:
+        text = f.read()
+    for block in STYLE_JSON_RE.findall(text):
+        try:
+            data = json.loads(block)
+        except ValueError:
+            continue
+        if isinstance(data, dict) and "koubo_style" in data:
+            break
+    else:
+        raise ValueError("风格卡里没有找到含 koubo_style 键的 json 代码块：%s" % path)
+
+    targets = data.get("targets", {})
+    if not isinstance(targets, dict):
+        raise ValueError("风格卡 targets 必须是对象")
+    for metric, bounds in targets.items():
+        if metric not in STYLE_METRICS:
+            raise ValueError("风格卡里有不支持的指标：%s（支持：%s）" % (metric, "、".join(STYLE_METRICS)))
+        if (not isinstance(bounds, list) or len(bounds) != 2
+                or not all(isinstance(b, (int, float)) for b in bounds) or bounds[0] > bounds[1]):
+            raise ValueError("风格卡指标 %s 的区间必须是 [下限, 上限]" % metric)
+    allow = data.get("allow", [])
+    if not isinstance(allow, list) or not all(isinstance(w, str) for w in allow):
+        raise ValueError("风格卡 allow 必须是字符串列表")
+    for key in ("rate", "soft_breath", "hard_breath"):
+        if key in data and not isinstance(data[key], (int, float)):
+            raise ValueError("风格卡 %s 必须是数字" % key)
+    data.setdefault("name", data["koubo_style"])
+    return data
+
+
+def compare_style(stats, style, issues):
+    """把稿子的统计值和风格卡区间逐项对比，返回对比结果列表。"""
+    rows = []
+    for metric, (low, high) in style.get("targets", {}).items():
+        value = stats.get(metric)
+        if value is None:
+            continue
+        ok = low <= value <= high
+        rows.append({"指标": metric, "数值": value, "区间": [low, high], "在区间内": ok})
+        if not ok:
+            unit = STYLE_METRICS[metric]
+            direction = "偏低" if value < low else "偏高"
+            issues.append(make_issue(SHOULD, "风格偏离", None,
+                                     "%s %s%s，%s" % (metric, value, unit, direction), "",
+                                     "%s的区间是 %s–%s%s；对照风格卡调整" % (style["name"], low, high, unit)))
+    return rows
 
 PARTICLE_RE = re.compile(r"[吧呢嘛啊呀哈呗啦嘞哦噢]")
 COMMON_LATIN = {"ai", "app", "ok", "iphone", "ppt", "wifi", "wi-fi", "bug"}
@@ -427,8 +502,12 @@ def check_audience(full_text, total_units, issues, stats):
     exclaims = len(re.findall(r"[！!]", full_text))
     per100 = particles * 100.0 / total_units if total_units else 0.0
 
+    address_total = you + me + we
     stats.update({"你": you, "我": me, "我们": we, "大家类称呼": crowd, "问句": questions,
-                  "语气词": particles, "语气词每百字": round(per100, 1), "感叹号": exclaims})
+                  "语气词": particles, "语气词每百字": round(per100, 1), "感叹号": exclaims,
+                  "问句每百字": round(questions * 100.0 / total_units, 1) if total_units else 0.0,
+                  "感叹号每百字": round(exclaims * 100.0 / total_units, 1) if total_units else 0.0,
+                  "你占称呼比": round(you * 100.0 / address_total) if address_total else 0})
 
     if total_units > 80 and you == 0:
         issues.append(make_issue(SHOULD, "对象感", None, "全稿没有一个'你'", "",
@@ -488,9 +567,14 @@ def check_terms_and_numbers(lines, full_text, issues, terms, delivery):
                                      "配音引擎念这类词很怪，删掉"))
 
 
-def lint(text, rate=4.0, target_seconds=None, terms=(), allow=(), delivery="human",
-         soft_breath=22, hard_breath=32):
-    allow = {w.strip().lower() for w in allow if w.strip()}
+def lint(text, rate=None, target_seconds=None, terms=(), allow=(), delivery="human",
+         soft_breath=None, hard_breath=None, style=None):
+    """style 是 load_style_card() 的返回值。显式传入的 rate／气口参数优先于风格卡。"""
+    style = style or {}
+    rate = rate if rate is not None else style.get("rate", 4.0)
+    soft_breath = soft_breath if soft_breath is not None else style.get("soft_breath", 22)
+    hard_breath = hard_breath if hard_breath is not None else style.get("hard_breath", 32)
+    allow = {w.strip().lower() for w in list(allow) + list(style.get("allow", [])) if w.strip()}
     raw_lines = text.splitlines()
     placeholders = sum(len(PLACEHOLDER_RE.findall(l)) for l in raw_lines)
     cleaned = [PLACEHOLDER_RE.sub("", l) for l in raw_lines]
@@ -541,9 +625,14 @@ def lint(text, rate=4.0, target_seconds=None, terms=(), allow=(), delivery="huma
         issues.append(make_issue(INFO, "待补", None, "%d 处 [[待补]]" % placeholders, "",
                                  "录之前换成你自己的经历或确认过的信息"))
 
+    result = {"stats": stats}
+    if style:
+        result["style"] = {"name": style["name"], "rows": compare_style(stats, style, issues)}
+
     issues.sort(key=lambda x: (LEVEL_ORDER[x["level"]], x["line"] if x["line"] is not None else 10 ** 6))
-    summary = {level: sum(1 for x in issues if x["level"] == level) for level in (MUST, SHOULD, INFO)}
-    return {"stats": stats, "summary": summary, "issues": issues}
+    result["summary"] = {level: sum(1 for x in issues if x["level"] == level) for level in (MUST, SHOULD, INFO)}
+    result["issues"] = issues
+    return result
 
 
 def format_report(result):
@@ -562,6 +651,16 @@ def format_report(result):
     out.append("活人信号：问句 %d ｜ 语气词 %.1f/百字 ｜ 短句占比 %d%% ｜ 平均句长 %.1f ｜ 你 %d ／ 我 %d ／ 我们 %d" % (
         stats.get("问句", 0), stats.get("语气词每百字", 0), stats.get("短句占比", 0), stats.get("平均句长", 0),
         stats.get("你", 0), stats.get("我", 0), stats.get("我们", 0)))
+
+    if result.get("style"):
+        rows = result["style"]["rows"]
+        hit = sum(1 for r in rows if r["在区间内"])
+        out.append("")
+        out.append("【像不像：%s】%d/%d 项在区间内" % (result["style"]["name"], hit, len(rows)))
+        for r in rows:
+            unit = STYLE_METRICS[r["指标"]]
+            mark = "在区间内" if r["在区间内"] else "偏离"
+            out.append("  %s %s%s（区间 %s–%s%s）%s" % (r["指标"], r["数值"], unit, r["区间"][0], r["区间"][1], unit, mark))
 
     for level in (MUST, SHOULD, INFO):
         items = [x for x in result["issues"] if x["level"] == level]
@@ -589,15 +688,24 @@ def format_report(result):
 def main(argv=None):
     parser = argparse.ArgumentParser(description="口播稿体检：找出像 AI、像念稿、听不懂的地方")
     parser.add_argument("path", help="口播正文文件路径；用 - 表示从标准输入读取")
-    parser.add_argument("--rate", type=float, default=4.0, help="语速，字/秒，默认 4.0（约 240 字/分钟）")
+    parser.add_argument("--rate", type=float, default=None, help="语速，字/秒，默认 4.0（约 240 字/分钟）；风格卡可以覆盖")
     parser.add_argument("--target-seconds", type=int, default=None, help="目标时长（秒）")
     parser.add_argument("--terms", default="", help="额外要盯的术语，逗号分隔")
     parser.add_argument("--allow", default="", help="放行的词（比如人设卡里的口头禅），逗号分隔")
     parser.add_argument("--delivery", choices=["human", "tts"], default="human", help="human 真人出镜／tts 配音或数字人")
-    parser.add_argument("--soft-breath", type=int, default=22, help="不停顿超过多少字算偏长，默认 22")
-    parser.add_argument("--hard-breath", type=int, default=32, help="不停顿超过多少字必须拆，默认 32")
+    parser.add_argument("--soft-breath", type=int, default=None, help="不停顿超过多少字算偏长，默认 22")
+    parser.add_argument("--hard-breath", type=int, default=None, help="不停顿超过多少字必须拆，默认 32")
+    parser.add_argument("--style-card", default=None, help="风格卡路径（references/style-cards/*.md），对比像不像")
     parser.add_argument("--json", action="store_true", help="输出 JSON")
     args = parser.parse_args(argv)
+
+    style = None
+    if args.style_card:
+        try:
+            style = load_style_card(args.style_card)
+        except (OSError, UnicodeDecodeError, ValueError) as exc:
+            print("风格卡读取失败：%s" % exc, file=sys.stderr)
+            return 2
 
     try:
         if args.path == "-":
@@ -616,7 +724,7 @@ def main(argv=None):
     split = lambda s: [w.strip() for w in re.split(r"[,，、]", s) if w.strip()]
     result = lint(text, rate=args.rate, target_seconds=args.target_seconds, terms=split(args.terms),
                   allow=split(args.allow), delivery=args.delivery,
-                  soft_breath=args.soft_breath, hard_breath=args.hard_breath)
+                  soft_breath=args.soft_breath, hard_breath=args.hard_breath, style=style)
 
     if args.json:
         print(json.dumps(result, ensure_ascii=False, indent=2))
