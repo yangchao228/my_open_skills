@@ -204,6 +204,87 @@ class StyleCard(unittest.TestCase):
         self.assertIn("不支持的指标", err)
 
 
+import build_style_card  # noqa: E402
+
+SRT_FIXTURE = """1
+00:00:00,000 --> 00:00:02,000
+你听我说
+
+2
+00:00:02,000 --> 00:00:04,000
+这事儿其实很简单
+"""
+
+# YouTube 自动字幕式的滚动重复：下一条会把上一条的行再带一遍
+VTT_FIXTURE = """WEBVTT
+
+00:00:00.000 --> 00:00:02.000
+你听我说
+
+00:00:01.500 --> 00:00:04.000
+你听我说
+这事儿很简单
+"""
+
+
+class BuildStyleCard(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def write(self, name, content):
+        path = os.path.join(self.tmp.name, name)
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(content)
+        return path
+
+    def test_srt_parsing_and_rate(self):
+        sample = build_style_card.load_sample(self.write("a.srt", SRT_FIXTURE))
+        self.assertEqual(sample["body"], "你听我说\n这事儿其实很简单")
+        self.assertAlmostEqual(sample["rate"], 12 / 4.0, places=2)  # 4 + 8 字，4 秒
+
+    def test_vtt_rolling_duplicates_and_overlap(self):
+        sample = build_style_card.load_sample(self.write("a.vtt", VTT_FIXTURE))
+        self.assertEqual(sample["body"], "你听我说\n这事儿很简单")
+        self.assertAlmostEqual(sample["rate"], 10 / 4.0, places=2)  # 重叠区间只算一次
+
+    def test_card_round_trip_is_self_consistent(self):
+        blocks = text_blocks(read("references/before-after.md"), "活人版")
+        paths = [self.write("s%d.txt" % i, b) for i, b in enumerate(blocks)]
+        card_path = os.path.join(self.tmp.name, "card.md")
+        code = build_style_card.main(paths + ["--name", "自洽测试", "--slug", "selfcheck", "-o", card_path])
+        self.assertEqual(code, 0)
+        style = koubo_lint.load_style_card(card_path)
+        self.assertEqual(style["koubo_style"], "selfcheck")
+        self.assertTrue(all(low >= 0 for low, _ in style["targets"].values()))
+        for block in blocks:
+            rows = lint(block, style=style)["style"]["rows"]
+            self.assertTrue(all(r["在区间内"] for r in rows), [r for r in rows if not r["在区间内"]])
+
+    def test_card_has_no_full_sentences_from_samples(self):
+        blocks = text_blocks(read("references/before-after.md"), "活人版")
+        samples = [{"name": "s%d" % i, "body": b, "rate": None} for i, b in enumerate(blocks)]
+        card = build_style_card.build_card(samples)
+        for block in blocks:
+            for sentence in re.split(r"[。！？\n]", block):
+                if len(sentence) >= 8:
+                    self.assertNotIn(sentence, card)
+
+    def test_warnings_for_few_samples_and_missing_punctuation(self):
+        samples = [{"name": "raw", "body": "你听我说这事儿其实很简单你一试就懂了你信我一次吧", "rate": None}]
+        card = build_style_card.build_card(samples)
+        self.assertIn("样本只有 1 份", card)
+        self.assertIn("标点很少", card)
+        self.assertIn("算不出真实语速", card)
+
+    def test_no_usable_sample_returns_2(self):
+        path = self.write("empty.txt", "\n")
+        with contextlib.redirect_stderr(io.StringIO()):
+            self.assertEqual(build_style_card.main([path]), 2)
+
+
 class Cli(unittest.TestCase):
     def test_empty_file_returns_2(self):
         with tempfile.TemporaryDirectory() as tmp:
