@@ -285,6 +285,75 @@ class BuildStyleCard(unittest.TestCase):
             self.assertEqual(build_style_card.main([path]), 2)
 
 
+LI_CARD = SKILL_DIR / "references/style-cards/li-shanglong.md"
+LI_DEMO = "examples/demo-output-li-shanglong-style.md"
+# 冒充本人、照搬身份、空洞恐吓的标志词：示范稿里一个都不能有
+LI_FORBIDDEN = ["李尚龙", "尚龙", "龙哥", "新东方", "考虫", "加拿大", "硅谷", "畅销书", "弯道超车",
+                "赛道", "被淘汰", "唯一出路", "唯一的机会"]
+
+
+class LiShanglongStyle(unittest.TestCase):
+    def setUp(self):
+        self.style = koubo_lint.load_style_card(str(LI_CARD))
+        blocks = text_blocks(read(LI_DEMO))
+        self.assertEqual(len(blocks), 1)
+        self.script = blocks[0]
+
+    def test_card_loads_with_measured_values(self):
+        self.assertEqual(self.style["koubo_style"], "li-shanglong")
+        self.assertEqual(self.style["name"], "李尚龙风格")
+        self.assertAlmostEqual(self.style["rate"], 6.17, places=2)
+        self.assertEqual(self.style["soft_breath"], 28)
+        self.assertEqual(set(self.style["targets"]), set(koubo_lint.STYLE_METRICS))
+        self.assertEqual(self.style["allow"], ["其实"])
+
+    def test_card_header_states_it_is_unofficial(self):
+        head = read("references/style-cards/li-shanglong.md")[:600]
+        for phrase in ("非官方", "不代表本人", "不是冒充他", "1 条视频"):
+            self.assertIn(phrase, head)
+
+    def test_demo_has_no_must_fix_with_or_without_card(self):
+        self.assertEqual(lint(self.script, target_seconds=120)["summary"][MUST], 0)
+        result = lint(self.script, target_seconds=120, style=self.style)
+        self.assertEqual(result["summary"][MUST], 0)
+        self.assertEqual(result["summary"][SHOULD], 0, [i for i in result["issues"] if i["level"] == SHOULD])
+
+    def test_demo_is_in_every_style_range(self):
+        result = lint(self.script, target_seconds=120, style=self.style)
+        rows = result["style"]["rows"]
+        self.assertEqual(len(rows), len(koubo_lint.STYLE_METRICS))
+        self.assertTrue(all(r["在区间内"] for r in rows), [r for r in rows if not r["在区间内"]])
+        self.assertFalse(found(result, category="风格偏离"))
+        self.assertFalse(found(result, category="时长"))
+
+    def test_demo_keeps_the_bottom_lines(self):
+        for word in LI_FORBIDDEN:
+            self.assertNotIn(word, self.script, word)
+        result = lint(self.script, style=self.style)
+        self.assertFalse(found(result, category="空洞恐吓"))
+        self.assertEqual(result["stats"]["待补占位"], 1)  # 讲故事的位置留给用户自己的经历
+
+    def test_demo_annotates_techniques(self):
+        notes = read(LI_DEMO)
+        self.assertIn("### 风格手法标注", notes)
+        for section in ("开头套路", "结构模板", "金句", "结尾方式", "讲故事的方法", "紧迫感"):
+            self.assertIn(section, notes.split("### 风格手法标注")[1], section)
+
+    def test_card_examples_pass_lint(self):
+        examples = re.findall(r"^> 示例：(.+)$", read("references/style-cards/li-shanglong.md"), re.M)
+        self.assertGreaterEqual(len(examples), 8)
+        for example in examples:
+            result = lint(example)
+            self.assertEqual(result["summary"][MUST], 0, (example, [i for i in result["issues"] if i["level"] == MUST]))
+
+    def test_skill_md_links_to_card_and_demo(self):
+        skill = read("SKILL.md")
+        self.assertIn("像李尚龙一样", skill)
+        self.assertIn("李尚龙那种风格", skill)
+        for link in re.findall(r"\]\(((?:references|examples|scripts)/[^)]+)\)", skill):
+            self.assertTrue((SKILL_DIR / link).exists(), link)
+
+
 class Cli(unittest.TestCase):
     def test_empty_file_returns_2(self):
         with tempfile.TemporaryDirectory() as tmp:

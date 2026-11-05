@@ -1,6 +1,6 @@
 ---
 name: article-to-koubo
-description: 把文章、长文、笔记、公众号稿改写成有活人感的中文口播稿。目标是听起来像一个人在轻松聊天：偶尔幽默、有真实情绪，不堆术语，没有 AI 套话。用于"文章转口播""写口播稿""视频文案""逐字稿""去 AI 味""改成能念的稿子"等需求，也可以只给已有的口播稿做体检，或者按反馈改稿。附带确定性体检脚本，检查套话、气口、句式单调、黑话术语和时长。
+description: 把文章、长文、笔记、公众号稿改写成有活人感的中文口播稿。目标是听起来像一个人在轻松聊天：偶尔幽默、有真实情绪，不堆术语，没有 AI 套话。用于"文章转口播""写口播稿""视频文案""逐字稿""去 AI 味""改成能念的稿子"等需求，也可以只给已有的口播稿做体检，或者按反馈改稿。还能按风格卡学某位博主的说话方式，比如"像李尚龙一样""李尚龙那种风格"。附带确定性体检脚本，检查套话、气口、句式单调、黑话术语和时长。
 version: 0.1.0
 metadata:
   openclaw:
@@ -160,6 +160,14 @@ python3 <本 skill 目录>/scripts/koubo_lint.py <稿件.txt> --target-seconds <
 
 **优先级**：人设卡 > 风格卡 > 默认风格。用户点名某种风格时启用对应的风格卡。用户也可以在人设卡里写明默认用哪张。
 
+**现有风格卡**（放在 `references/style-cards/`）
+
+| 风格卡 | 用户这样说时启用 | 说明 |
+| --- | --- | --- |
+| [li-shanglong.md](references/style-cards/li-shanglong.md) | "像李尚龙一样""李尚龙那种风格""照李尚龙的路子讲" | 先亮判断、"原来 vs 现在"、身边例子、翻转句收尾、指令式结尾；语速约 6.2 字/秒。基于他公开 AI 访谈的 5 段独白提炼，非官方。示范见 [examples/demo-output-li-shanglong-style.md](examples/demo-output-li-shanglong-style.md) |
+
+启用后先读风格卡开头的"材料来源和局限"，再按卡里的手法起稿。
+
 **怎么做一张风格卡**
 
 1. 收集 3–5 份逐字稿。优先用带时间戳的 `.srt` 或 `.vtt` 字幕，这样才能算出真实语速。
@@ -216,6 +224,7 @@ python3 <本 skill 目录>/scripts/koubo_lint.py <稿件.txt> --target-seconds <
 - [references/jargon-translation.md](references/jargon-translation.md)：术语三选一、比喻怎么找、黑话换人话。
 - [references/ai-flavor-blacklist.md](references/ai-flavor-blacklist.md)：口播版 AI 味清单，分成脚本能抓的和要自己判断的两部分。
 - [references/before-after.md](references/before-after.md)：三组改前改后对照，附具体改法。
+- [references/style-cards/li-shanglong.md](references/style-cards/li-shanglong.md)：李尚龙风格卡，包括数值区间、体检误报、定性手法和底线。用户说"像李尚龙一样""李尚龙那种风格"时启用。
 - [scripts/koubo_lint.py](scripts/koubo_lint.py)：体检脚本，只用 Python 标准库，加 `--json` 输出机器可读结果。
 - [scripts/build_style_card.py](scripts/build_style_card.py)：从逐字稿生成风格卡骨架，支持 txt、srt、vtt 三种格式。
 - [scripts/test_koubo_lint.py](scripts/test_koubo_lint.py)：体检脚本和风格卡工具的回归测试，改阈值或词表之后先跑一遍。
